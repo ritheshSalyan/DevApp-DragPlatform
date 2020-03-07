@@ -33,6 +33,13 @@ dependencies:
   provider: ^4.0.4
 
 
+  #ordering multiple list
+  reorderables: 
+    git:
+      url: https://github.com/ritheshSalyan/reorderables.git
+
+
+
 
 dev_dependencies:
   flutter_test:

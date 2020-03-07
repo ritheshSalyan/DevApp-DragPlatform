@@ -5,11 +5,13 @@ import 'package:flutter_drag_and_drop/UI/widgets/mobile.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/widgets/appbar_widgets/custom_appbar.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/button.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/card.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/center.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/column.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/container.dart';
+import 'package:flutter_drag_and_drop/elements/widgets/custom_fab.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/row.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/scaffold.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/text.dart';
@@ -83,6 +85,23 @@ class _DragDropState extends State<DragDrop> {
                         ),
                       ),
                     ),
+                      Draggable<CustomAppBarWidget>(
+                      data: CustomAppbar(),
+                      child: Container(
+                        color: Colors.orange,
+                        width: size.width * 0.1,
+                        height: size.width * 0.1,
+                        child: Text("CustomAppbar"),
+                      ),
+                      feedback: Material(
+                        child: Container(
+                          width: size.width * 0.1,
+                          height: size.width * 0.1, 
+                          color: Colors.orange,
+                          child: Text("CustomAppbar"),
+                        ),
+                      ),
+                    ),
                     Draggable<CustomWidget>(
                       data: CustomButton(),
                       child: Container(
@@ -97,6 +116,23 @@ class _DragDropState extends State<DragDrop> {
                           height: size.width * 0.1,
                           color: Colors.red,
                           child: Text("CustomButton"),
+                        ),
+                      ),
+                    ),
+                    Draggable<CustomWidget>(
+                      data: CustomFAB(),
+                      child: Container(
+                        color: Colors.green,
+                        width: size.width * 0.1,
+                        height: size.width * 0.1,
+                        child: Text("CustomFAB"),
+                      ),
+                      feedback: Material(
+                        child: Container(
+                          width: size.width * 0.1,
+                          height: size.width * 0.1,
+                          color: Colors.red,
+                          child: Text("CustomFAB"),
                         ),
                       ),
                     ),

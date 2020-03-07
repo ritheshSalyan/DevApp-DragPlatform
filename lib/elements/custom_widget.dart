@@ -13,3 +13,9 @@ mixin CustomWidget {
     Provider.of<ControllerClass>(context, listen: false).update();
   }
 }
+
+mixin CustomAppBarWidget on CustomWidget {
+ 
+  Size get size; 
+ 
+}

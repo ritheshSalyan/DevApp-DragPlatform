@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 
 class CustomContainer with CustomWidget {
@@ -20,11 +21,12 @@ class CustomContainer with CustomWidget {
         context,
         childWidget: data.copy(),
       );
-    }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-      return Container(
+    }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) { 
+
+      return child==null?EmptyRepresenter(width: null, height: null): Container(
         color: Colors.red,
         child: child == null
-            ? null //Container()
+            ? EmptyRepresenter(width: null, height: null)//Container()
             : child.build(context), //Text("data"),
       ); //currentWidget(type, child, context);
     });

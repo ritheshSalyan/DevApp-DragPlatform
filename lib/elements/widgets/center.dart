@@ -14,6 +14,8 @@ class CustomCenter with CustomWidget {
 
   @override
   Widget build(context) {
+      print("CustomCenter");
+
     return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
       print("CustomCenter");
       addChild(

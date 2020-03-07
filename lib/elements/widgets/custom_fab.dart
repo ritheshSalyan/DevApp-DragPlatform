@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 
-class CustomButton with CustomWidget {
+class CustomFAB with CustomWidget {
   CustomWidget child;
   void addChild(BuildContext context, {CustomWidget childWidget}) {
     if (child == null) {
@@ -16,22 +16,24 @@ class CustomButton with CustomWidget {
   @override
   Widget build(context) {
     return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-      print("Button");
+      print("CustomFAB");
       addChild(
         context,
         childWidget: data.copy(),
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-      return RaisedButton(
+      return FloatingActionButton(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         onPressed: () {},
-        child: child == null ? null:child.build(context),
+        child: child == null ? EmptyRepresenter():child.build(context),
       ); //currentWidget(type, child, context);
     });
   }
 
   @override
   CustomWidget copy() {
-    return CustomButton();
+    return CustomFAB();
   }
 
   @override
