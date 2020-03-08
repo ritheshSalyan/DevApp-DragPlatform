@@ -4,6 +4,8 @@ import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 
 class CustomFAB with CustomWidget {
   CustomWidget child;
+
+  int elevation;
   void addChild(BuildContext context, {CustomWidget childWidget}) {
     if (child == null) {
       child = childWidget;
@@ -39,4 +41,16 @@ class CustomFAB with CustomWidget {
   @override
   // TODO: implement widget
   get name => "Button";
+    @override
+  Widget properties(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        TextField(
+          onChanged: (string) {
+            elevation = int.parse(string);
+          },
+        ),
+      ],
+    );
+  }
 }

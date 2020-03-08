@@ -101,4 +101,17 @@ class CustomScaffold with CustomWidget {
   @override
   // TODO: implement widget
   get name => "Scaffold";
+
+    @override
+  Widget properties(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        TextField(
+          onChanged: (string) {
+            // elevation = int.parse(string);
+          },
+        ),
+      ],
+    );
+  }
 }

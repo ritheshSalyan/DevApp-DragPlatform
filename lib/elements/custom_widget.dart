@@ -12,6 +12,8 @@ mixin CustomWidget {
   void addChild(BuildContext context, {CustomWidget childWidget}) {
     Provider.of<ControllerClass>(context, listen: false).update();
   }
+
+  Widget properties(BuildContext context);
 }
 
 mixin CustomAppBarWidget on CustomWidget {

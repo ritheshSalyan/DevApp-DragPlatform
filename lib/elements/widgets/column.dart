@@ -5,6 +5,8 @@ import 'package:reorderables/reorderables.dart';
 
 class CustomColumn with CustomWidget {
   List<CustomWidget> children = [];
+
+  int elevation;
   void addChild(BuildContext context,
       {CustomWidget childWidget, int position}) {
     print(position);
@@ -99,5 +101,17 @@ class CustomColumn with CustomWidget {
   @override
   // TODO: implement widget
   get name => "Column";
+    @override
+  Widget properties(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        TextField(
+          onChanged: (string) {
+            elevation = int.parse(string);
+          },
+        ),
+      ],
+    );
+  }
 }
 

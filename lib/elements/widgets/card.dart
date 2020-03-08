@@ -3,6 +3,8 @@ import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 
 class CustomCard with CustomWidget {
   CustomWidget child;
+
+  int elevation;
   void addChild(BuildContext context, {CustomWidget childWidget}) {
     if (child == null) {
       child = childWidget;
@@ -38,4 +40,17 @@ class CustomCard with CustomWidget {
   @override
   // TODO: implement widget
   get name => "Card";
+
+    @override
+  Widget properties(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        TextField(
+          onChanged: (string) {
+            elevation = int.parse(string);
+          },
+        ),
+      ],
+    );
+  }
 }

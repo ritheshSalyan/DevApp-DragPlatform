@@ -3,6 +3,8 @@ import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 
 class CustomCenter with CustomWidget {
   CustomWidget child;
+
+  int elevation;
   void addChild(BuildContext context, {CustomWidget childWidget}) {
     if (child == null) {
       child = childWidget;
@@ -40,4 +42,16 @@ class CustomCenter with CustomWidget {
   @override
   // TODO: implement widget
   get name => "Center";
+    @override
+  Widget properties(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        TextField(
+          onChanged: (string) {
+            elevation = int.parse(string);
+          },
+        ),
+      ],
+    );
+  }
 }

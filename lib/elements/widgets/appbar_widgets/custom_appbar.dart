@@ -16,21 +16,7 @@ class CustomAppbar with CustomWidget, CustomAppBarWidget {
   @override
   Widget build(context) {
     return AppBar();
-    // return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-    //   print("CustomContainer");
-    //   addChild(
-    //     context,
-    //     childWidget: data.copy(),
-    //   );
-    // }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-
-    //   return child==null?EmptyRepresenter(width: null, height: null): Container(
-    //     color: Colors.red,
-    //     child: child == null
-    //         ? EmptyRepresenter(width: null, height: null)//Container()
-    //         : child.build(context), //Text("data"),
-    //   ); //currentWidget(type, child, context);
-    // });
+    
   }
 
   @override
@@ -39,10 +25,15 @@ class CustomAppbar with CustomWidget, CustomAppBarWidget {
   }
 
   @override
-  // TODO: implement widget
+  
   get name => "Container";
 
   @override
-  // TODO: implement size
-  Size get size => throw UnimplementedError();
+ 
+  Size get size => AppBar().preferredSize;
+
+  @override
+  Widget properties(BuildContext context) {
+   return ListView();
+  }
 }
