@@ -4,18 +4,22 @@ import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 class CustomText with CustomWidget {
   String data;
 
+  CustomText({this.data});
+
   @override
   Widget build(context) {
+    // print("data $this");
     return Text("$data");
   }
 
   @override
   CustomWidget copy() {
-    return CustomText();
+    return CustomText(
+      // data:data
+    );
   }
 
   @override 
-  // TODO: implement widget
   get name => "Text";
 
     @override
@@ -25,6 +29,8 @@ class CustomText with CustomWidget {
         TextField(
           onChanged: (string) {
             data = string;
+            print(data);
+            super.properties(context);
           },
         ),
       ],

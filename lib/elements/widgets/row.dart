@@ -5,9 +5,9 @@ import 'package:reorderables/reorderables.dart';
 
 class CustomRow with CustomWidget {
   List<CustomWidget> children = [];
-  // void addChild(BuildContext context, {CustomWidget childWidget}) {
+  // void addChild(BuildContext context, CustomWidget childWidget) {
   //   children.add(childWidget);
-  //   super.addChild(context);
+  //   super.addChild(context,childWidget;
   // }
 
   // @override
@@ -16,7 +16,7 @@ class CustomRow with CustomWidget {
   //     print("CustomRow");
   //     addChild(
   //       context,
-  //       childWidget: data.copy(),
+  //     data.copy(),
   //     );
   //   }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
   //     return Row(
@@ -34,11 +34,11 @@ class CustomRow with CustomWidget {
   //   });
   // }
   void addChild(BuildContext context,
-      {CustomWidget childWidget, int position}) {
+      CustomWidget childWidget,{ int position}) {
     print(position);
 
     children.insert(position ?? 0, childWidget);
-    super.addChild(context);
+    super.addChild(context,childWidget);
   }
 
   @override
@@ -48,7 +48,7 @@ class CustomRow with CustomWidget {
     //     if (i.isEven) {
     //       return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
     //         print("CustomColumn");
-    //         addChild(context, childWidget: data.copy(), position: (i/2).floor());
+    //         addChild(context,   data.copy(), position: (i/2).floor());
     //       }, builder:
     //           (context, List<CustomWidget> accept, List<dynamic> reject) {
     //         // return Column(
@@ -73,14 +73,14 @@ class CustomRow with CustomWidget {
       print("CustomColumn");
       addChild(
         context,
-        childWidget: data.copy(),
+      data.copy(),
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return ReorderableRow(
         needsLongPressDraggable: false,
         onReorder: (int oldIndex, int newIndex) {
           addChild(context,
-              childWidget: children.removeAt(oldIndex), position: newIndex);
+                children.removeAt(oldIndex), position: newIndex);
         },
         children: children.isEmpty
             ? <Widget>[

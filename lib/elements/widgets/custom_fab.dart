@@ -6,13 +6,13 @@ class CustomFAB with CustomWidget {
   CustomWidget child;
 
   int elevation;
-  void addChild(BuildContext context, {CustomWidget childWidget}) {
+  void addChild(BuildContext context, CustomWidget childWidget) {
     if (child == null) {
       child = childWidget;
     } else {
-      child.addChild(context, childWidget: childWidget);
+      child.addChild(context,   childWidget);
     }
-    super.addChild(context);
+    super.addChild(context,childWidget);
   }
 
   @override
@@ -21,7 +21,7 @@ class CustomFAB with CustomWidget {
       print("CustomFAB");
       addChild(
         context,
-        childWidget: data.copy(),
+      data.copy(),
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return FloatingActionButton(

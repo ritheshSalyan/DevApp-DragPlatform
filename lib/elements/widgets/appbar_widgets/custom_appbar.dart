@@ -4,13 +4,13 @@ import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 
 class CustomAppbar with CustomWidget, CustomAppBarWidget {
   CustomWidget child;
-  void addChild(BuildContext context, {CustomWidget childWidget}) {
+  void addChild(BuildContext context, CustomWidget childWidget) {
     if (child == null) {
       child = childWidget;
     } else {
-      child.addChild(context, childWidget: childWidget);
+      child.addChild(context,   childWidget);
     }
-    super.addChild(context);
+    super.addChild(context,childWidget);
   }
 
   @override

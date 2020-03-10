@@ -7,15 +7,15 @@ class CustomScaffold with CustomWidget {
   CustomWidget child;
   CustomAppBarWidget appbar;
   void addChild(
-    BuildContext context, {
+    BuildContext context, 
     CustomWidget childWidget,
-  }) {
+  ) {
     if (child == null) {
       child = childWidget;
     } else {
-      child.addChild(context, childWidget: childWidget);
+      child.addChild(context,   childWidget);
     }
-    super.addChild(context);
+    super.addChild(context,childWidget);
   }
 
   void addAppbar(
@@ -23,7 +23,7 @@ class CustomScaffold with CustomWidget {
     CustomAppBarWidget appBarWidget,
   }) {
     appbar = appBarWidget;
-    super.addChild(context);
+    super.addChild(context,appBarWidget);
   }
 
   @override
@@ -57,7 +57,7 @@ class CustomScaffold with CustomWidget {
               print("CustomScaffold");
               addChild(
                 context,
-                childWidget: data.copy(),
+              data.copy(),
               );
             }, builder:
               (context, List<CustomWidget> accept, List<dynamic> reject) {
@@ -73,7 +73,7 @@ class CustomScaffold with CustomWidget {
     //   print("CustomScaffold");
     //   addChild(
     //     context,
-    //     childWidget: data.copy(),
+    //   data.copy(),
     //   );
     // }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
     //   return Scaffold(

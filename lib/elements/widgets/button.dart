@@ -6,13 +6,13 @@ class CustomButton with CustomWidget {
   CustomWidget child;
   int elevation = 1;
   // double height= 0.25;
-  void addChild(BuildContext context, {CustomWidget childWidget}) {
+  void addChild(BuildContext context, CustomWidget childWidget) {
     if (child == null) {
       child = childWidget;
     } else {
-      child.addChild(context, childWidget: childWidget);
+      child.addChild(context,  childWidget);
     }
-    super.addChild(context);
+    super.addChild(context,childWidget);
   }
 
   @override
@@ -21,7 +21,7 @@ class CustomButton with CustomWidget {
       print("Button");
       addChild(
         context,
-        childWidget: data.copy(),
+        data.copy(),
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return RaisedButton(

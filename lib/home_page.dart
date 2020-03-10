@@ -32,7 +32,7 @@ class _DragDropState extends State<DragDrop> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    print("Hello");
     return ChangeNotifierProvider<ControllerClass>(
       create: (_) => ControllerClass(),
       child: Scaffold(
@@ -64,7 +64,11 @@ class _DragDropState extends State<DragDrop> {
                 // borderRadius: radius,
                 color: neuBackground,
                 width: size.width * 0.3,
-                child:  val.properties(context),
+                child:   Consumer<ControllerClass>(
+                   builder: (context, snapshot, _) {
+                    return snapshot.properties(context);
+                  }
+                ),
               ),
 
               

@@ -9,11 +9,13 @@ mixin CustomWidget {
 
   CustomWidget copy();
 
-  void addChild(BuildContext context, {CustomWidget childWidget}) {
-    Provider.of<ControllerClass>(context, listen: false).update();
+  void addChild(BuildContext context, CustomWidget childWidget) {
+    Provider.of<ControllerClass>(context, listen: false).updateChild(childWidget);
   }
 
-  Widget properties(BuildContext context);
+  Widget properties(BuildContext context){
+    Provider.of<ControllerClass>(context, listen: false).notify();
+  }
 }
 
 mixin CustomAppBarWidget on CustomWidget {
