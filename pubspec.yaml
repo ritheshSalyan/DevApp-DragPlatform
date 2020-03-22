@@ -32,6 +32,11 @@ dependencies:
   #state Management
   provider: ^4.0.4
 
+  #### Widget Properties Editing #########
+  flutter_circle_color_picker: ^0.1.1
+  flutter_xlider: ^3.2.0
+  flutter_neumorphic: ^1.0.2+1
+
 
   #ordering multiple list
   reorderables: 

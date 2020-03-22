@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
 
 class CustomText with CustomWidget {
-  String data;
-
+  String data = "hello";
+  Color color = Colors.black;
   CustomText({this.data});
 
   @override
   Widget build(context) {
     // print("data $this");
-    return Text("$data");
+    return Text("$data",
+    style: TextStyle(
+        color: color,
+    ),
+    );
   }
 
   @override
@@ -33,6 +38,12 @@ class CustomText with CustomWidget {
             super.properties(context);
           },
         ),
+        CustomColorPicker(onSelected: (color){
+            this.color = color;
+            super.properties(context);
+        })
+        
+
       ],
     );
   }
