@@ -5,12 +5,14 @@ import 'package:reorderables/reorderables.dart';
 
 class CustomColumn with CustomWidget {
   List<CustomWidget> children = [];
+
+  int elevation;
   void addChild(BuildContext context,
-      {CustomWidget childWidget, int position}) {
+      CustomWidget childWidget, {int position}) {
     print(position);
 
     children.insert(position ?? 0, childWidget);
-    super.addChild(context);
+    super.addChild(context,childWidget);
   }
 
   @override
@@ -20,7 +22,7 @@ class CustomColumn with CustomWidget {
     //     if (i.isEven) {
     //       return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
     //         print("CustomColumn");
-    //         addChild(context, childWidget: data.copy(), position: (i/2).floor());
+    //         addChild(context,   data.copy(), position: (i/2).floor());
     //       }, builder:
     //           (context, List<CustomWidget> accept, List<dynamic> reject) {
     //         // return Column(
@@ -45,14 +47,14 @@ class CustomColumn with CustomWidget {
       print("CustomColumn");
       addChild(
         context,
-        childWidget: data.copy(),
+      data.copy(),
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return ReorderableColumn(
         needsLongPressDraggable: false,
         onReorder: (int oldIndex, int newIndex) {
           addChild(context,
-              childWidget: children.removeAt(oldIndex), position: newIndex);
+               children.removeAt(oldIndex), position: newIndex);
         },
         children: children.isEmpty
             ? <Widget>[
@@ -99,5 +101,33 @@ class CustomColumn with CustomWidget {
   @override
   // TODO: implement widget
   get name => "Column";
+    @override
+  Widget properties(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        TextField(
+          onChanged: (string) {
+            elevation = int.parse(string);
+          },
+        ),
+      ],
+    );
+  }
+
+String childrenCode(){
+    String code  = "";
+    children.forEach((child) { 
+      code+=child.code+',';
+    });
+    return code;
+  }
+  @override
+  // TODO: implement code
+  String get code =>'''
+  Column(
+    children:<Widget>[
+      ${childrenCode()}
+    ]
+  )''';  
 }
 

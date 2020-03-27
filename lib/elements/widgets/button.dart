@@ -4,13 +4,15 @@ import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 
 class CustomButton with CustomWidget {
   CustomWidget child;
-  void addChild(BuildContext context, {CustomWidget childWidget}) {
+  int elevation = 1;
+  // double height= 0.25;
+  void addChild(BuildContext context, CustomWidget childWidget) {
     if (child == null) {
       child = childWidget;
     } else {
-      child.addChild(context, childWidget: childWidget);
+      child.addChild(context,  childWidget);
     }
-    super.addChild(context);
+    super.addChild(context,childWidget);
   }
 
   @override
@@ -19,12 +21,12 @@ class CustomButton with CustomWidget {
       print("Button");
       addChild(
         context,
-        childWidget: data.copy(),
+        data.copy(),
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return RaisedButton(
         onPressed: () {},
-        child: child == null ? null:child.build(context),
+        child: child == null ? null : child.build(context),
       ); //currentWidget(type, child, context);
     });
   }
@@ -35,6 +37,26 @@ class CustomButton with CustomWidget {
   }
 
   @override
-  // TODO: implement widget
   get name => "Button";
+
+  @override
+  Widget properties(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        TextField(
+          onChanged: (string) {
+            elevation = int.parse(string);
+          },
+        ),
+      ],
+    );
+  }
+
+  @override
+  // TODO: implement code
+  String get code => '''RaisedButton(
+        onPressed: () {},
+        ${ child == null ? "" : "child:"+child.code+','}
+      )''';
+  
 }

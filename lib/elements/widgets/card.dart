@@ -3,13 +3,15 @@ import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 
 class CustomCard with CustomWidget {
   CustomWidget child;
-  void addChild(BuildContext context, {CustomWidget childWidget}) {
+
+  int elevation;
+  void addChild(BuildContext context, CustomWidget childWidget) {
     if (child == null) {
       child = childWidget;
     } else {
-      child.addChild(context, childWidget: childWidget);
+      child.addChild(context,  childWidget);
     }
-    super.addChild(context);
+    super.addChild(context,childWidget);
   }
 
   @override
@@ -18,7 +20,7 @@ class CustomCard with CustomWidget {
       print("CustomCard");
       addChild(
         context,
-        childWidget: data.copy(),
+         data.copy(),
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return Card(
@@ -38,4 +40,22 @@ class CustomCard with CustomWidget {
   @override
   // TODO: implement widget
   get name => "Card";
+
+    @override
+  Widget properties(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        TextField(
+          onChanged: (string) {
+            elevation = int.parse(string);
+          },
+        ),
+      ],
+    );
+  }
+   String get code =>''' Card(
+    ${child!=null ? "child :"+child.code+",":"" }
+  )
+  
+  '''; 
 }

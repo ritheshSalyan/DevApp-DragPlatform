@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/UI/home.dart';
+import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/home_page.dart';
 
 void main() => runApp(MyApp());
@@ -11,7 +12,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           brightness: Brightness.light,
-        primarySwatch: Colors.blue,
+        primarySwatch: green, //Colors.blue,
+
       ),
       home:DragDrop(title: 'Flutter Demo Home Page'),// HomePage(),//
     );

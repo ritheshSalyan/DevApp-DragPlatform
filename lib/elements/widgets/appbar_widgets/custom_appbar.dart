@@ -4,33 +4,19 @@ import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 
 class CustomAppbar with CustomWidget, CustomAppBarWidget {
   CustomWidget child;
-  void addChild(BuildContext context, {CustomWidget childWidget}) {
+  void addChild(BuildContext context, CustomWidget childWidget) {
     if (child == null) {
       child = childWidget;
     } else {
-      child.addChild(context, childWidget: childWidget);
+      child.addChild(context,   childWidget);
     }
-    super.addChild(context);
+    super.addChild(context,childWidget);
   }
 
   @override
   Widget build(context) {
     return AppBar();
-    // return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-    //   print("CustomContainer");
-    //   addChild(
-    //     context,
-    //     childWidget: data.copy(),
-    //   );
-    // }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-
-    //   return child==null?EmptyRepresenter(width: null, height: null): Container(
-    //     color: Colors.red,
-    //     child: child == null
-    //         ? EmptyRepresenter(width: null, height: null)//Container()
-    //         : child.build(context), //Text("data"),
-    //   ); //currentWidget(type, child, context);
-    // });
+    
   }
 
   @override
@@ -39,10 +25,19 @@ class CustomAppbar with CustomWidget, CustomAppBarWidget {
   }
 
   @override
-  // TODO: implement widget
+  
   get name => "Container";
 
   @override
-  // TODO: implement size
-  Size get size => throw UnimplementedError();
+ 
+  Size get size => AppBar().preferredSize;
+
+  @override
+  Widget properties(BuildContext context) {
+   return ListView();
+  }
+
+  @override
+  // TODO: implement code
+  String get code =>''' Appbar()''';
 }

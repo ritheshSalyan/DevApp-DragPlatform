@@ -24,13 +24,23 @@ dependencies:
   cupertino_icons: ^0.1.2
 
 
+  #Icons
+  flutter_icons: ^1.0.0+1
+  
   #UI Neumorphic
   neumorphic: ^0.1.2
   clay_containers: ^0.2.2
   animated_neumorphic: ^0.1.1
+  flip_card: ^0.4.4
 
   #state Management
   provider: ^4.0.4
+
+  #### Widget Properties Editing #########
+  flutter_circle_color_picker: ^0.1.1
+  flutter_colorpicker: ^0.3.2
+  flutter_xlider: ^3.2.0
+  flutter_neumorphic: ^1.0.2+1
 
 
   #ordering multiple list
