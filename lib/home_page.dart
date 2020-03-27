@@ -192,23 +192,23 @@ class WidgetWindow extends StatelessWidget {
             ),
           ),
         ),
-        Draggable<CustomWidget>(
-          data: CustomFAB(),
-          child: Container(
-            color: Colors.green,
-            width: size.width * 0.1,
-            height: size.width * 0.1,
-            child: Text("CustomFAB"),
-          ),
-          feedback: Material(
-            child: Container(
-              width: size.width * 0.1,
-              height: size.width * 0.1,
-              color: Colors.red,
-              child: Text("CustomFAB"),
-            ),
-          ),
-        ),
+        // Draggable<CustomWidget>(
+        //   data: CustomFAB(),
+        //   child: Container(
+        //     color: Colors.green,
+        //     width: size.width * 0.1,
+        //     height: size.width * 0.1,
+        //     child: Text("CustomFAB"),
+        //   ),
+        //   feedback: Material(
+        //     child: Container(
+        //       width: size.width * 0.1,
+        //       height: size.width * 0.1,
+        //       color: Colors.red,
+        //       child: Text("CustomFAB"),
+        //     ),
+        //   ),
+        // ),
         Draggable<CustomWidget>(
           data: CustomText(),
           child: Container(

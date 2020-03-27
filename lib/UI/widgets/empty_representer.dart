@@ -9,6 +9,7 @@ class EmptyRepresenter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: Colors.transparent,
       key: ValueKey(0),
       width: width??MediaQuery.of(context).size.width,
       height: height??MediaQuery.of(context).size.height,

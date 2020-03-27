@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 mixin CustomWidget {
   Widget build(BuildContext context);

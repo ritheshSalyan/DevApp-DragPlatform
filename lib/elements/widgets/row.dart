@@ -104,7 +104,7 @@ class CustomRow with CustomWidget {
                 if (i < children.length) {
                   return Container(
                     key: ValueKey(i),
-                    child: children[i].build(context),
+                    child: children[i].build(context,),
                     color: Colors.transparent,
                   );
                 } else {
