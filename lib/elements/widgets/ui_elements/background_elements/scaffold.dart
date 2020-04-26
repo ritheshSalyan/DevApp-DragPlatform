@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
+import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
-import 'package:flutter_drag_and_drop/elements/widgets/custom_fab.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
+import 'package:tree_view/tree_view.dart';
+// import 'package:flutter_drag_and_drop/elements/widgets/custom_fab.dart';
 
-class CustomScaffold with CustomWidget {
+class CustomScaffoldWithAppbar with CustomWidget {
   CustomWidget child;
   CustomAppBarWidget appbar;
+  Color backgroundColor = Colors.white;
   void addChild(
-    BuildContext context, 
+    BuildContext context,
     CustomWidget childWidget,
   ) {
     if (child == null) {
       child = childWidget;
     } else {
-      child.addChild(context,   childWidget);
+      child.addChild(context, childWidget);
     }
-    super.addChild(context,childWidget);
+    super.addChild(context, childWidget);
   }
 
   void addAppbar(
@@ -23,7 +28,7 @@ class CustomScaffold with CustomWidget {
     CustomAppBarWidget appBarWidget,
   }) {
     appbar = appBarWidget;
-    super.addChild(context,appBarWidget);
+    super.addChild(context, appBarWidget);
   }
 
   @override
@@ -31,6 +36,7 @@ class CustomScaffold with CustomWidget {
     print("CustomScaffold");
 
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: appbar != null
           ? appbar.build(context)
           : PreferredSize(
@@ -47,8 +53,9 @@ class CustomScaffold with CustomWidget {
                     ? accept.first.build(context)
                     : EmptyRepresenter();
               }),
-              preferredSize: Size(MediaQuery.of(context).size.width,
-                  MediaQuery.of(context).size.height * 0.075),
+              preferredSize: AppBar().preferredSize,
+              // Size(MediaQuery.of(context).size.width,
+              //     MediaQuery.of(context).size.height * 0.075),
             ),
 
       body: child != null
@@ -57,7 +64,7 @@ class CustomScaffold with CustomWidget {
               print("CustomScaffold");
               addChild(
                 context,
-              data.copy(),
+                data.copy(),
               );
             }, builder:
               (context, List<CustomWidget> accept, List<dynamic> reject) {
@@ -95,20 +102,23 @@ class CustomScaffold with CustomWidget {
 
   @override
   CustomWidget copy() {
-    return CustomScaffold();
+    return CustomScaffoldWithAppbar();
   }
 
   @override
   // TODO: implement widget
   get name => "Scaffold";
 
-    @override
+  @override
   Widget properties(BuildContext context) {
     return ListView(
       children: <Widget>[
-        TextField(
-          onChanged: (string) {
-            // elevation = int.parse(string);
+        CustomColorPicker(
+          color: backgroundColor,
+          lable: "Background Color",
+          onSelected: (Color colorSelected) {
+            this.backgroundColor = colorSelected;
+            super.properties(context);
           },
         ),
       ],
@@ -116,10 +126,55 @@ class CustomScaffold with CustomWidget {
   }
 
   @override
-
   String get code => '''
   Scaffold(
-    ${appbar!=null? "appbar: "+appbar.code+",":""}
-    ${child!=null? "body: "+child.code+",":""}
-     )''';//throw UnimplementedError();
+    ${appbar != null ? "appbar: " + appbar.code + "," : ""}
+    ${child != null ? "body: " + child.code + "," : ""}
+     )'''; //throw UnimplementedError();
+
+  @override
+  Widget buildTree(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        super.setActive(context, this);
+      },
+      child: Parent(
+        parent: TreeItemView(customWidget: this),
+        callback: (value) {
+          super.setActive(context, this);
+        },
+        childList: child == null
+            ? ChildList()
+            : ChildList(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.02),
+                    child: child?.buildTree(context),
+                  ),
+                ],
+              ),
+      ),
+    );
+  }
+
+  @override
+  Widget prevIcon(Size constraints) {
+    return Container(
+      color: neuBackground,
+      // padding:  EdgeInsets.symmetric(vertical: 3,horizontal: constraints.width*0.2),
+      child: Scaffold(
+          appBar: PreferredSize(
+            child: Container(
+              color: green,
+            ),
+            preferredSize:
+                Size(constraints.width * 0.5, constraints.height * 0.1),
+          ),
+          body: Container(
+              // color: Colors.white,
+              )),
+    );
+  }
 }

@@ -2,7 +2,8 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
-import 'package:flutter_drag_and_drop/elements/widgets/scaffold.dart';
+import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_elements/scaffold.dart';
+// import 'package:flutter_drag_and_drop/elements/widgets/scaffold.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -14,7 +15,7 @@ class MobileWidget extends StatelessWidget {
   }) : super(key: key);
 
   final Size size;
-  final CustomScaffold val;
+  final CustomScaffoldWithAppbar val;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +36,10 @@ class MobileWidget extends StatelessWidget {
         // ),
         child: ScreenTypeLayout(
           mobile: PreferredSize(
-            preferredSize: Size(size.width * 0.25, size.height * 0.8),
+            preferredSize: Size(size.width * 0.25, size.height * 0.7),
             child: ResponsiveBuilder(builder: (context, sizeingInfo) {
               return Consumer<ControllerClass>(builder: (context, snapshot, _) {
-                snapshot.sizingInformation = sizeingInfo;
+                snapshot.size =  Size(size.width * 0.25, size.height * 0.8);
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -81,7 +82,7 @@ class MobileWidget extends StatelessWidget {
                           width: size.width * 0.25,
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 4.0, right: 4.0),
-                            child: val.build(context),
+                            child: MaterialApp(home: val.build(context)),
                           )),
                     ),
                     Row(

@@ -8,15 +8,16 @@ class EmptyRepresenter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Empty Repesenter $height ");
     return Container(
       // color: Colors.transparent,
       key: ValueKey(0),
       width: width??MediaQuery.of(context).size.width,
       height: height??MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(border: Border.all()),
-      child: CustomPaint(
-        painter: CrossPainter(),
-      ),
+      decoration: BoxDecoration(border: Border.all(style:BorderStyle.solid,),color: Colors.black12),
+      // child: CustomPaint(
+      //   painter: CrossPainter(),
+      // ),
     );
   }
 }

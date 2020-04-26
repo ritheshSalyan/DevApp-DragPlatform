@@ -6,11 +6,13 @@ import 'package:responsive_builder/responsive_builder.dart';
 class ControllerClass with ChangeNotifier {
   CustomWidget latestWidget;
 
-  SizingInformation sizingInformation;
+  Size size;
   ControllerClass();
 
   void updateChild(CustomWidget latest) {
     latestWidget = latest;
+    print("Add updateChild ${latestWidget.name} ");
+
     notifyListeners();
   }
 
@@ -20,6 +22,7 @@ class ControllerClass with ChangeNotifier {
   }
 
   Widget properties(BuildContext context){
+    print("Properitis called ${latestWidget?.name}");
    return latestWidget!=null?latestWidget.properties(context):Container();
   }
 }

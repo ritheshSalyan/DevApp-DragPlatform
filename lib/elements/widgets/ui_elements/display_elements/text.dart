@@ -108,5 +108,25 @@ class CustomText with CustomWidget {
         color: $color,
       ),
     )
-  ''';//throw UnimplementedError();
+  ''';
+
+  @override
+  Widget buildTree(BuildContext context) {
+    return ListTile(
+      onTap: () {
+        super.setActive(context, this);
+      },
+      title: Text("$data"),
+      leading: Icon(Icons.text_fields),
+    );
+  }
+
+  @override
+  Widget prevIcon(Size constraints) {
+    return Icon(Icons.text_fields);
+  }
+
+  // @override
+  // // TODO: implement prevIcon
+  // Widget get prevIcon => Icon(Icons.text_fields);//throw UnimplementedError();
 }
