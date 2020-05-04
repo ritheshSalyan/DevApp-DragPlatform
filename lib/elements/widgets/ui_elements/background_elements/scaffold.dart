@@ -138,23 +138,28 @@ class CustomScaffoldWithAppbar with CustomWidget {
       onTap: () {
         super.setActive(context, this);
       },
-      child: Parent(
-        parent: TreeItemView(customWidget: this),
-        callback: (value) {
+      child: ExpansionTile(
+        initiallyExpanded: true,
+        trailing: SizedBox(width: 1,height: 1),
+        title: TreeItemView(customWidget: this),
+        onExpansionChanged: (value) {
           super.setActive(context, this);
         },
-        childList: child == null
-            ? ChildList()
-            : ChildList(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
+        children:
+         child == null
+            ? []//ChildList()
+            :
+            //  ChildList(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children:
+                 <Widget>[
                   Padding(
                     padding: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.02),
                     child: child?.buildTree(context),
                   ),
                 ],
-              ),
+              // ),
       ),
     );
   }

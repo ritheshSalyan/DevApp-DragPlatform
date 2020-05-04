@@ -304,24 +304,30 @@ class CustomContainer with CustomWidget {
       onTap: () {
         super.setActive(context, this);
       },
-      child: Parent(
-        parent: TreeItemView(customWidget: this), // Text("Container"),
-        callback: (value) {
+      child: ExpansionTile(
+        initiallyExpanded: true,
+        trailing: SizedBox(width:0,height:0),
+        title: TreeItemView(customWidget: this), // Text("Container"),
+        onExpansionChanged: (value) {
           super.setActive(context, this);
         },
-        childList: child == null
-            ? ChildList()
-            : ChildList(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: child != null
-                    ? <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.02),
-                          child: child?.buildTree(context),
-                        ),
-                      ]
-                    : null),
+        children:
+
+            // child == null
+            //     ? ChildList()
+            //     : ChildList(
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children:
+            child != null
+                ? <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      child: child?.buildTree(context),
+                    ),
+                  ]
+                : [],
+        // ),
       ),
     );
   }
@@ -351,7 +357,7 @@ class CustomBoxShadow {
 
   Widget propertiesWidget(BuildContext context, void Function() refresh) {
     return Padding(
-      padding:  EdgeInsets.symmetric(vertical: 25),
+      padding: EdgeInsets.symmetric(vertical: 25),
       child: NeuCard(
         color: neuBackground,
         curveType: CurveType.flat,

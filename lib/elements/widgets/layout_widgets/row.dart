@@ -113,8 +113,8 @@ class CustomRow with CustomWidget {
                   );
                 } else {
                   return Container(
-                    key: ValueKey(children.length + i),
-                    child: accept[children.length + i].build(context),
+                    key: ValueKey(i),
+                    child: accept[i-children.length ].build(context),
                   );
                 }
               }),
@@ -165,22 +165,27 @@ class CustomRow with CustomWidget {
       onTap: () {
         super.setActive(context, this);
       },
-      child: Parent(
-        parent: TreeItemView(customWidget: this),
-        callback: (value) {
+      child: ExpansionTile(
+        initiallyExpanded: true,
+        trailing: SizedBox(width: 1,height: 1),
+        title: TreeItemView(customWidget: this),
+        onExpansionChanged: (value) {
           super.setActive(context, this);
         },
-        childList: children.isEmpty
-            ? ChildList()
-            : ChildList(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: List<Widget>.generate(
-                    children.length,
-                    (i) => Padding(
-                          padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.02),
-                          child: children[i]?.buildTree(context),
-                        )))
+        children: children.isEmpty
+            ? []
+            :
+            // ChildList(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children:
+            List<Widget>.generate(
+                children.length,
+                (i) => Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      child: children[i]?.buildTree(context),
+                    ))
+        // )
         // child.buildTree(context),
         ,
       ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:neumorphic/neumorphic.dart';
@@ -8,7 +7,6 @@ class CustomTabbar extends StatefulWidget {
     Key key,
     @required this.titles,
     @required this.onSelect,
-    
   }) : super(key: key);
   final List<String> titles;
   final void Function(int i) onSelect;
@@ -29,6 +27,7 @@ class _CustomTabbarState extends State<CustomTabbar> {
 
   @override
   Widget build(BuildContext context) {
+    // NeuText("text");
     return NeuCard(
       curveType: CurveType.flat,
       color: neuBackground,
@@ -56,10 +55,15 @@ class _CustomTabbarState extends State<CustomTabbar> {
                 bevel: selected == index ? 25 : 1,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Text(
+                  child: NeuText(
                     titles[index],
-                    style:
-                        TextStyle(color: selected == index ? green : textColor),
+                    emboss: selected != index,
+                    depth: 10,
+                    spread: 2.0,
+                    parentColor: neuBackground,
+                    style: selected == index
+                        ? TextStyle(color: green, fontWeight: FontWeight.bold)
+                        : TextStyle(color: textColor),
                   ),
                 ),
               ),

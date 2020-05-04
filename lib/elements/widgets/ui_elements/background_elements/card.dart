@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:tree_view/tree_view.dart';
@@ -67,22 +68,30 @@ class CustomCard with CustomWidget {
       onTap: () {
         super.setActive(context, this);
       },
-      child: Parent(
-        parent: Text("Card"),
-        callback: (value) {
+      child: ExpansionTile(
+        trailing: SizedBox(width: 1,height: 1),
+        initiallyExpanded: true,
+        title: TreeItemView(customWidget: this), // Text("Container"),
+        onExpansionChanged: (value) {
           super.setActive(context, this);
         },
-        childList: child==null?ChildList(
+        children:
 
-     ): ChildList(
-      crossAxisAlignment: CrossAxisAlignment.center,
-          children:child==null?null: <Widget>[
-            Padding(
-              padding:EdgeInsets.only(left: MediaQuery.of(context).size.width*0.02),
-              child: child?.buildTree(context),
-            ),
-          ],
-        ),
+            // child == null
+            //     ? ChildList()
+            //     : ChildList(
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children:
+            child != null
+                ? <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      child: child?.buildTree(context),
+                    ),
+                  ]
+                : [],
+        // ),
       ),
     );
   }
