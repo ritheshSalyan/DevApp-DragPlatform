@@ -83,7 +83,7 @@ class CustomRootWidget with CustomWidget {
   @override
   String get code => '''
      ${child != null ?child.code : ""}
-     )'''; //throw UnimplementedError();
+     '''; //throw UnimplementedError();
 
   @override
   Widget buildTree(BuildContext context) {

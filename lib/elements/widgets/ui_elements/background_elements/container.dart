@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_counter/flutter_counter.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
@@ -21,7 +23,7 @@ class CustomContainer with CustomWidget {
   bool isSameRadius = true;
   AlignmentGeometry alignment = Alignment.topLeft;
   int elevation;
-
+  int wrand, hrand;
   double tlRad = 0.0;
   double blRad = 0.0;
   double trRad = 0.0;
@@ -32,7 +34,10 @@ class CustomContainer with CustomWidget {
   TextEditingController blcontroller = TextEditingController();
   TextEditingController brcontroller = TextEditingController();
   List<CustomBoxShadow> shadows = [];
-
+  CustomContainer() {
+    wrand = Random().nextInt(100);
+    hrand = Random().nextInt(100);
+  }
   void addChild(BuildContext context, CustomWidget childWidget) {
     if (child == null) {
       child = childWidget;
@@ -102,6 +107,7 @@ class CustomContainer with CustomWidget {
           },
         ),
         WidthSelector(
+            key: ValueKey(wrand),
             lable: "Width",
             initialValue: width,
             onChanged: (double newWidth) {
@@ -109,6 +115,7 @@ class CustomContainer with CustomWidget {
               super.properties(context);
             }),
         WidthSelector(
+            key: ValueKey(hrand),
             lable: "height",
             initialValue: height,
             onChanged: (double newHeight) {
@@ -134,7 +141,7 @@ class CustomContainer with CustomWidget {
                 // children: <Widget>[
                 //     Text("Border radius"),
                 Column(
-                  mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,6 +175,7 @@ class CustomContainer with CustomWidget {
                     ),
                   ],
                 ),
+                // AnimatedSwitcher(duration: Duration(milliseconds: 250),child: 
                 isSameRadius
                     ? Flexible(
                         child: NeuTextField(
@@ -252,7 +260,7 @@ class CustomContainer with CustomWidget {
                             )
                           ],
                         ),
-                      ),
+                      ),//)
               ],
             )
 
@@ -307,7 +315,7 @@ class CustomContainer with CustomWidget {
       },
       child: ExpansionTile(
         initiallyExpanded: true,
-        trailing: SizedBox(width:0,height:0),
+        trailing: SizedBox(width: 0, height: 0),
         title: TreeItemView(customWidget: this), // Text("Container"),
         onExpansionChanged: (value) {
           super.setActive(context, this);

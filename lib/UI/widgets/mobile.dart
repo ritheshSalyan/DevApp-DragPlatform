@@ -38,7 +38,7 @@ class MobileWidget extends StatelessWidget {
         // ),
         child: ScreenTypeLayout(
           mobile: PreferredSize(
-            preferredSize: Size(size.width * 0.25, size.height * 0.7),
+            preferredSize: Size(size.width * 0.25, size.height * 0.6),
             child: ResponsiveBuilder(builder: (context, sizeingInfo) {
               return Consumer<ControllerClass>(builder: (context, snapshot, _) {
                 snapshot.size =  Size(size.width * 0.25, size.height * 0.8);
@@ -81,7 +81,7 @@ class MobileWidget extends StatelessWidget {
                           // borderRadius: radius,
                           spread: 2,
                           color: neuBackground,
-                          height: size.longestSide * 0.39,
+                          height: size.height * 0.75,
                           width: size.width * 0.25,
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 4.0, right: 4.0),

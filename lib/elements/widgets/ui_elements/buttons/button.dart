@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
+import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:provider/provider.dart';
 
 class CustomButton with CustomWidget {
   CustomWidget child;
   int elevation = 1;
   Widget icon;
-
+  int navigateTo;
   // double height= 0.25;
   void addChild(BuildContext context, CustomWidget childWidget) {
     if (child == null) {
@@ -29,7 +31,13 @@ class CustomButton with CustomWidget {
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return RaisedButton(
-        onPressed: () {},
+        onPressed: () {
+          if (navigateTo == null) {
+            return;
+          }
+          Provider.of<ControllerClass>(context, listen: false)
+              .changePage(navigateTo);
+        },
         child: child == null ? null : child.build(context),
       ); //currentWidget(type, child, context);
     });
@@ -54,6 +62,13 @@ class CustomButton with CustomWidget {
             elevation = int.parse(string);
           },
         ),
+        NavigationModule(
+          selected: navigateTo,
+          onSelected: (int index) {
+          navigateTo = index;
+          super.properties(context);
+        }
+        ),
         FlatButton(
             onPressed: () async {
               IconData iconData = await FlutterIconPicker.showIconPicker(
@@ -76,7 +91,7 @@ class CustomButton with CustomWidget {
         onPressed: () {},
         ${child == null ? "" : "child:" + child.code + ','}
       )''';
-      
+
   @override
   Widget buildTree(BuildContext context) {
     return ListTile(
@@ -98,11 +113,34 @@ class CustomButton with CustomWidget {
           width: constraints.width,
           height: constraints.height * 0.25,
           // color: green,
-          child: RaisedButton(
-            color: green,
-            onPressed: (){}),
+          child: RaisedButton(color: green, onPressed: () {}),
         ),
       ],
     );
+  }
+}
+
+class NavigationModule extends StatelessWidget {
+  const NavigationModule({
+    Key key, this.onSelected, this.selected,
+  }) : super(key: key);
+final  Function(int selected) onSelected;
+final int selected;
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<int>(
+      hint: Text("Navigate To"),
+      value: selected,
+        items: List<DropdownMenuItem>.generate(
+            Provider.of<ControllerClass>(context, listen: false)
+                .pages
+                .length,
+            (index) => DropdownMenuItem(
+                value: index,
+                child: Text(
+                    "${Provider.of<ControllerClass>(context, listen: false).pages[index].pageName}"))),
+        onChanged:onSelected
+        
+        );
   }
 }

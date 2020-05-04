@@ -35,30 +35,6 @@ class _DragDropState extends State<DragDrop> {
         backgroundColor: neuBackground,
         body: ListView(
           children: <Widget>[
-            Consumer<ControllerClass>(builder: (context, snapshot, _) {
-              return NeuCard(
-                height: size.height * 0.1,
-                color: neuBackground,
-                child: ListView.builder(
-                    itemCount: snapshot.pages.length + 1,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, i) => i == snapshot.pages.length
-                        ? RaisedButton(
-                          child: Text("Add"),
-                          onPressed: () {
-                            snapshot.addPage();
-                          })
-                        : RaisedButton(
-                            onPressed: () {
-                              snapshot.changePage(i);
-                            },
-                            child: Text("$i"))),
-                //Text("data"),
-              );
-            }),
-            SizedBox(
-              height: 25,
-            ),
             NeuCard(
               color: neuBackground,
               height: size.height,
@@ -111,7 +87,13 @@ class _DragDropState extends State<DragDrop> {
                                 snapshot.pages[snapshot.activePage].rootWidget;
                             return Container(
                               //depth: 25,
-                              child: Text(val.code),
+                              height: size.height*0.75,
+                              width: size.width * 0.25,
+                              child: ListView(
+                                children: <Widget>[
+                                  Text(val.code),
+                                ],
+                              ),
                             );
                           }),
                         ),
@@ -142,6 +124,62 @@ class _DragDropState extends State<DragDrop> {
                 ],
               ),
             ),
+                    SizedBox(height: 25),
+
+            Consumer<ControllerClass>(builder: (context, snapshot, _) {
+              return NeuCard(
+                alignment: Alignment.center,
+                height: size.height * 0.1,
+                color: neuBackground,
+
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Current Page"),
+                    SizedBox(width: 25),
+                    DropdownButton<int>(
+                        hint: Text(
+                            "${snapshot.pages[snapshot.activePage].pageName}"),
+                        // value: Te,
+                        items: List<DropdownMenuItem<int>>.generate(
+                            snapshot.pages.length + 1,
+                            (index) => DropdownMenuItem(
+                                value: index,
+                                child: index == snapshot.pages.length
+                                    ? Text("Add New Page")
+                                    : Text(
+                                        "${snapshot.pages[index].pageName}"))),
+                        onChanged: (int i) {
+                          i == snapshot.pages.length
+                              ? snapshot.addPage()
+                              : snapshot.changePage(i);
+                        })
+                    // DropdownButton(
+                    //   child: Text("${snapshot.pages[snapshot.activePage].pageName}"),
+                    //   onPressed: (){
+
+                    // }),
+                  ],
+                ),
+
+                // ListView.builder(
+                //     itemCount: snapshot.pages.length + 1,
+                //     scrollDirection: Axis.horizontal,
+                // itemBuilder: (context, i) => i == snapshot.pages.length
+                //     ? RaisedButton(
+                //       child: Text("Add"),
+                //       onPressed: () {
+                //         snapshot.addPage();
+                //       })
+                //         : RaisedButton(
+                //             onPressed: () {
+                //               snapshot.changePage(i);
+                //             },
+                //             child: Text("$i"))),
+                //Text("data"),
+              );
+            }),
           ],
         ),
       ),
