@@ -2,6 +2,7 @@ import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
+import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_elements/scaffold.dart';
 // import 'package:flutter_drag_and_drop/elements/widgets/scaffold.dart';
 import 'package:provider/provider.dart';
@@ -11,14 +12,15 @@ class MobileWidget extends StatelessWidget {
   const MobileWidget({
     Key key,
     @required this.size,
-    @required this.val,
+    // @required this.val,
   }) : super(key: key);
 
   final Size size;
-  final CustomScaffoldWithAppbar val;
+  // final CustomScaffoldWithAppbar val;
 
   @override
   Widget build(BuildContext context) {
+    
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: size.shortestSide * 0.01),
       child: ClayContainer(
@@ -40,6 +42,7 @@ class MobileWidget extends StatelessWidget {
             child: ResponsiveBuilder(builder: (context, sizeingInfo) {
               return Consumer<ControllerClass>(builder: (context, snapshot, _) {
                 snapshot.size =  Size(size.width * 0.25, size.height * 0.8);
+                 CustomWidget val =  snapshot.pages[snapshot.activePage].rootWidget;
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[

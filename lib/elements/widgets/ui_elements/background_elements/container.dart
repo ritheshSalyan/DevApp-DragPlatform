@@ -134,6 +134,7 @@ class CustomContainer with CustomWidget {
                 // children: <Widget>[
                 //     Text("Border radius"),
                 Column(
+                  mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
