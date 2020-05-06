@@ -3,39 +3,13 @@ import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:tree_view/tree_view.dart';
 
 class CustomRow with CustomWidget {
   List<CustomWidget> children = [];
-  // void addChild(BuildContext context, CustomWidget childWidget) {
-  //   children.add(childWidget);
-  //   super.addChild(context,childWidget;
-  // }
 
-  // @override
-  // Widget build(context) {
-  //   return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-  //     print("CustomRow");
-  //     addChild(
-  //       context,
-  //     data.copy(),
-  //     );
-  //   }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-  //     return Row(
-  //       children: children.isEmpty
-  //           ? <Widget>[Container(width: 150, height: 150,color: Colors.transparent),]
-  //           : List.generate(children.length + accept.length, (i) {
-  //               if (i < children.length) {
-  //                 return children[i].build(context);
-  //               } else {
-  //                 return Container(
-  //                     color: Colors.blueAccent, width: 150, height: 150);
-  //               }
-  //             }),
-  //     ); //currentWidget(type, child, context);
-  //   });
-  // }
   void addChild(BuildContext context, CustomWidget childWidget,
       {int position}) {
     print(position);
@@ -46,32 +20,6 @@ class CustomRow with CustomWidget {
 
   @override
   Widget build(context) {
-    // return Column(
-    //   children: List.generate(2 * children.length + 1, (int i) {
-    //     if (i.isEven) {
-    //       return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-    //         print("CustomColumn");
-    //         addChild(context,   data.copy(), position: (i/2).floor());
-    //       }, builder:
-    //           (context, List<CustomWidget> accept, List<dynamic> reject) {
-    //         // return Column(
-    //         //   children: children.isEmpty
-    //         //       ? <Widget>[Container(width: 150, height: 150,color: Colors.transparent),]
-    //         //       :List.generate(children.length + accept.length, (i) {
-    //         //     if (i < children.length) {
-    //         // return children[(i/2).round()].build(context);
-    //         // }
-    //         // else{
-    //         return accept.length>0? accept.first.build(context):Container(color: Colors.transparent,height: 10,);
-    //         // }
-    //       });
-    //       // ); //currentWidget(type, child, context);
-    //       // });
-    //     } else {
-    //       return children[(i / 2).floor()].build(context);
-    //     }
-    //   }),
-    // );
     return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
       print("CustomColumn");
       addChild(
@@ -114,7 +62,7 @@ class CustomRow with CustomWidget {
                 } else {
                   return Container(
                     key: ValueKey(i),
-                    child: accept[i-children.length ].build(context),
+                    child: accept[i - children.length].build(context),
                   );
                 }
               }),
@@ -167,7 +115,7 @@ class CustomRow with CustomWidget {
       },
       child: ExpansionTile(
         initiallyExpanded: true,
-        trailing: SizedBox(width: 1,height: 1),
+        trailing: SizedBox(width: 1, height: 1),
         title: TreeItemView(customWidget: this),
         onExpansionChanged: (value) {
           super.setActive(context, this);
@@ -219,5 +167,55 @@ class CustomRow with CustomWidget {
         ],
       ),
     );
+  }
+
+  @override
+  CustomWidget fromJson(Map<String, dynamic> json) {
+    if (json[CHILD] != null) {
+      children = List<CustomWidget>.from(
+          json[CHILD].map((x) => getWidgetByName(x[NAME])));
+      // child.fromJson(json[CHILD][0]);
+      if (children != null) {
+        // children.forEach((element) {
+        // });
+
+        for (var i = 0; i < children.length; i++) {
+          children[i].fromJson(json[CHILD][i]);
+        }
+      }
+    }
+    // color = json[PROPERTIES]["color"];
+    // height = json[PROPERTIES]["height"];
+    // width = json[PROPERTIES]["width"];
+    // tlRad = json[PROPERTIES]["tlRad"];
+    // blRad = json[PROPERTIES]["blRad"];
+    // trRad = json[PROPERTIES]["trRad"];
+    // brRad = json[PROPERTIES]["brRad"];
+    // alignment = json[PROPERTIES]["alignment"];
+    return this;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {};
+    if (children != null) {
+      map[CHILD] = List<dynamic>.from(
+          children.map((e) => e.toJson())); // [child.toJson()];
+    } else {
+      map[CHILD] = null;
+    }
+
+    map[NAME] = name;
+    // map[PROPERTIES] = {
+    //   "color": color,
+    //   "height": height,
+    //   "width": width,
+    //   "tlRad": tlRad,
+    //   "blRad": blRad,
+    //   "trRad": trRad,
+    //   "brRad": brRad,
+    //   "alignment": alignment
+    // };
+    return map;
   }
 }

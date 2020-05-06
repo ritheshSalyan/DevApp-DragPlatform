@@ -119,9 +119,9 @@ class CustomText with CustomWidget {
           ],
         ),
         DropdownButton<FontWeight>(
-          value: fontWeight,
-          isDense: true,
-          isExpanded: true,
+            value: fontWeight,
+            isDense: true,
+            isExpanded: true,
             items: List<DropdownMenuItem<FontWeight>>.generate(
                 fontWeightMap.length,
                 (index) => DropdownMenuItem(
@@ -166,7 +166,38 @@ class CustomText with CustomWidget {
     return Icon(Icons.text_fields);
   }
 
-  // @override
-  // // TODO: implement prevIcon
-  // Widget get prevIcon => Icon(Icons.text_fields);//throw UnimplementedError();
+  @override
+  CustomWidget fromJson(Map<String, dynamic> json) {
+    // if (json[CHILD] != null) {
+    //   child = getWidgetByName(json[CHILD][NAME]);
+    //   child.fromJson(json[CHILD]);
+    // }
+    fontWeight = fontWeightMap.keys.elementAt(
+        fontWeightMap.values.toList().indexOf(json[PROPERTIES]["font_weight"]));
+    fontSize = json[PROPERTIES]["font_size"]*1.0;
+    textAlign = json[PROPERTIES]["text_align"];
+    data = json[PROPERTIES]["text"];
+    return this;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {};
+    // if (child != null) {
+    //   map[CHILD] = child.toJson();
+    // } else {
+      map[CHILD] = null;
+    // }
+
+    // map[NAME] = pageName;
+    map[PROPERTIES] = {
+      "font_weight": fontWeightMap[fontWeight],
+      "font_size": fontSize,
+      "text_align": textAlign,
+      "text": data
+    };
+    map[NAME] = name;
+    
+    return map;
+  }
 }

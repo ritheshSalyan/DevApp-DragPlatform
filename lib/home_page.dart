@@ -85,13 +85,14 @@ class _DragDropState extends State<DragDrop> {
                               builder: (context, snapshot, _) {
                             CustomWidget val =
                                 snapshot.pages[snapshot.activePage].rootWidget;
+                                print(val.toJson().toString());
                             return Container(
                               //depth: 25,
                               height: size.height*0.75,
                               width: size.width * 0.25,
                               child: ListView(
                                 children: <Widget>[
-                                  Text(val.code),
+                                  Text(val.toJson().toString()),
                                 ],
                               ),
                             );
@@ -232,11 +233,12 @@ class _RightWindowState extends State<RightWindow> {
   Widget getWidgetTree() {
     return SingleChildScrollView(
       child: Container(
-        height: widget.size.height,
+        // height: widget.size.height,
+        // width: widget.size.height,
         child: Consumer<ControllerClass>(builder: (context, snapshot, _) {
-          CustomWidget val = snapshot.pages[snapshot.activePage].rootWidget;
-          return val.buildTree(context);
-        }),
+            CustomWidget val = snapshot.pages[snapshot.activePage].rootWidget;
+            return val.buildTree(context);
+          }),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
+import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:tree_view/tree_view.dart';
 // import 'package:flutter_drag_and_drop/elements/widgets/custom_fab.dart';
 
@@ -182,4 +183,31 @@ class CustomScaffoldWithAppbar with CustomWidget {
               )),
     );
   }
+  
+  @override
+  CustomWidget fromJson(Map<String, dynamic> json) {
+    if (json[CHILD] != null) {
+      child = getWidgetByName(json[CHILD][0][NAME]);
+       child.fromJson(json[CHILD][0]);
+    }
+    backgroundColor = json[PROPERTIES]["bg_color"];
+    return this;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {};
+    if (child != null) {
+      map[CHILD] = [child.toJson()];
+    } else {
+      map[CHILD] = null;
+    }
+
+    map[NAME] = name;
+    map[PROPERTIES] = {
+      "bg_color":backgroundColor,
+    };
+    return map;
+  }
+
 }

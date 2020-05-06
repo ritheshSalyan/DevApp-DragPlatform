@@ -23,3 +23,7 @@ Map<FontWeight,String> fontWeightMap = {
   FontWeight.w800: 'ExtraBold',
   FontWeight.w900: 'Black',
 };
+
+const String CHILD = "child";
+const String NAME = "name";
+const String PROPERTIES = "properties";

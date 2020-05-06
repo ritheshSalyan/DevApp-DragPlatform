@@ -10,6 +10,7 @@ import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/alignment_selector.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/width_height_selector.dart';
+import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class CustomContainer with CustomWidget {
   Color color = Colors.transparent;
   bool isSameRadius = true;
   AlignmentGeometry alignment = Alignment.topLeft;
-  int elevation;
+  // int elevation;
   int wrand, hrand;
   double tlRad = 0.0;
   double blRad = 0.0;
@@ -175,7 +176,7 @@ class CustomContainer with CustomWidget {
                     ),
                   ],
                 ),
-                // AnimatedSwitcher(duration: Duration(milliseconds: 250),child: 
+                // AnimatedSwitcher(duration: Duration(milliseconds: 250),child:
                 isSameRadius
                     ? Flexible(
                         child: NeuTextField(
@@ -260,7 +261,7 @@ class CustomContainer with CustomWidget {
                             )
                           ],
                         ),
-                      ),//)
+                      ), //)
               ],
             )
 
@@ -348,6 +349,46 @@ class CustomContainer with CustomWidget {
       width: constraints.width * 0.9,
       height: constraints.height * 0.9,
     );
+  }
+
+  @override
+  CustomWidget fromJson(Map<String, dynamic> json) {
+    if (json[CHILD] != null) {
+      child = getWidgetByName(json[CHILD][0][NAME]);
+  child.fromJson(json[CHILD][0]);
+    }
+    color = json[PROPERTIES]["color"];
+    height = json[PROPERTIES]["height"]*1.0;
+    width = json[PROPERTIES]["width"]*1.0;
+    tlRad = json[PROPERTIES]["tlRad"]*1.0;
+    blRad = json[PROPERTIES]["blRad"]*1.0;
+    trRad = json[PROPERTIES]["trRad"]*1.0;
+    brRad = json[PROPERTIES]["brRad"]*1.0;
+    // alignment = json[PROPERTIES]["alignment"];
+    return this;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {};
+    if (child != null) {
+      map[CHILD] = [child.toJson()];
+    } else {
+      map[CHILD] = null;
+    }
+
+    map[NAME] = name;
+    map[PROPERTIES] = {
+      "color": color,
+      "height": height,
+      "width": width,
+      "tlRad": tlRad,
+      "blRad": blRad,
+      "trRad": trRad,
+      "brRad": brRad,
+      "alignment": alignment
+    };
+    return map;
   }
 }
 

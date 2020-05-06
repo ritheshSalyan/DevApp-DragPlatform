@@ -9,7 +9,7 @@ class CustomColorPicker extends StatelessWidget {
   Function(Color) onSelected;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[

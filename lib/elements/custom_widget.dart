@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:provider/provider.dart';
-import 'package:responsive_builder/responsive_builder.dart';
+// import 'package:responsive_builder/responsive_builder.dart';
 
 mixin CustomWidget {
   Widget build(BuildContext context,);
@@ -25,6 +25,8 @@ mixin CustomWidget {
     Provider.of<ControllerClass>(context, listen: false).latestWidget = customWidget;
     Provider.of<ControllerClass>(context, listen: false).notify();
   }
+  CustomWidget fromJson(Map<String,dynamic> json);
+  Map<String,dynamic> toJson();
 }
 
 mixin CustomAppBarWidget on CustomWidget {

@@ -6,6 +6,7 @@ import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/multi_choice_selector.dart';
+import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
@@ -218,5 +219,54 @@ class CustomListView with CustomWidget {
         ],
       ),
     );
+  }
+    @override
+  CustomWidget fromJson(Map<String, dynamic> json) {
+    if (json[CHILD] != null) {
+      children = List<CustomWidget>.from(
+          json[CHILD].map((x) => getWidgetByName(x[NAME])));
+      // child.fromJson(json[CHILD][0]);
+      if (children != null) {
+        // children.forEach((element) {
+        // });
+
+        for (var i = 0; i < children.length; i++) {
+          children[i].fromJson(json[CHILD][i]);
+        }
+      }
+    }
+    // color = json[PROPERTIES]["color"];
+    // height = json[PROPERTIES]["height"];
+    // width = json[PROPERTIES]["width"];
+    // tlRad = json[PROPERTIES]["tlRad"];
+    // blRad = json[PROPERTIES]["blRad"];
+    // trRad = json[PROPERTIES]["trRad"];
+    // brRad = json[PROPERTIES]["brRad"];
+    // alignment = json[PROPERTIES]["alignment"];
+    return this;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {};
+    if (children != null) {
+      map[CHILD] = List<dynamic>.from(
+          children.map((e) => e.toJson())); // [child.toJson()];
+    } else {
+      map[CHILD] = null;
+    }
+
+    map[NAME] = name;
+    // map[PROPERTIES] = {
+    //   "color": color,
+    //   "height": height,
+    //   "width": width,
+    //   "tlRad": tlRad,
+    //   "blRad": blRad,
+    //   "trRad": trRad,
+    //   "brRad": brRad,
+    //   "alignment": alignment
+    // };
+    return map;
   }
 }

@@ -84,20 +84,20 @@ class _WidgetWindowState extends State<WidgetWindow> {
 
   List<Widget> getAppbarWidgets() {
     return [
-      Draggable<CustomAppBarWidget>(
-        data: CustomAppbar(),
-        child: DragWidgetPrview(
-          customWidget: CustomAppbar(),
-        ),
-        feedback: Material(
-          child: Container(
-            width: widget.size.width * 0.1,
-            height: widget.size.width * 0.1,
-            color: Colors.orange,
-            child: Text("CustomAppbar"),
-          ),
-        ),
-      )
+      // Draggable<CustomAppBarWidget>(
+      //   data: CustomAppbar(),
+      //   child: DragWidgetPrview(
+      //     customWidget: CustomAppbar(),
+      //   ),
+      //   feedback: Material(
+      //     child: Container(
+      //       width: widget.size.width * 0.1,
+      //       height: widget.size.width * 0.1,
+      //       color: Colors.orange,
+      //       child: Text("CustomAppbar"),
+      //     ),
+      //   ),
+      // )
     ];
   }
 

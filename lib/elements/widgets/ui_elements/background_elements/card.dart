@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:tree_view/tree_view.dart';
 
 class CustomCard with CustomWidget {
@@ -107,6 +108,32 @@ class CustomCard with CustomWidget {
       // height: constraints.height*0.9,
   ),
    );
+  }
+
+  @override
+  CustomWidget fromJson(Map<String, dynamic> json) {
+    if (json[CHILD] != null) {
+      child = getWidgetByName(json[CHILD][0][NAME]);
+  child.fromJson(json[CHILD][0]);
+    }
+    // backgroundColor = json[PROPERTIES]["bg_color"];
+    return this;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {};
+    if (child != null) {
+      map[CHILD] = [child.toJson()];
+    } else {
+      map[CHILD] = null;
+    }
+
+    map[NAME] = name;
+    map[PROPERTIES] = {
+      // "bg_color":backgroundColor,
+    };
+    return map;
   }
 
 }

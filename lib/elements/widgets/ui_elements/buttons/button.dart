@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:provider/provider.dart';
 
@@ -57,11 +59,11 @@ class CustomButton with CustomWidget {
   Widget properties(BuildContext context) {
     return ListView(
       children: <Widget>[
-        TextField(
-          onChanged: (string) {
-            elevation = int.parse(string);
-          },
-        ),
+        // TextField(
+        //   onChanged: (string) {
+        //     elevation = int.parse(string);
+        //   },
+        // ),
         NavigationModule(
           selected: navigateTo,
           onSelected: (int index) {
@@ -94,13 +96,33 @@ class CustomButton with CustomWidget {
 
   @override
   Widget buildTree(BuildContext context) {
-    return ListTile(
+       return InkWell(
       onTap: () {
         super.setActive(context, this);
       },
-      title: Text("Button"),
-      leading: Icon(Icons.text_fields),
+      child: ExpansionTile(
+        initiallyExpanded: true,
+        trailing: SizedBox(width: 0, height: 0),
+        title: TreeItemView(customWidget: this), // Text("Container"),
+        onExpansionChanged: (value) {
+          super.setActive(context, this);
+        },
+        children:
+
+        
+            child != null
+                ? <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.02),
+                      child: child?.buildTree(context),
+                    ),
+                  ]
+                : [],
+        // ),
+      ),
     );
+ 
   }
 
   @override
@@ -118,6 +140,34 @@ class CustomButton with CustomWidget {
       ],
     );
   }
+
+  @override
+  CustomWidget fromJson(Map<String, dynamic> json) {
+    if (json[CHILD] != null) {
+      child = getWidgetByName(json[CHILD][0][NAME]);
+      child.fromJson(json[CHILD][0]);
+    }
+    navigateTo = json[PROPERTIES]["navigate_to"];
+    return this;
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {};
+    if (child != null) {
+      map[CHILD] = [child.toJson()];
+    } else {
+      map[CHILD] = null;
+    }
+
+    map[NAME] = name;
+    map[PROPERTIES] = {
+      "navigate_to":navigateTo,
+    };
+    return map;
+  }
+
+
 }
 
 class NavigationModule extends StatelessWidget {
@@ -143,4 +193,6 @@ final int selected;
         
         );
   }
+
+  
 }
