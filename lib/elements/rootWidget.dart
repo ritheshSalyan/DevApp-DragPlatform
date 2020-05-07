@@ -84,10 +84,22 @@ class CustomRootWidget with CustomWidget {
     );
   }
 
+  String getClassName() {
+    String classname =
+        name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+    return classname;
+  }
+
   @override
   String get code => '''
-     ${child != null ? child.code : ""}
-     '''; //throw UnimplementedError();
+import 'package:flutter/material.dart';
+  
+class ${getClassName()} extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+      return ${child != null ? child.code : "Container()"}
+  }
+}  '''; //throw UnimplementedError();
 
   @override
   Widget buildTree(BuildContext context) {
@@ -127,7 +139,7 @@ class CustomRootWidget with CustomWidget {
   CustomWidget fromJson(Map<String, dynamic> json) {
     if (json[CHILD] != null) {
       child = getWidgetByName(json[CHILD][0][NAME]);
-     child.fromJson(json[CHILD][0]);
+      child.fromJson(json[CHILD][0]);
     }
     return this;
   }

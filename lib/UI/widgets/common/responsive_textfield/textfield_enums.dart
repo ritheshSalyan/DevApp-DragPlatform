@@ -1,0 +1,1 @@
+enum TextFieldState { ERROR, WARNING, VALID }

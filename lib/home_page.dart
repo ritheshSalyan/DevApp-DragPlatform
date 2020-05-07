@@ -85,14 +85,14 @@ class _DragDropState extends State<DragDrop> {
                               builder: (context, snapshot, _) {
                             CustomWidget val =
                                 snapshot.pages[snapshot.activePage].rootWidget;
-                                print(val.toJson().toString());
+                                // print(val.toJson().toString());
                             return Container(
                               //depth: 25,
                               height: size.height*0.75,
                               width: size.width * 0.25,
                               child: ListView(
                                 children: <Widget>[
-                                  Text(val.toJson().toString()),
+                                  Text(val.code),
                                 ],
                               ),
                             );
