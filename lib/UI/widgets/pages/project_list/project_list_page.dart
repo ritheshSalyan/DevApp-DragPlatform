@@ -39,7 +39,7 @@ class ProjectListPage extends StatelessWidget {
                     alignment: WrapAlignment.spaceAround,
                     runAlignment: WrapAlignment.spaceEvenly,
                     children: List<Widget>.generate(
-                        20,
+                        10,
                         (index) => InkWell(
                               onTap: () {
                                 viewModel.projectPressed(context, index);
@@ -79,7 +79,7 @@ class ProjectListPage extends StatelessWidget {
                                                     size: size.longestSide * 0.05,
                                                   )
                                                 : Text(
-                                                    "Project Name ${(index - 1) % 2 == 0 ? "" : "with Long Text Name and Veery LLOONNGG  Long Text Name and Veery LLOONNGG  Long Text Name and Veery LLOONNGG"}",
+                                                    "Project Name $index",
                                                     textAlign: TextAlign.center,
                                                     maxLines: 4,
                                                     style: Theme.of(context)
@@ -91,7 +91,7 @@ class ProjectListPage extends StatelessWidget {
                                         Padding(
                                           padding: EdgeInsets.only(bottom: 10.0),
                                           child: Text(
-                                            index == 0 ? "Add New" : "12-02-2020",
+                                            index == 0 ? "Add New" : "$index-02-2020",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyText1,

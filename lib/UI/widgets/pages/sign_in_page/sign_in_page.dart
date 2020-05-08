@@ -34,12 +34,9 @@ class _SignInPageState extends State<SignInPage> {
           body: AnimatedSwitcher(
             switchInCurve: Curves.easeInExpo,
             switchOutCurve: Curves.easeInExpo,
-            transitionBuilder: (child, animation) => ScaleTransition(
-              scale: animation,
-              child: FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
+            transitionBuilder: (child, animation) => FadeTransition(
+              opacity: animation,
+              child: child,
             ),
             duration: Duration(milliseconds: 350),
             child: viewModel.pageViewStates == PageViewStates.SIGN_IN
