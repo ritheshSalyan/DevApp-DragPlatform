@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/responsive_textfield/responsive_textfield.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/responsive_textfield/textfield_enums.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
@@ -11,11 +15,16 @@ import 'package:tree_view/tree_view.dart';
 class CustomRootWidget with CustomWidget {
   CustomWidget child;
   // CustomAppBarWidget appbar;
-  final String pageName;
-
+  String pageName;
+  TextEditingController nameController ;
+  int nameKey;
   Color backgroundColor = Colors.white;
 
-  CustomRootWidget(this.pageName);
+  CustomRootWidget(this.pageName) {
+    nameKey = Random().nextInt(100);
+    nameController  = TextEditingController(text: pageName);
+    // hrand = Random().nextInt(100);
+  }
   void addChild(
     BuildContext context,
     CustomWidget childWidget,
@@ -72,14 +81,41 @@ class CustomRootWidget with CustomWidget {
   Widget properties(BuildContext context) {
     return ListView(
       children: <Widget>[
-        // CustomColorPicker(
-        //   color: backgroundColor,
-        //   lable: "Background Color",
-        //   onSelected: (Color colorSelected) {
-        //     this.backgroundColor = colorSelected;
-        //     super.properties(context);
-        //   },
-        // ),
+        ResponsiveTextField(
+          controller: nameController,
+          lableText: "Page Name",
+            key: ValueKey(nameKey),
+            validate: (text) {
+              if (!alphaNumericCharacters.hasMatch(text) ||
+                  text == null ||
+                  text.isEmpty) {
+                return TextFieldState.ERROR;
+              }
+              if (text.length <= 4 || text.length >= 15) {
+                pageName = text;
+                super.properties(context);
+
+                return TextFieldState.WARNING;
+              }
+              pageName = text;
+              super.properties(context);
+              return TextFieldState.VALID;
+            },
+            setMessage: (textState, text) {
+              if (textState == TextFieldState.ERROR) {
+                if (text == null || text.isEmpty) {
+                  return "Page Name cannot be Empty.";
+                }
+                return "Page Name Cannot Contain special Charecters.";
+              }
+              if (text.length <= 4) {
+                return "Page name is short";
+              }
+              if (text.length >= 15) {
+                return "Page name is Lengthy";
+              }
+              return null;
+            })
       ],
     );
   }
@@ -97,7 +133,7 @@ import 'package:flutter/material.dart';
 class ${getClassName()} extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-      return ${child != null ? child.code : "Container()"}
+      return ${child != null ? child.code : "Scaffold()"}
   }
 }  '''; //throw UnimplementedError();
 

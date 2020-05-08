@@ -5,6 +5,32 @@
   <title>flutter_drag_and_drop</title>
 </head>
 <body>
+  
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+  
+  <script>
+    // TODO: Replace the following with your app's Firebase project configuration.
+    // See: https://support.google.com/firebase/answer/7015592
+    const firebaseConfig = {
+                              apiKey: "AIzaSyBISO065tFi0hnBY8s4JwqdTJgulnF6wts",
+                              authDomain: "build-it-2e578.firebaseapp.com",
+                              databaseURL: "https://build-it-2e578.firebaseio.com",
+                              projectId: "build-it-2e578",
+                              storageBucket: "build-it-2e578.appspot.com",
+                              messagingSenderId: "267719822504",
+                              appId: "1:267719822504:web:e27cdf21d984786f55069d",
+                              measurementId: "G-YFDCKERYHK"
+                            };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+
   <script src="main.dart.js" type="application/javascript"></script>
+
+
+  
 </body>
 </html>

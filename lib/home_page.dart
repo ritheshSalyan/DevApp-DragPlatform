@@ -211,9 +211,12 @@ class _RightWindowState extends State<RightWindow> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Container(
-            width: MediaQuery.of(context).size.width * 0.2,
-            child: getSelectedPage()),
+        Padding(
+          padding: EdgeInsets.only(top:15.0),
+          child: Container(
+              width: MediaQuery.of(context).size.width * 0.2,
+              child: getSelectedPage()),
+        ),
         CustomTabbar(
           titles: [
             "Properties",
@@ -245,6 +248,7 @@ class _RightWindowState extends State<RightWindow> {
 
   Container getPropertiesWidget() {
     return Container(
+      padding: EdgeInsets.only(top:15),
       height: widget.size.height,
       alignment: Alignment.center,
       child: Consumer<ControllerClass>(builder: (context, snapshot, _) {

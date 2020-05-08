@@ -12,6 +12,13 @@ bool isNumeric(String s) {
   return double.tryParse(s,) != null;
 }
 
+//validators
+final  alphaNumericCharacters = RegExp(r'^[a-zA-Z0-9]+$');
+final  nameCharacters = RegExp(r'^[a-zA-Z ]+$');
+final emailRegex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+
+
+//
 Map<FontWeight,String> fontWeightMap = {
   FontWeight.w100: 'Thin',
   FontWeight.w200: 'ExtraLight',
@@ -27,3 +34,13 @@ Map<FontWeight,String> fontWeightMap = {
 const String CHILD = "child";
 const String NAME = "name";
 const String PROPERTIES = "properties";
+
+//Common Fields
+const CREATED_AT = "created_at";
+const UPDATED_AT = "updated_at";
+const IS_ACTIVE = "is_active";
+
+//User Model
+const USER_NAME = "name";
+const USER_ID = "uid";
+const USER_EMAIL = "email";

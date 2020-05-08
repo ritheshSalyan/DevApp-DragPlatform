@@ -92,7 +92,7 @@ class CreateProjectPage extends StatelessWidget {
                       ),
                       onPressed: () {
                         if (formKey.currentState.validate()) {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(textEditingController.text);
                           createProject(textEditingController.text);
                         }
                       }),

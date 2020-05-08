@@ -124,6 +124,17 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 SizedBox(height: 40),
 
+                Container(
+                  width: size.width * 0.35,
+                  child: ResponsiveTextField(
+                    controller: viewModel.nameController,
+                    lableText: "Name",
+                    validate: viewModel.nameValidator,
+                    setMessage: viewModel.nameSetMessage,
+                  ),
+                ),
+
+                SizedBox(height: 30),
                 // NeuCard(
                 //   curveType: CurveType.flat,
                 //   decoration: NeumorphicDecoration(
@@ -136,12 +147,8 @@ class _SignInPageState extends State<SignInPage> {
                   child: ResponsiveTextField(
                     controller: viewModel.emailController,
                     lableText: "Email Addrress",
-                    validate: (String data) {
-                      return TextFieldState.VALID;
-                    },
-                    setMessage: (textFieldState, data) {
-                      return null;
-                    },
+                    validate: viewModel.emailValidator,
+                    setMessage: viewModel.emailSetMessage,
                   ),
                 ),
 
@@ -159,12 +166,8 @@ class _SignInPageState extends State<SignInPage> {
                   child: ResponsiveTextField(
                     controller: viewModel.passwordController,
                     lableText: "Password",
-                    validate: (String data) {
-                      return TextFieldState.VALID;
-                    },
-                    setMessage: (textFieldState, data) {
-                      return null;
-                    },
+                    validate: viewModel.passwordValidator,
+                    setMessage: viewModel.passwordSetMessage,
                   ),
                 ),
                 // ),
@@ -180,7 +183,6 @@ class _SignInPageState extends State<SignInPage> {
                         child: Text("SIGN UP"),
                         onPressed: () {
                           viewModel.signUp(context);
-
                         }),
                   ],
                 )
@@ -224,14 +226,9 @@ class _SignInPageState extends State<SignInPage> {
                   width: size.width * 0.35,
                   child: ResponsiveTextField(
                     controller: viewModel.emailController,
-
                     lableText: "Email Addrress",
-                    validate: (String data) {
-                      return TextFieldState.VALID;
-                    },
-                    setMessage: (textFieldState, data) {
-                      return null;
-                    },
+                    validate: viewModel.emailValidator,
+                    setMessage: viewModel.emailSetMessage,
                   ),
                 ),
 
@@ -249,12 +246,8 @@ class _SignInPageState extends State<SignInPage> {
                   child: ResponsiveTextField(
                     controller: viewModel.passwordController,
                     lableText: "Password",
-                    validate: (String data) {
-                      return TextFieldState.VALID;
-                    },
-                    setMessage: (textFieldState, data) {
-                      return null;
-                    },
+                    validate: viewModel.passwordValidator,
+                    setMessage: viewModel.passwordSetMessage,
                   ),
                 ),
                 // ),

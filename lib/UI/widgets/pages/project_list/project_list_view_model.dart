@@ -7,17 +7,23 @@ import 'package:flutter_drag_and_drop/home_page.dart';
 class ProjectListViewModel with ChangeNotifier {
   Future<void> projectPressed(BuildContext context, int i) async {
     if (i == 0) {
-     await showDialog(
+    String projectName =  await showDialog(
         context: context,
         builder: (context) {
           return CreateProjectPage(createProject: createProject);
         },
       );
+
+      if(projectName==null || projectName.isEmpty){
+        return;
+      }
     }
     else{
+    moveToBuilding(context);
 
     }
     moveToBuilding(context);
+
   }
   void projectSelect(){
     

@@ -11,7 +11,7 @@ class ControllerClass with ChangeNotifier {
 
   Size size;
   ControllerClass() {
-    pages.add(CustomPage("Page ${pages.length + 1} "));
+    pages.add(CustomPage("Page${pages.length + 1}"));
     // pages.first.rootWidget.fromJson({
     //   "child": [
     //     {
