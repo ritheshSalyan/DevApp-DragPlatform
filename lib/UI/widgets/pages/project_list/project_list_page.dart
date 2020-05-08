@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/loading.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/pages/project_list/project_list_view_model.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:neumorphic/neumorphic.dart';
@@ -59,7 +60,7 @@ class ProjectListPage extends StatelessWidget {
                       if(snapshot.hasError){
                         return Text("Error Occured");
                       }
-                      return CircularProgressIndicator();
+                      return Loader.loading(context);//CircularProgressIndicator();
                     }),
               ),
             ],

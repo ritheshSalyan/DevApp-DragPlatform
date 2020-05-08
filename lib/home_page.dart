@@ -8,6 +8,7 @@ import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/models/project.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
@@ -33,15 +34,21 @@ class _DragDropState extends State<DragDrop> {
       create: (_) => ControllerClass(widget.project.id),
       child: Scaffold(
         backgroundColor: neuBackground,
-        appBar: AppBar(
+        // appBar:
+        body: ListView(
+          children: <Widget>[
+             AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          iconTheme: IconThemeData(color:Colors.black),
-          title: Text(widget.project.projectName??""),
+          iconTheme: IconThemeData(color: Colors.black),
+          title: Text(
+            widget.project.projectName ?? "",
+            style:Theme.of(context).textTheme.headline6.copyWith(color:Colors.black) //TextStyle(color: Colors.black),
+          ),
           actions: <Widget>[
             Consumer<ControllerClass>(builder: (context, snapshot, _) {
               return IconButton(
-                  icon: Icon(Icons.save),
+                  icon: Icon(AntDesign.save),
                   onPressed: () {
                     print("Called Save Icon Press");
                     // Provider.of<ControllerClass>(context, listen: false)
@@ -50,8 +57,6 @@ class _DragDropState extends State<DragDrop> {
             })
           ],
         ),
-        body: ListView(
-          children: <Widget>[
             NeuCard(
               color: neuBackground,
               height: size.height,

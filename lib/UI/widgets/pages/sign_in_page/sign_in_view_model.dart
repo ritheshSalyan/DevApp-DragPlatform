@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/loading.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/responsive_textfield/textfield_enums.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/pages/project_list/project_list_page.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/pages/sign_in_page/sign_in_page.dart';
@@ -28,12 +29,16 @@ class SignInViewModel with ChangeNotifier {
   Future<void> signIn(BuildContext context) async {
     //Perform Signin Logic
     try {
+      Loader.showOverlayLoading(context);
       await Provider.of<UserService>(context, listen: false).signIn(
           email: emailController.text, password: passwordController.text);
       // Navigator.of(context).push("route")
+      Loader.hideOverlayLoading(context);
+
       moveToProjectList(context);
     } catch (e) {
       print("e $e");
+      Loader.hideOverlayLoading(context);
       // showToast("$e",context: context);
       showToast(
         // Container(
@@ -70,15 +75,18 @@ class SignInViewModel with ChangeNotifier {
 
   Future<void> signUp(BuildContext context) async {
     try {
+      Loader.showOverlayLoading(context);
+
       await Provider.of<UserService>(context, listen: false).signUp(
           email: emailController.text,
           password: passwordController.text,
           name: nameController.text);
+      Loader.hideOverlayLoading(context);
       // Navigator.of(context).push("route")
       moveToProjectList(context);
     } catch (e) {
       print("e $e");
-       print("e $e");
+      Loader.hideOverlayLoading(context);
       // showToast("$e",context: context);
       showToast(
         // Container(
@@ -115,7 +123,7 @@ class SignInViewModel with ChangeNotifier {
   }
 
   void moveToProjectList(BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) => ProjectListPage(),
       ),
