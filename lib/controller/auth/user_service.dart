@@ -7,22 +7,31 @@ class UserService {
   User user;
 
   Future<void> signIn({String email, String password}) async {
-    await AuthService.signIn(email, password);
-    DocumentSnapshot documentSnapshot =
-        await AppDatabase.getUserDocumentReference(AuthService.firebaseUser.uid)
-            .get();
-    user = User.fromJson(documentSnapshot.data, documentSnapshot.documentID);
+    try {
+      await AuthService.signIn(email, password);
+      DocumentSnapshot documentSnapshot =
+          await AppDatabase.getUserDocumentReference(
+                  AuthService.firebaseUser.uid)
+              .get();
+      user = User.fromJson(documentSnapshot.data, documentSnapshot.documentID);
+    } catch (e) {
+      throw e.message;
+    }
   }
 
   Future<void> signUp({String email, String password, String name}) async {
-    await AuthService.signUp(email, password);
-    user = User(
-      name: name,
-      uid: AuthService.firebaseUser.uid,
-      email: AuthService.firebaseUser.email,
-    );
-    await AppDatabase.getUserDocumentReference(AuthService.firebaseUser.uid)
-        .setData(user.toJson());
+    try {
+      await AuthService.signUp(email, password);
+      user = User(
+        name: name,
+        uid: AuthService.firebaseUser.uid,
+        email: AuthService.firebaseUser.email,
+      );
+      await AppDatabase.getUserDocumentReference(AuthService.firebaseUser.uid)
+          .setData(user.toJson());
+    } catch (e) {
+      throw e.message;
+    }
   }
 
   Future<void> signOut() async {

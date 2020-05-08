@@ -16,6 +16,8 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   PageViewStates pageViewStates; // = PageViewStates.SIGN_IN;
+  final signInKey = GlobalKey<FormState>();
+  final signUpKey = GlobalKey<FormState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -112,6 +114,7 @@ class _SignInPageState extends State<SignInPage> {
           height: size.height,
           color: neuBackground, //Colors.white, //
           child: Form(
+            key: signUpKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,7 +185,9 @@ class _SignInPageState extends State<SignInPage> {
                             borderRadius: BorderRadius.circular(5)),
                         child: Text("SIGN UP"),
                         onPressed: () {
-                          viewModel.signUp(context);
+                          if (signUpKey.currentState.validate()) {
+                            viewModel.signUp(context);
+                          }
                         }),
                   ],
                 )
@@ -203,6 +208,7 @@ class _SignInPageState extends State<SignInPage> {
           height: size.height,
           color: neuBackground, //Colors.white, //
           child: Form(
+            key: signInKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -262,7 +268,9 @@ class _SignInPageState extends State<SignInPage> {
                             borderRadius: BorderRadius.circular(5)),
                         child: Text("SIGN IN"),
                         onPressed: () {
-                          viewModel.signIn(context);
+                          if (signInKey.currentState.validate()) {
+                            viewModel.signIn(context);
+                          }
                         }),
                   ],
                 )

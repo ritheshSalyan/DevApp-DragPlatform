@@ -7,6 +7,7 @@ import 'package:flutter_drag_and_drop/UI/widgets/pages/sign_in_page/sign_in_page
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/auth/auth_service.dart';
 import 'package:flutter_drag_and_drop/controller/auth/user_service.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:provider/provider.dart';
 
 class SignInViewModel with ChangeNotifier {
@@ -33,6 +34,37 @@ class SignInViewModel with ChangeNotifier {
       moveToProjectList(context);
     } catch (e) {
       print("e $e");
+      // showToast("$e",context: context);
+      showToast(
+        // Container(
+        //   width: MediaQuery.of(context).size.width*0.5,
+        //           child: Row(
+        //     children: <Widget>[
+        //       Icon(
+        //         Icons.error,
+        //         color: Colors.white,
+        //       ),
+        //       Flexible(
+                            // child: Text(
+                  "$e",
+        //           style: TextStyle(color: Colors.white),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        context: context,
+
+        // position: StyledToastPosition.bottom,
+        backgroundColor: Colors.red,
+        textStyle: TextStyle(color:Colors.white),
+      animation: StyledToastAnimation.slideFromBottom,
+      curve: Curves.elasticOut,
+      reverseCurve: Curves.elasticIn,
+      duration: Duration(seconds:3)
+      // reverseAnimation: StyledToastAnimation.slideToBottom,
+      
+      );
     }
   }
 
@@ -41,12 +73,43 @@ class SignInViewModel with ChangeNotifier {
       await Provider.of<UserService>(context, listen: false).signUp(
           email: emailController.text,
           password: passwordController.text,
-          name: nameController.text
-          );
+          name: nameController.text);
       // Navigator.of(context).push("route")
       moveToProjectList(context);
     } catch (e) {
       print("e $e");
+       print("e $e");
+      // showToast("$e",context: context);
+      showToast(
+        // Container(
+        //   width: MediaQuery.of(context).size.width*0.5,
+        //           child: Row(
+        //     children: <Widget>[
+        //       Icon(
+        //         Icons.error,
+        //         color: Colors.white,
+        //       ),
+        //       Flexible(
+                            // child: Text(
+                  "$e",
+        //           style: TextStyle(color: Colors.white),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        context: context,
+
+        // position: StyledToastPosition.bottom,
+        backgroundColor: Colors.red,
+        textStyle: TextStyle(color:Colors.white),
+      animation: StyledToastAnimation.slideFromBottom,
+      curve: Curves.elasticOut,
+      reverseCurve: Curves.elasticIn,
+      duration: Duration(seconds:3)
+      // reverseAnimation: StyledToastAnimation.slideToBottom,
+      
+      );
     }
     moveToProjectList(context);
   }

@@ -417,7 +417,7 @@ class CustomBoxShadow {
     };
   }
 
-  CustomBoxShadow({this.color, this.blurRadius, this.x, this.y});
+  CustomBoxShadow({this.color = Colors.black12, this.blurRadius = 1, this.x = 0, this.y = 0});
   static CustomBoxShadow fromJson(Map<String, dynamic> json) => CustomBoxShadow(
         color: Color(json["shadow_color"]),
         x: json["x"],
