@@ -4,6 +4,7 @@ import 'package:flutter_drag_and_drop/UI/landing_page.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/pages/project_list/project_list_page.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/auth/user_service.dart';
+import 'package:flutter_drag_and_drop/controller/project/project_service.dart';
 import 'package:flutter_drag_and_drop/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neumorphic/neumorphic.dart';
@@ -18,7 +19,10 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<UserService>(
           create: (context) => UserService(),
-        )
+        ),
+        Provider<ProjectService>(
+          create: (context) => ProjectService(),
+        ),
       ],
       child: MaterialApp(
         title: 'Build It',

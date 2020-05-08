@@ -42,7 +42,7 @@ class MobileWidget extends StatelessWidget {
             child: ResponsiveBuilder(builder: (context, sizeingInfo) {
               return Consumer<ControllerClass>(builder: (context, snapshot, _) {
                 snapshot.size =  Size(size.width * 0.25, size.height * 0.8);
-                 CustomWidget val =  snapshot.pages[snapshot.activePage].rootWidget;
+                 CustomWidget val =  snapshot.pages[snapshot.activePage].widgetTree;
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[

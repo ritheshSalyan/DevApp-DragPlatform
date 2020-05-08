@@ -8,11 +8,11 @@ import 'package:neumorphic/neumorphic.dart';
 class CreateProjectPage extends StatelessWidget {
   CreateProjectPage({
     Key key,
-    this.createProject,
+    // this.createProject,
   }) : super(key: key);
   final formKey = GlobalKey<FormState>();
   TextEditingController textEditingController = TextEditingController();
-  void Function(String name) createProject;
+  // void Function(String name,) createProject;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +93,7 @@ class CreateProjectPage extends StatelessWidget {
                       onPressed: () {
                         if (formKey.currentState.validate()) {
                           Navigator.of(context).pop(textEditingController.text);
-                          createProject(textEditingController.text);
+                          // createProject(textEditingController.text,);
                         }
                       }),
                 ],

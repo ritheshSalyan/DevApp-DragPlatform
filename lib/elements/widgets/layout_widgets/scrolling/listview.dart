@@ -15,7 +15,6 @@ import 'package:tree_view/tree_view.dart';
 class CustomListView with CustomWidget {
   List<CustomWidget> children = [];
   Axis scrollDirection = Axis.vertical;
-  int elevation;
   void addChild(BuildContext context, CustomWidget childWidget,
       {int position}) {
     print(position);
@@ -72,15 +71,12 @@ class CustomListView with CustomWidget {
                 if (i < children.length) {
                   return SizedBox(
                       key: ValueKey(i), child: children[i].build(context));
-                } else
-                if(children.length == i){
-                  return  Container(width:30,height:30
-                    );
-                }else
-                 {
+                } else if (children.length == i) {
+                  return Container(width: 30, height: 30);
+                } else {
                   return Container(
                     key: ValueKey(i),
-                    child: accept[i-1 - children.length].build(context),
+                    child: accept[i - 1 - children.length].build(context),
                   );
                 }
               }, growable: true),
@@ -220,7 +216,8 @@ class CustomListView with CustomWidget {
       ),
     );
   }
-    @override
+
+  @override
   CustomWidget fromJson(Map<String, dynamic> json) {
     if (json[CHILD] != null) {
       children = List<CustomWidget>.from(
@@ -235,6 +232,7 @@ class CustomListView with CustomWidget {
         }
       }
     }
+    scrollDirection = Axis.values[json[PROPERTIES]["direction"]];
     // color = json[PROPERTIES]["color"];
     // height = json[PROPERTIES]["height"];
     // width = json[PROPERTIES]["width"];
@@ -257,16 +255,9 @@ class CustomListView with CustomWidget {
     }
 
     map[NAME] = name;
-    // map[PROPERTIES] = {
-    //   "color": color,
-    //   "height": height,
-    //   "width": width,
-    //   "tlRad": tlRad,
-    //   "blRad": blRad,
-    //   "trRad": trRad,
-    //   "brRad": brRad,
-    //   "alignment": alignment
-    // };
+    map[PROPERTIES] = {
+      "direction": scrollDirection.index,
+    };
     return map;
   }
 }

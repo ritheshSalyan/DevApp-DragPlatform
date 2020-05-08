@@ -32,6 +32,7 @@ dependencies:
   clay_containers: ^0.2.2
   animated_neumorphic: ^0.1.1
   flip_card: ^0.4.4
+  date_format: ^1.0.8
 
   #Fonts
   google_fonts: ^1.0.0

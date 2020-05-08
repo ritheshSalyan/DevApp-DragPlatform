@@ -44,3 +44,12 @@ const IS_ACTIVE = "is_active";
 const USER_NAME = "name";
 const USER_ID = "uid";
 const USER_EMAIL = "email";
+
+//Project Model
+const PROJECT_NAME = "project_name";
+const PROJECT_ID = "id";
+
+
+const PAGES_NAME = "page_name";
+const PAGES_ID = "page_id";
+const PAGES_WIDGET_TREE = "widget_tree";

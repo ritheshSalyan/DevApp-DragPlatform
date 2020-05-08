@@ -190,7 +190,7 @@ class CustomScaffoldWithAppbar with CustomWidget {
       child = getWidgetByName(json[CHILD][0][NAME]);
        child.fromJson(json[CHILD][0]);
     }
-    backgroundColor = json[PROPERTIES]["bg_color"];
+    backgroundColor = json[PROPERTIES]["bg_color"] == null?Colors.white:Color(json[PROPERTIES]["bg_color"]);
     return this;
   }
 
@@ -205,7 +205,7 @@ class CustomScaffoldWithAppbar with CustomWidget {
 
     map[NAME] = name;
     map[PROPERTIES] = {
-      "bg_color":backgroundColor,
+      "bg_color":backgroundColor.value,
     };
     return map;
   }

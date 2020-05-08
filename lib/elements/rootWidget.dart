@@ -6,9 +6,11 @@ import 'package:flutter_drag_and_drop/UI/widgets/common/responsive_textfield/tex
 import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
+import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
+import 'package:provider/provider.dart';
 import 'package:tree_view/tree_view.dart';
 // import 'package:flutter_drag_and_drop/elements/widgets/custom_fab.dart';
 
@@ -93,6 +95,7 @@ class CustomRootWidget with CustomWidget {
               }
               if (text.length <= 4 || text.length >= 15) {
                 pageName = text;
+                Provider.of<ControllerClass>(context,listen: false).updatePageName(pageName);
                 super.properties(context);
 
                 return TextFieldState.WARNING;
@@ -177,6 +180,7 @@ class ${getClassName()} extends StatelessWidget {
       child = getWidgetByName(json[CHILD][0][NAME]);
       child.fromJson(json[CHILD][0]);
     }
+    pageName = json[NAME];
     return this;
   }
 

@@ -174,9 +174,12 @@ class CustomText with CustomWidget {
     // }
     fontWeight = fontWeightMap.keys.elementAt(
         fontWeightMap.values.toList().indexOf(json[PROPERTIES]["font_weight"]));
-    fontSize = json[PROPERTIES]["font_size"]*1.0;
-    textAlign = json[PROPERTIES]["text_align"];
+    fontSize = json[PROPERTIES]["font_size"] * 1.0;
+    textAlign = convertStringToTextAlign(json[PROPERTIES]["text_align"]);
     data = json[PROPERTIES]["text"];
+    color = json[PROPERTIES]["color"] != null
+        ? Color(json[PROPERTIES]["color"])
+        : Colors.black;
     return this;
   }
 
@@ -186,18 +189,78 @@ class CustomText with CustomWidget {
     // if (child != null) {
     //   map[CHILD] = child.toJson();
     // } else {
-      map[CHILD] = null;
+    map[CHILD] = null;
     // }
 
     // map[NAME] = pageName;
     map[PROPERTIES] = {
       "font_weight": fontWeightMap[fontWeight],
       "font_size": fontSize,
-      "text_align": textAlign,
-      "text": data
+      "text_align": convertTextAlignToString(textAlign),
+      "text": data,
+      "color": color.value
     };
     map[NAME] = name;
-    
+
     return map;
+  }
+}
+
+String convertTextAlignToString(TextAlign textAlign) {
+  switch (textAlign) {
+    case TextAlign.left:
+      return "left";
+      break;
+    case TextAlign.right:
+      return "right";
+
+      break;
+    case TextAlign.center:
+      return "center";
+
+      break;
+    case TextAlign.justify:
+      return "justify";
+
+      break;
+    case TextAlign.start:
+      return "start";
+
+      break;
+    case TextAlign.end:
+      return "end";
+
+      break;
+  }
+  return "left";
+}
+
+TextAlign convertStringToTextAlign(String text) {
+  switch (text) {
+    case "left":
+      return TextAlign.left;
+      break;
+    case "right":
+      return TextAlign.right;
+
+      break;
+    case "center":
+      return TextAlign.center;
+
+      break;
+    case "justify":
+      return TextAlign.justify;
+
+      break;
+    case "start":
+      return TextAlign.start;
+
+      break;
+    case "end":
+      return TextAlign.end;
+
+      break;
+    default:
+      return TextAlign.left;
   }
 }

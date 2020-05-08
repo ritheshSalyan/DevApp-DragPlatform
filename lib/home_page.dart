@@ -7,15 +7,15 @@ import 'package:flutter_drag_and_drop/UI/widgets/pages/widget_Listing.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
-import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_elements/scaffold.dart';
+import 'package:flutter_drag_and_drop/models/project.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class DragDrop extends StatefulWidget {
-  DragDrop({Key key, this.title}) : super(key: key);
+  DragDrop({Key key, this.project}) : super(key: key);
 
-  final String title;
+  final Project project;
 
   @override
   _DragDropState createState() => _DragDropState();
@@ -30,9 +30,26 @@ class _DragDropState extends State<DragDrop> {
 
     // print("Hello");
     return ChangeNotifierProvider<ControllerClass>(
-      create: (_) => ControllerClass(),
+      create: (_) => ControllerClass(widget.project.id),
       child: Scaffold(
         backgroundColor: neuBackground,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          iconTheme: IconThemeData(color:Colors.black),
+          title: Text(widget.project.projectName??""),
+          actions: <Widget>[
+            Consumer<ControllerClass>(builder: (context, snapshot, _) {
+              return IconButton(
+                  icon: Icon(Icons.save),
+                  onPressed: () {
+                    print("Called Save Icon Press");
+                    // Provider.of<ControllerClass>(context, listen: false)
+                    snapshot.save(context);
+                  });
+            })
+          ],
+        ),
         body: ListView(
           children: <Widget>[
             NeuCard(
@@ -84,11 +101,11 @@ class _DragDropState extends State<DragDrop> {
                           back: Consumer<ControllerClass>(
                               builder: (context, snapshot, _) {
                             CustomWidget val =
-                                snapshot.pages[snapshot.activePage].rootWidget;
-                                // print(val.toJson().toString());
+                                snapshot.pages[snapshot.activePage].widgetTree;
+                            // print(val.toJson().toString());
                             return Container(
                               //depth: 25,
-                              height: size.height*0.75,
+                              height: size.height * 0.75,
                               width: size.width * 0.25,
                               child: ListView(
                                 children: <Widget>[
@@ -125,8 +142,7 @@ class _DragDropState extends State<DragDrop> {
                 ],
               ),
             ),
-                    SizedBox(height: 25),
-
+            SizedBox(height: 25),
             Consumer<ControllerClass>(builder: (context, snapshot, _) {
               return NeuCard(
                 alignment: Alignment.center,
@@ -212,7 +228,7 @@ class _RightWindowState extends State<RightWindow> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(top:15.0),
+          padding: EdgeInsets.only(top: 15.0),
           child: Container(
               width: MediaQuery.of(context).size.width * 0.2,
               child: getSelectedPage()),
@@ -239,16 +255,16 @@ class _RightWindowState extends State<RightWindow> {
         // height: widget.size.height,
         // width: widget.size.height,
         child: Consumer<ControllerClass>(builder: (context, snapshot, _) {
-            CustomWidget val = snapshot.pages[snapshot.activePage].rootWidget;
-            return val.buildTree(context);
-          }),
+          CustomWidget val = snapshot.pages[snapshot.activePage].widgetTree;
+          return val.buildTree(context);
+        }),
       ),
     );
   }
 
   Container getPropertiesWidget() {
     return Container(
-      padding: EdgeInsets.only(top:15),
+      padding: EdgeInsets.only(top: 15),
       height: widget.size.height,
       alignment: Alignment.center,
       child: Consumer<ControllerClass>(builder: (context, snapshot, _) {

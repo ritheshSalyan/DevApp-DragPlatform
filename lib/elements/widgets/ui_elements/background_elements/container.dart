@@ -355,16 +355,18 @@ class CustomContainer with CustomWidget {
   CustomWidget fromJson(Map<String, dynamic> json) {
     if (json[CHILD] != null) {
       child = getWidgetByName(json[CHILD][0][NAME]);
-  child.fromJson(json[CHILD][0]);
+      child.fromJson(json[CHILD][0]);
     }
-    color = json[PROPERTIES]["color"];
-    height = json[PROPERTIES]["height"]*1.0;
-    width = json[PROPERTIES]["width"]*1.0;
-    tlRad = json[PROPERTIES]["tlRad"]*1.0;
-    blRad = json[PROPERTIES]["blRad"]*1.0;
-    trRad = json[PROPERTIES]["trRad"]*1.0;
-    brRad = json[PROPERTIES]["brRad"]*1.0;
-    // alignment = json[PROPERTIES]["alignment"];
+    color = Color(json[PROPERTIES]["color"]);
+    height = json[PROPERTIES]["height"] * 1.0;
+    width = json[PROPERTIES]["width"] * 1.0;
+    tlRad = json[PROPERTIES]["tlRad"] * 1.0;
+    blRad = json[PROPERTIES]["blRad"] * 1.0;
+    trRad = json[PROPERTIES]["trRad"] * 1.0;
+    brRad = json[PROPERTIES]["brRad"] * 1.0;
+    alignment = json[PROPERTIES]["alignment"];
+    shadows = List<CustomBoxShadow>.from(
+        json[PROPERTIES]["shadows"].map((x) => CustomBoxShadow.fromJson(x)));
     return this;
   }
 
@@ -379,14 +381,15 @@ class CustomContainer with CustomWidget {
 
     map[NAME] = name;
     map[PROPERTIES] = {
-      "color": color,
+      "color": color.value,
       "height": height,
       "width": width,
       "tlRad": tlRad,
       "blRad": blRad,
       "trRad": trRad,
       "brRad": brRad,
-      "alignment": alignment
+      "alignment": alignment,
+      "shadows": List<dynamic>.from(shadows.map((e) => e.toJson())),
     };
     return map;
   }
@@ -405,6 +408,22 @@ class CustomBoxShadow {
         color: color);
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      "shadow_color": color.value,
+      "x": x,
+      "y": y,
+      "blur_radius": blurRadius
+    };
+  }
+
+  CustomBoxShadow({this.color, this.blurRadius, this.x, this.y});
+  static CustomBoxShadow fromJson(Map<String, dynamic> json) => CustomBoxShadow(
+        color: Color(json["shadow_color"]),
+        x: json["x"],
+        y: json["y"],
+        blurRadius: json["blur_radius"],
+      );
   Widget propertiesWidget(BuildContext context, void Function() refresh) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 25),
