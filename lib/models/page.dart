@@ -1,4 +1,5 @@
 import 'package:flutter_drag_and_drop/constants.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/class_model_generator.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/rootWidget.dart';
 
@@ -6,6 +7,7 @@ class CustomPage {
   String pageName;
   String id;
   CustomWidget widgetTree;
+ CustomClassModel classModel;
   DateTime createdAt;
   DateTime updatedAt;
   bool isActive;
@@ -20,6 +22,7 @@ class CustomPage {
     if (widgetTree == null) {
       widgetTree = CustomRootWidget(pageName);
     }
+    classModel = CustomClassModel(pageName);
   }
   factory CustomPage.fromJson(Map<String, dynamic> json, String id) =>
       CustomPage(

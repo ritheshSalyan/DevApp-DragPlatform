@@ -6,6 +6,7 @@ import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/auth/user_service.dart';
 import 'package:flutter_drag_and_drop/controller/project/project_service.dart';
 import 'package:flutter_drag_and_drop/home_page.dart';
+import 'package:flutter_drag_and_drop/instructionBuilder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
@@ -42,8 +43,8 @@ class MyApp extends StatelessWidget {
             cardColor: neuBackground,
             primaryColor: green,
           ),
-          child:
-              LandingPage(), //DragDrop(title: 'Flutter Demo Home Page'),// HomePage(),//
+          child:CodeBuilder()
+            //  LandingPage(), //DragDrop(title: 'Flutter Demo Home Page'),// HomePage(),//
         ),
       ),
     );
