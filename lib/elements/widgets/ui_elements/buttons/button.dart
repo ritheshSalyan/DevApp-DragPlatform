@@ -5,6 +5,7 @@ import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
+import 'package:flutter_drag_and_drop/models/page.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +57,7 @@ class CustomButton with CustomWidget {
 //  @override
 //  get prevIcon =>
   @override
-  Widget properties(BuildContext context) {
+  Widget properties(BuildContext context,CustomPage page) {
     return ListView(
       children: <Widget>[
         // TextField(
@@ -68,7 +69,7 @@ class CustomButton with CustomWidget {
           selected: navigateTo,
           onSelected: (int index) {
           navigateTo = index;
-          super.properties(context);
+          super.properties(context,page);
         }
         ),
         FlatButton(
@@ -79,7 +80,7 @@ class CustomButton with CustomWidget {
 
               icon = Icon(iconData);
 
-              super.properties(context);
+              super.properties(context,page);
               // icon = Icon(icon)
             },
             child: icon)

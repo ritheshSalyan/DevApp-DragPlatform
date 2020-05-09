@@ -10,6 +10,7 @@ import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
+import 'package:flutter_drag_and_drop/models/page.dart';
 import 'package:provider/provider.dart';
 import 'package:tree_view/tree_view.dart';
 // import 'package:flutter_drag_and_drop/elements/widgets/custom_fab.dart';
@@ -80,7 +81,7 @@ class CustomRootWidget with CustomWidget {
   get name => pageName;
 
   @override
-  Widget properties(BuildContext context) {
+  Widget properties(BuildContext context,CustomPage page) {
     return ListView(
       children: <Widget>[
         ResponsiveTextField(
@@ -95,13 +96,15 @@ class CustomRootWidget with CustomWidget {
               }
               if (text.length <= 4 || text.length >= 15) {
                 pageName = text;
-                Provider.of<ControllerClass>(context,listen: false).updatePageName(pageName);
-                super.properties(context);
+                page.pageName = text;
+                // Provider.of<ControllerClass>(context,listen: false).updatePageName(pageName);
+                super.properties(context,page);
 
                 return TextFieldState.WARNING;
               }
               pageName = text;
-              super.properties(context);
+              page.pageName = text;
+              super.properties(context,page);
               return TextFieldState.VALID;
             },
             setMessage: (textState, text) {

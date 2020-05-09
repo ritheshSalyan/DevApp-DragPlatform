@@ -38,14 +38,14 @@ class CustomText with CustomWidget {
   get name => "Text";
 
   @override
-  Widget properties(BuildContext context) {
+  Widget properties(BuildContext context,_) {
     return ListView(
       children: <Widget>[
         TextField(
           onChanged: (string) {
             data = string;
             print(data);
-            super.properties(context);
+            super.properties(context,_);
           },
         ),
         CustomColorPicker(
@@ -53,12 +53,12 @@ class CustomText with CustomWidget {
             lable: "Choose Text Color",
             onSelected: (color) {
               this.color = color;
-              super.properties(context);
+              super.properties(context,_);
             }),
         CustomNeumorpicRadio(
           onSelect: (select) {
             textAlign = select;
-            super.properties(context);
+            super.properties(context,_);
           },
           initialSelect: textAlign,
           lable: "Alignment",
@@ -101,7 +101,7 @@ class CustomText with CustomWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text("Font Weight "),
+            Text("Font Size "),
             Counter(
               initialValue: fontSize,
               minValue: 10,
@@ -113,7 +113,7 @@ class CustomText with CustomWidget {
 
                 fontSize = value;
                 // refresh();
-                super.properties(context);
+                super.properties(context,_);
               },
             ),
           ],
@@ -134,7 +134,7 @@ class CustomText with CustomWidget {
                     )),
             onChanged: (fw) {
               fontWeight = fw;
-              super.properties(context);
+              super.properties(context,_);
             }),
       ],
     );

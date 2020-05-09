@@ -72,7 +72,7 @@ class ControllerClass with ChangeNotifier {
   Widget properties(BuildContext context) {
     print("Properitis called ${latestWidget?.name}");
     return latestWidget != null
-        ? latestWidget.properties(context)
+        ? latestWidget.properties(context,pages[activePage])
         : Container();
   }
 }

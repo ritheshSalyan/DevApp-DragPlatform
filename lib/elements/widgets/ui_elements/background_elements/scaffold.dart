@@ -111,7 +111,7 @@ class CustomScaffoldWithAppbar with CustomWidget {
   get name => "Scaffold";
 
   @override
-  Widget properties(BuildContext context) {
+  Widget properties(BuildContext context,page) {
     return ListView(
       children: <Widget>[
         CustomColorPicker(
@@ -119,7 +119,7 @@ class CustomScaffoldWithAppbar with CustomWidget {
           lable: "Background Color",
           onSelected: (Color colorSelected) {
             this.backgroundColor = colorSelected;
-            super.properties(context);
+            super.properties(context,page);
           },
         ),
       ],

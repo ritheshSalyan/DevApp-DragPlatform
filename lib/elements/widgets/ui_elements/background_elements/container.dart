@@ -94,7 +94,7 @@ class CustomContainer with CustomWidget {
   get name => "Container";
 
   @override
-  Widget properties(BuildContext context) {
+  Widget properties(BuildContext context,page) {
     print("Properitis called");
 
     return ListView(
@@ -104,7 +104,7 @@ class CustomContainer with CustomWidget {
           lable: "Background Color",
           onSelected: (Color colorSelected) {
             this.color = colorSelected;
-            super.properties(context);
+            super.properties(context,page);
           },
         ),
         WidthSelector(
@@ -113,7 +113,7 @@ class CustomContainer with CustomWidget {
             initialValue: width,
             onChanged: (double newWidth) {
               width = newWidth;
-              super.properties(context);
+              super.properties(context,page);
             }),
         WidthSelector(
             key: ValueKey(hrand),
@@ -122,13 +122,13 @@ class CustomContainer with CustomWidget {
             onChanged: (double newHeight) {
               height = newHeight;
               print("Height:$height");
-              super.properties(context);
+              super.properties(context,page);
             }),
         AlignmentSelector(
           onSelected: (AlignmentGeometry selectedAlignment) {
             alignment = selectedAlignment;
             print("Alignment Selected $alignment");
-            super.properties(context);
+            super.properties(context,page);
           },
         ),
         NeumorphicTheme(
@@ -170,7 +170,7 @@ class CustomContainer with CustomWidget {
                               trcontroller.text =
                                   tlcontroller.text = tlRad.toStringAsFixed(2);
                           brRad = blRad = trRad = tlRad;
-                          super.properties(context);
+                          super.properties(context,page);
                         },
                       ),
                     ),
@@ -189,7 +189,7 @@ class CustomContainer with CustomWidget {
 
                               blcontroller.text =
                                   brcontroller.text = trcontroller.text = value;
-                              super.properties(context);
+                              super.properties(context,page);
                             }
                           },
                         ),
@@ -207,7 +207,7 @@ class CustomContainer with CustomWidget {
                                     onChanged: (value) {
                                       if (isNumeric(value)) {
                                         tlRad = double.parse(value);
-                                        super.properties(context);
+                                        super.properties(context,page);
                                       }
                                     },
                                   ),
@@ -221,7 +221,7 @@ class CustomContainer with CustomWidget {
                                     onChanged: (value) {
                                       if (isNumeric(value)) {
                                         trRad = double.parse(value);
-                                        super.properties(context);
+                                        super.properties(context,page);
                                       }
                                     },
                                   ),
@@ -238,7 +238,7 @@ class CustomContainer with CustomWidget {
                                     onChanged: (value) {
                                       if (isNumeric(value)) {
                                         blRad = double.parse(value);
-                                        super.properties(context);
+                                        super.properties(context,page);
                                       }
                                     },
                                   ),
@@ -252,7 +252,7 @@ class CustomContainer with CustomWidget {
                                     onChanged: (value) {
                                       if (isNumeric(value)) {
                                         brRad = double.parse(value);
-                                        super.properties(context);
+                                        super.properties(context,page);
                                       }
                                     },
                                   ),
@@ -279,7 +279,7 @@ class CustomContainer with CustomWidget {
                         (index) => shadows[index].propertiesWidget(
                           context,
                           () {
-                            super.properties(context);
+                            super.properties(context,page);
                           },
                         ),
                       ),
@@ -293,7 +293,7 @@ class CustomContainer with CustomWidget {
                   child: Icon(Icons.add, color: green),
                   onPressed: () {
                     shadows.add(CustomBoxShadow());
-                    super.properties(context);
+                    super.properties(context,page);
                   }),
             ],
           ),
@@ -447,7 +447,7 @@ class CustomBoxShadow {
                     // get the latest value from here
 
                     blurRadius = value;
-                    // super.properties(context);
+                    // super.properties(context,page);
                     refresh();
                   },
                 ),
@@ -472,7 +472,7 @@ class CustomBoxShadow {
 
                         x = value;
                         refresh();
-                        // super.properties(context);
+                        // super.properties(context,page);
                       },
                     ),
                   ],
@@ -492,7 +492,7 @@ class CustomBoxShadow {
 
                         y = value;
                         refresh();
-                        // super.properties(context);
+                        // super.properties(context,page);
                       },
                     ),
                   ],
@@ -505,7 +505,7 @@ class CustomBoxShadow {
               onSelected: (Color colorSelected) {
                 this.color = colorSelected;
                 refresh();
-                // super.properties(context);
+                // super.properties(context,page);
               },
             ),
           ],

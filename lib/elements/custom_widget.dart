@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
+import 'package:flutter_drag_and_drop/models/page.dart';
 import 'package:provider/provider.dart';
 // import 'package:responsive_builder/responsive_builder.dart';
 
@@ -18,7 +19,7 @@ mixin CustomWidget {
   }
   Widget buildTree(BuildContext context);
 
-  Widget properties(BuildContext context){
+  Widget properties(BuildContext context,CustomPage page){
     Provider.of<ControllerClass>(context, listen: false).notify();
   }
   void setActive(BuildContext context,CustomWidget customWidget){

@@ -93,14 +93,14 @@ class CustomListView with CustomWidget {
   get name => "ListView";
 
   @override
-  Widget properties(BuildContext context) {
+  Widget properties(BuildContext context,page) {
     return ListView(
       children: <Widget>[
         Text("ListView Properties"),
         CustomNeumorpicRadio(
           onSelect: (select) {
             scrollDirection = select;
-            super.properties(context);
+            super.properties(context,page);
           },
           initialSelect: scrollDirection,
           lable: "Scroll direction",

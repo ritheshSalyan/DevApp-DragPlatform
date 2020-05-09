@@ -46,7 +46,7 @@ class CustomCard with CustomWidget {
   get name => "Card";
 
   @override
-  Widget properties(BuildContext context) {
+  Widget properties(BuildContext context,page) {
     return ListView(
       children: <Widget>[
         TextField(

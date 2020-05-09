@@ -83,7 +83,7 @@ class CustomColumn with CustomWidget {
   // TODO: implement widget
   get name => "Column";
   @override
-  Widget properties(BuildContext context) {
+  Widget properties(BuildContext context,_) {
     return ListView(
       children: <Widget>[
         TextField(
