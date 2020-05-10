@@ -3,6 +3,7 @@ import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:flutter_drag_and_drop/models/page.dart';
@@ -14,6 +15,7 @@ class CustomButton with CustomWidget {
   int elevation = 1;
   Widget icon;
   int navigateTo;
+  CustomFunction function;
   // double height= 0.25;
   void addChild(BuildContext context, CustomWidget childWidget) {
     if (child == null) {
@@ -35,11 +37,12 @@ class CustomButton with CustomWidget {
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return RaisedButton(
         onPressed: () {
-          if (navigateTo == null) {
-            return;
-          }
-          Provider.of<ControllerClass>(context, listen: false)
-              .changePage(navigateTo);
+          function.execute();
+          // if (navigateTo == null) {
+          //   return;
+          // }
+          // Provider.of<ControllerClass>(context, listen: false)
+          //     .changePage(navigateTo);
         },
         child: child == null ? null : child.build(context),
       ); //currentWidget(type, child, context);
@@ -57,7 +60,7 @@ class CustomButton with CustomWidget {
 //  @override
 //  get prevIcon =>
   @override
-  Widget properties(BuildContext context,CustomPage page) {
+  Widget properties(BuildContext context, CustomPage page) {
     return ListView(
       children: <Widget>[
         // TextField(
@@ -65,12 +68,29 @@ class CustomButton with CustomWidget {
         //     elevation = int.parse(string);
         //   },
         // ),
-        NavigationModule(
-          selected: navigateTo,
-          onSelected: (int index) {
-          navigateTo = index;
-          super.properties(context,page);
-        }
+        // NavigationModule(
+        //   selected: navigateTo,
+        //   onSelected: (int index) {
+        //   navigateTo = index;
+        //   super.properties(context,page);
+        // }
+        // ),
+
+        Consumer<ControllerClass>(
+          builder: (context, value, child) {
+            return DropdownButton<CustomFunction>(
+              value: function,
+                items: List<DropdownMenuItem<CustomFunction>>.from(value
+                    .pages[value.activePage].classModel.functions
+                    .map((e) => DropdownMenuItem<CustomFunction>(
+                          child: Text(e.functionName),
+                          value: e,
+                        ))),
+                onChanged: (newFunction) {
+                  function = newFunction;
+                  super.properties(context, page);
+                });
+          },
         ),
         FlatButton(
             onPressed: () async {
@@ -80,7 +100,7 @@ class CustomButton with CustomWidget {
 
               icon = Icon(iconData);
 
-              super.properties(context,page);
+              super.properties(context, page);
               // icon = Icon(icon)
             },
             child: icon)
@@ -97,7 +117,7 @@ class CustomButton with CustomWidget {
 
   @override
   Widget buildTree(BuildContext context) {
-       return InkWell(
+    return InkWell(
       onTap: () {
         super.setActive(context, this);
       },
@@ -108,22 +128,18 @@ class CustomButton with CustomWidget {
         onExpansionChanged: (value) {
           super.setActive(context, this);
         },
-        children:
-
-        
-            child != null
-                ? <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.02),
-                      child: child?.buildTree(context),
-                    ),
-                  ]
-                : [],
+        children: child != null
+            ? <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.02),
+                  child: child?.buildTree(context),
+                ),
+              ]
+            : [],
         // ),
       ),
     );
- 
   }
 
   @override
@@ -163,37 +179,31 @@ class CustomButton with CustomWidget {
 
     map[NAME] = name;
     map[PROPERTIES] = {
-      "navigate_to":navigateTo,
+      "navigate_to": navigateTo,
     };
     return map;
   }
-
-
 }
 
 class NavigationModule extends StatelessWidget {
   const NavigationModule({
-    Key key, this.onSelected, this.selected,
+    Key key,
+    this.onSelected,
+    this.selected,
   }) : super(key: key);
-final  Function(int selected) onSelected;
-final int selected;
+  final Function(int selected) onSelected;
+  final int selected;
   @override
   Widget build(BuildContext context) {
     return DropdownButton<int>(
-      hint: Text("Navigate To"),
-      value: selected,
+        hint: Text("Navigate To"),
+        value: selected,
         items: List<DropdownMenuItem>.generate(
-            Provider.of<ControllerClass>(context, listen: false)
-                .pages
-                .length,
+            Provider.of<ControllerClass>(context, listen: false).pages.length,
             (index) => DropdownMenuItem(
                 value: index,
                 child: Text(
                     "${Provider.of<ControllerClass>(context, listen: false).pages[index].pageName}"))),
-        onChanged:onSelected
-        
-        );
+        onChanged: onSelected);
   }
-
-  
 }

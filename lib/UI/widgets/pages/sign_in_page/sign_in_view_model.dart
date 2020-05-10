@@ -8,6 +8,7 @@ import 'package:flutter_drag_and_drop/UI/widgets/pages/sign_in_page/sign_in_page
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/auth/auth_service.dart';
 import 'package:flutter_drag_and_drop/controller/auth/user_service.dart';
+import 'package:flutter_drag_and_drop/roure.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:provider/provider.dart';
 
@@ -41,35 +42,35 @@ class SignInViewModel with ChangeNotifier {
       Loader.hideOverlayLoading(context);
       // showToast("$e",context: context);
       showToast(
-        // Container(
-        //   width: MediaQuery.of(context).size.width*0.5,
-        //           child: Row(
-        //     children: <Widget>[
-        //       Icon(
-        //         Icons.error,
-        //         color: Colors.white,
-        //       ),
-        //       Flexible(
-                            // child: Text(
-                  "$e",
-        //           style: TextStyle(color: Colors.white),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        context: context,
+          // Container(
+          //   width: MediaQuery.of(context).size.width*0.5,
+          //           child: Row(
+          //     children: <Widget>[
+          //       Icon(
+          //         Icons.error,
+          //         color: Colors.white,
+          //       ),
+          //       Flexible(
+          // child: Text(
+          "$e",
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          context: context,
 
-        // position: StyledToastPosition.bottom,
-        backgroundColor: Colors.red,
-        textStyle: TextStyle(color:Colors.white),
-      animation: StyledToastAnimation.slideFromBottom,
-      curve: Curves.elasticOut,
-      reverseCurve: Curves.elasticIn,
-      duration: Duration(seconds:3)
-      // reverseAnimation: StyledToastAnimation.slideToBottom,
-      
-      );
+          // position: StyledToastPosition.bottom,
+          backgroundColor: Colors.red,
+          textStyle: TextStyle(color: Colors.white),
+          animation: StyledToastAnimation.slideFromBottom,
+          curve: Curves.elasticOut,
+          reverseCurve: Curves.elasticIn,
+          duration: Duration(seconds: 3)
+          // reverseAnimation: StyledToastAnimation.slideToBottom,
+
+          );
     }
   }
 
@@ -89,45 +90,48 @@ class SignInViewModel with ChangeNotifier {
       Loader.hideOverlayLoading(context);
       // showToast("$e",context: context);
       showToast(
-        // Container(
-        //   width: MediaQuery.of(context).size.width*0.5,
-        //           child: Row(
-        //     children: <Widget>[
-        //       Icon(
-        //         Icons.error,
-        //         color: Colors.white,
-        //       ),
-        //       Flexible(
-                            // child: Text(
-                  "$e",
-        //           style: TextStyle(color: Colors.white),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        context: context,
+          // Container(
+          //   width: MediaQuery.of(context).size.width*0.5,
+          //           child: Row(
+          //     children: <Widget>[
+          //       Icon(
+          //         Icons.error,
+          //         color: Colors.white,
+          //       ),
+          //       Flexible(
+          // child: Text(
+          "$e",
+          //           style: TextStyle(color: Colors.white),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          context: context,
 
-        // position: StyledToastPosition.bottom,
-        backgroundColor: Colors.red,
-        textStyle: TextStyle(color:Colors.white),
-      animation: StyledToastAnimation.slideFromBottom,
-      curve: Curves.elasticOut,
-      reverseCurve: Curves.elasticIn,
-      duration: Duration(seconds:3)
-      // reverseAnimation: StyledToastAnimation.slideToBottom,
-      
-      );
+          // position: StyledToastPosition.bottom,
+          backgroundColor: Colors.red,
+          textStyle: TextStyle(color: Colors.white),
+          animation: StyledToastAnimation.slideFromBottom,
+          curve: Curves.elasticOut,
+          reverseCurve: Curves.elasticIn,
+          duration: Duration(seconds: 3)
+          // reverseAnimation: StyledToastAnimation.slideToBottom,
+
+          );
     }
     moveToProjectList(context);
   }
 
   void moveToProjectList(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => ProjectListPage(),
-      ),
+    Navigator.of(context).pushNamed(
+      PROJECT_ROUTE,
     );
+    // Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(
+    //     builder: (_) => ProjectListPage(),
+    //   ),
+    // );
   }
 
   TextFieldState passwordValidator(String data) {

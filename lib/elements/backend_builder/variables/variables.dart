@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 
-class CustomInt with CustomVariables {
+class CustomGlobalVariable with CustomVariables {
   String variableName;
   int variableValue;
   int initalValue;
-  CustomInt(this.variableName,{this.variableValue = 0}){
+  dynamic variableType;
+  CustomGlobalVariable(this.variableName,{this.variableValue = 0,this.variableType}){
     initalValue = variableValue;
   }
   @override

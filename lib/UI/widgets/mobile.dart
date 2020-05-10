@@ -4,6 +4,7 @@ import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_elements/scaffold.dart';
+import 'package:flutter_drag_and_drop/roure.dart';
 // import 'package:flutter_drag_and_drop/elements/widgets/scaffold.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -85,7 +86,12 @@ class MobileWidget extends StatelessWidget {
                           width: size.width * 0.25,
                           child: Padding(
                             padding: EdgeInsets.only(bottom: 4.0, right: 4.0),
-                            child: MaterialApp(home: val.build(context)),
+                            child:
+                            Theme(
+                              data: ThemeData(),
+                              child: 
+                            val.build(context)
+                           ),
                           )),
                     ),
                     Row(

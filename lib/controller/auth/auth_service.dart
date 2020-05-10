@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   static FirebaseAuth auth = FirebaseAuth.instance;
   static FirebaseUser firebaseUser;
-
+  
   static Future<void> signIn(String email, String password) async {
     try {
       AuthResult result =
@@ -44,6 +44,7 @@ class AuthService {
   }
   static Future<bool> isSignedIn() async {
     firebaseUser = await auth.currentUser();
+    print("AUTH SERVICE CONDITION ${firebaseUser!=null}");
     return firebaseUser != null;
   }
 

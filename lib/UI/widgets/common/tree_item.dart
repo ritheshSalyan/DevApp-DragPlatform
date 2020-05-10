@@ -23,21 +23,21 @@ class TreeItemView extends StatelessWidget {
             padding: const EdgeInsets.all(2.0),
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                maxWidth: 30,
-                minWidth: 25,
-                maxHeight: 75,
-                minHeight: 74,
+                maxWidth: 25,
+                minWidth: 19,
+                maxHeight: 65,
+                minHeight: 55,
               ),
               child: Container(
                 color: neuBackground,
                 padding: const EdgeInsets.all(2.0),
-                child: customWidget.prevIcon(Size(50, 150)),
+                child: customWidget.prevIcon(Size(20, 50)),
               ),
             ),
           ),
           title: Text(
             customWidget.name,
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.black,fontSize: 12),
           ),
         ),
       );

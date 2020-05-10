@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
-
+import 'package:provider/provider.dart';
 
 class CustomFunction {
   String functionName;
@@ -41,8 +42,11 @@ class CustomFunction {
   }
 
   void declareVariables(CustomVariables variables) {
-    if (localVariables.contains(variables)) {
-      return;
+    // if (localVariables..contains(variables)) {
+    //   return;
+    // }
+    for (var element in localVariables) {
+      if (element.name.compareTo(variables.name) == 0) return;
     }
     localVariables.add(variables);
   }
@@ -52,6 +56,7 @@ class CustomFunction {
     return DragTarget<CustomInstruction>(
       onAccept: (data) {
         instructionSet.add(data.copy());
+        notify(context);
       },
       builder: (BuildContext context, List<CustomInstruction> candidateData,
           List<dynamic> rejectedData) {
@@ -70,11 +75,13 @@ class CustomFunction {
     );
   }
 
+  void notify(BuildContext context) {
+    Provider.of<ControllerClass>(context, listen: false).notify();
+  }
+
   void execute() {
     for (var inst in instructionSet) {
       inst.performOperation(this);
     }
   }
 }
-
-

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
@@ -18,11 +16,12 @@ class CustomPrint with CustomInstruction {
   Widget build(BuildContext context, CustomFunction function) {
     return Row(
       children: <Widget>[
-      
         DragTarget<CustomVariables>(
           onAccept: (data) {
             checkVariable(data, function);
             a = data;
+            print("INSIDE PRINT ${data.value} ");
+            function.notify(context);
           },
           builder: (context, candidateData, rejectedData) => Container(
             width: 30,
@@ -37,7 +36,7 @@ class CustomPrint with CustomInstruction {
 
   @override
   // TODO: implement code
-  String get code => '''print(\'\$\{${a.name}\}\')  ''';
+  String get code => '''print(\'\$\{${a?.name ?? ""}\}\')  ''';
 
   @override
   void performOperation(CustomFunction function) {

@@ -7,28 +7,32 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/cust
 import 'package:flutter_drag_and_drop/elements/backend_builder/variables/variables.dart';
 
 class CodeBuilder extends StatefulWidget {
+  CustomClassModel classModel;
+
+  CodeBuilder({Key key, @required this.classModel}) : super(key: key);
   @override
   _CodeBuilderState createState() => _CodeBuilderState();
 }
 
 class _CodeBuilderState extends State<CodeBuilder> {
-  CustomClassModel classModel = CustomClassModel("pageName");
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        // appBar: AppBar(),
-        body: Row(
-          children: <Widget>[
-            classModel.build(context),
-            Column(
+    return Scaffold(
+      // appBar: AppBar(),
+      // backgroundColor: Colors.black,
+      body: Row(
+        children: <Widget>[
+          widget.classModel.build(context),
+          Container(
+            width: 50,
+            child: Column(
               children: <Widget>[
                 Draggable<CustomInstruction>(
-                  data: CustomAddition(),
+                  data: CustomArithmaticOperation(),
                   child: Container(
                     width: 50,
                     height: 50,
-              child: Text("inst"),
+                    child: Text("inst"),
                     color: Colors.cyanAccent,
                   ),
                   feedback: Container(
@@ -37,12 +41,12 @@ class _CodeBuilderState extends State<CodeBuilder> {
                     color: Colors.cyanAccent,
                   ),
                 ),
-                 Draggable<CustomInstruction>(
+                Draggable<CustomInstruction>(
                   data: CustomPrint(),
                   child: Container(
                     width: 50,
                     height: 50,
-              child: Text("prin"),
+                    child: Text("prin"),
                     color: Colors.cyanAccent,
                   ),
                   feedback: Container(
@@ -52,51 +56,58 @@ class _CodeBuilderState extends State<CodeBuilder> {
                   ),
                 ),
                 Draggable<CustomFunction>(
-              data: CustomFunction(""),
-              child: Container(
-                width: 50,
-                height: 50,
-              child: Text("Fun"),
-                color: Colors.amber,
-              ),
-              feedback: Container(
-                width: 50,
-                height: 50,
-                color: Colors.amber,
-              ),
-            ),
-            Draggable<CustomVariables>(
-              data: CustomConstInt(variableValue: 20),
-              child: Container(
-                width: 50,
-                height: 50,
-              child: Text("int"),
-                color: Colors.teal,
-              ),
-              feedback: Container(
-                width: 50,
-                height: 50,
-                color: Colors.teal,
-              ),
-            ),
-            Draggable<CustomVariables>(
-              data: CustomInt("a"),
-              child: Container(
-                width: 50,
-                height: 50,
-              child: Text("int"),
-                color: Colors.teal,
-              ),
-              feedback: Container(
-                width: 50,
-                height: 50,
-                color: Colors.teal,
-              ),
-            )
+                  data: CustomFunction(""),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    child: Text("Fun"),
+                    color: Colors.amber,
+                  ),
+                  feedback: Container(
+                    width: 50,
+                    height: 50,
+                    color: Colors.amber,
+                  ),
+                ),
+                Draggable<CustomVariables>(
+                  data: CustomConstInt(variableValue: 20),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    child: Text("int"),
+                    color: Colors.teal,
+                  ),
+                  feedback: Container(
+                    width: 50,
+                    height: 50,
+                    color: Colors.teal,
+                  ),
+                ),
+                Column(
+                  children:
+                      List<Widget>.from(widget.classModel.globalVariables.map(
+                    (e) => Draggable<CustomVariables>(
+                      data: e, //CustomConstInt(variableValue: 20),
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        child: Text(e.name),
+                        color: Colors.teal,
+                      ),
+                      feedback: Container(
+                        width: 50,
+                        height: 50,
+                        color: Colors.teal,
+                      ),
+                    ),
+                  )),
+                ),
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+          widget.classModel.variableCreation(context),
+
+        ],
       ),
     );
   }

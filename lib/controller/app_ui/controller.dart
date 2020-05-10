@@ -14,26 +14,35 @@ class ControllerClass with ChangeNotifier {
   String projectId;
   Size size;
   ControllerClass(this.projectId) {
+    pages = [CustomPage(pageName: "")];
+    // projectId = "NNJHE0zlumPetpe6RN5I";
+    print("projectID $projectId");
     getAllPages(projectId);
-  
   }
 
+  bool isUI = true;
+
   Future<void> getAllPages(String projectId) async {
+    print("Started getAllPages ");
     pages = [CustomPage(pageName: "")];
-    QuerySnapshot querySnapshot =
-        await AppDatabase.getPagesOfProject(projectId).getDocuments();
+    // QuerySnapshot querySnapshot =
+    //     await AppDatabase.getPagesOfProject(projectId).getDocuments();
     pages = [];
-    for (var document in querySnapshot.documents) {
-      pages.add(CustomPage.fromJson(document.data, document.documentID));
-    }
+    // for (var document in querySnapshot.documents) {
+    //   pages.add(CustomPage.fromJson(document.data, document.documentID));
+    // }
     if (pages.isEmpty) {
       pages.add(CustomPage(pageName: "Page${pages.length + 1}"));
     }
+    print("Ended getAllPages ");
+
     notify();
   }
-  updatePageName(String name){
-      pages[activePage].pageName = name;
+
+  updatePageName(String name) {
+    pages[activePage].pageName = name;
   }
+
   Future<void> save(BuildContext context) async {
     print("Inside Save");
     for (var i = 0; i < pages.length; i++) {
@@ -70,9 +79,9 @@ class ControllerClass with ChangeNotifier {
   }
 
   Widget properties(BuildContext context) {
-    print("Properitis called ${latestWidget?.name}");
+    // print("Properitis called ${latestWidget?.name}");
     return latestWidget != null
-        ? latestWidget.properties(context,pages[activePage])
+        ? latestWidget.properties(context, pages[activePage])
         : Container();
   }
 }

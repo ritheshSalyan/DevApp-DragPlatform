@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 
-class CustomAddition with CustomInstruction {
+class CustomArithmaticOperation with CustomInstruction {
   CustomVariables a, b, c;
+  ArithmaticOperationType type = ArithmaticOperationType.ADD;
   bool checkVariable(CustomVariables variables, CustomFunction function) {
     if (!variables.type.toString().contains(CONST_PREFIX)) {
       function.declareVariables(variables);
@@ -20,6 +20,8 @@ class CustomAddition with CustomInstruction {
           onAccept: (data) {
             if (checkVariable(data, function)) {
               c = data;
+            function.notify(context);
+
             }
           },
           builder: (context, candidateData, rejectedData) => Container(
@@ -34,6 +36,7 @@ class CustomAddition with CustomInstruction {
           onAccept: (data) {
             checkVariable(data, function);
             a = data;
+            function.notify(context);
           },
           builder: (context, candidateData, rejectedData) => Container(
             width: 30,
@@ -42,11 +45,30 @@ class CustomAddition with CustomInstruction {
             child: a?.build(context),
           ),
         ),
-        Text("+"),
+        SizedBox(width: 10),
+        // Text("${getOperator(type)}"),
+        Flexible(
+          child: DropdownButton<ArithmaticOperationType>(
+            value: type,
+            items: List<DropdownMenuItem<ArithmaticOperationType>>.from(
+              ArithmaticOperationType.values.map(
+                (e) => DropdownMenuItem<ArithmaticOperationType>(
+                  child: Text(getOperator(e)),
+                  value: e,
+                ),
+              ),
+            ),
+            onChanged: (newType) {
+              type = newType;
+              function.notify(context);
+            },
+          ),
+        ),
         DragTarget<CustomVariables>(
           onAccept: (data) {
             checkVariable(data, function);
             b = data;
+            function.notify(context);
           },
           builder: (context, candidateData, rejectedData) => Container(
             width: 30,
@@ -60,18 +82,64 @@ class CustomAddition with CustomInstruction {
   }
 
   @override
-  // TODO: implement code
-  String get code => '''${c.name} =  ${a.name}+${b.name}  ''';
+  String get code =>
+      ''' ${c?.name??"_"} =  ${a?.name??0} ${getOperator(type)} ${b?.name??0} ;''';
 
   @override
   void performOperation(CustomFunction function) {
     // print("Inside Addition");
-    c.value = a.value+b.value;
+    c.value = getResult(type); //a.value + b.value;
   }
 
   @override
   CustomInstruction copy() {
-    return CustomAddition();
+    return CustomArithmaticOperation();
+  }
+
+  getResult(ArithmaticOperationType type) {
+    switch (type) {
+      case ArithmaticOperationType.ADD:
+        return a.value + b.value;
+        break;
+      case ArithmaticOperationType.SUBTRACT:
+        return a.value - b.value;
+        break;
+      case ArithmaticOperationType.MULTIPLY:
+        return a.value * b.value;
+        break;
+      case ArithmaticOperationType.DEVIDE:
+        return a.value / b.value;
+        break;
+    }
   }
 }
 
+enum ArithmaticOperationType {
+  ADD,
+  SUBTRACT,
+  MULTIPLY,
+  DEVIDE,
+  // MODULO,
+}
+
+String getOperator(ArithmaticOperationType type) {
+  switch (type) {
+    case ArithmaticOperationType.ADD:
+      return "+";
+
+    case ArithmaticOperationType.SUBTRACT:
+      return "-";
+
+    case ArithmaticOperationType.MULTIPLY:
+      return "*";
+
+    case ArithmaticOperationType.DEVIDE:
+      return "/";
+
+    // case ArithmaticOperationType.MODULO:
+
+    //   return "-";
+
+  }
+  return "+";
+}

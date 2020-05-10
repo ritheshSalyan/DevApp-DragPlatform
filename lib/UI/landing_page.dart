@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/pages/sign_in_page/sign_in_page.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
+import 'package:flutter_drag_and_drop/controller/auth/user_service.dart';
+import 'package:flutter_drag_and_drop/roure.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:neumorphic/neumorphic.dart';
+import 'package:provider/provider.dart';
 
 class LandingPage extends StatefulWidget {
   @override
@@ -63,11 +66,13 @@ class _LandingPageState extends State<LandingPage> {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => SignInPage(
-                      pageViewStates: PageViewStates.SIGN_IN,
-                    ),
-                  ));
+                               navigate(context,  PageViewStates.SIGN_IN);
+
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => SignInPage(
+                  //     pageViewStates: PageViewStates.SIGN_IN,
+                  //   ),
+                  // ));
                 }),
           ),
           SizedBox(
@@ -267,11 +272,11 @@ class _LandingPageState extends State<LandingPage> {
                               ],
                             ),
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => SignInPage(
-                                  pageViewStates: PageViewStates.SIGN_UP,
-                                ),
-                              ));
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //   builder: (context) => SignInPage(
+                               navigate(context,  PageViewStates.SIGN_UP);
+                              //   ),
+                              // ));
                             }),
                       ],
                     ),
@@ -294,5 +299,19 @@ class _LandingPageState extends State<LandingPage> {
         ],
       ),
     );
+  }
+
+  void navigate(BuildContext context, PageViewStates pageViewStates) {
+    if (Provider.of<UserService>(context, listen: false).user != null) {
+      Navigator.of(context).pushNamed(
+        PROJECT_ROUTE,
+      );
+    }
+    else{
+        Navigator.of(context).pushNamed(
+        LOGIN_ROUTE,
+        arguments: pageViewStates,
+      );
+    }
   }
 }

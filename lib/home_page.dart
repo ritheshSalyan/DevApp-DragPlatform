@@ -7,6 +7,7 @@ import 'package:flutter_drag_and_drop/UI/widgets/pages/widget_Listing.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/instructionBuilder.dart';
 import 'package:flutter_drag_and_drop/models/project.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -14,7 +15,8 @@ import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
 
 class DragDrop extends StatefulWidget {
-  DragDrop({Key key, this.project}) : super(key: key);
+  // StatefulWidget {
+  DragDrop({Key key, this.project}); // : super(key: key);
 
   final Project project;
 
@@ -23,130 +25,84 @@ class DragDrop extends StatefulWidget {
 }
 
 class _DragDropState extends State<DragDrop> {
-  // CustomScaffoldWithAppbar val = CustomScaffoldWithAppbar();
   GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
+  Project project;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    project = widget.project;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    // print("Hello");
+    print("Hello");
     return ChangeNotifierProvider<ControllerClass>(
-      create: (_) => ControllerClass(widget.project.id),
+      create: (_) => ControllerClass(project.id),
       child: Scaffold(
         backgroundColor: neuBackground,
         // appBar:
         body: ListView(
           children: <Widget>[
-             AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          iconTheme: IconThemeData(color: Colors.black),
-          title: Text(
-            widget.project.projectName ?? "",
-            style:Theme.of(context).textTheme.headline6.copyWith(color:Colors.black) //TextStyle(color: Colors.black),
-          ),
-          actions: <Widget>[
-            Consumer<ControllerClass>(builder: (context, snapshot, _) {
-              return IconButton(
-                  icon: Icon(AntDesign.save),
-                  onPressed: () {
-                    print("Called Save Icon Press");
-                    // Provider.of<ControllerClass>(context, listen: false)
-                    snapshot.save(context);
-                  });
-            })
-          ],
-        ),
-            NeuCard(
-              color: neuBackground,
-              height: size.height,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  NeuCard(
-                    bevel: 10,
-
-                    decoration: NeumorphicDecoration(
-                        color: neuBackground,
-                        borderRadius: BorderRadius.circular(radius)),
-                    // borderRadius: radius,
-                    // color:Colo neuBackground,
-                    // color: Colors.white,
-                    width: size.width * 0.3,
-                    height: size.height,
-                    child: WidgetWindow(size: size),
+            AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              iconTheme: IconThemeData(color: Colors.black),
+              title: Text("Titile", // widget.project.projectName ?? "",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                      color: Colors.black) //TextStyle(color: Colors.black),
                   ),
-
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: size.height * 0.02,
-                      // bottom: size.height * 0.05,
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        NeumorphicButton(
-                          minDistance: 3,
-                          style: NeumorphicStyle(color: neuBackground),
-                          child: Text("Code"),
-                          onClick: () {
-                            // print(val.code);
-                            cardKey.currentState.toggleCard();
-                          },
-                        ),
-                        SizedBox(
-                          height: size.shortestSide * 0.02,
-                        ),
-                        FlipCard(
-                          key: cardKey,
-                          flipOnTouch: false,
-                          front: MobileWidget(
-                            size: size,
+              actions: <Widget>[
+                Consumer<ControllerClass>(builder: (context, snapshot, _) {
+                  return IconButton(
+                      icon: Icon(AntDesign.save),
+                      onPressed: () {
+                        print("Called Save Icon Press");
+                        // Provider.of<ControllerClass>(context, listen: false)
+                        snapshot.save(context);
+                      });
+                }),
+                Consumer<ControllerClass>(builder: (context, snapshot, _) {
+                  return snapshot.isUI
+                      ? NeuButton(
+                          decoration: NeumorphicDecoration(
+                            color: neuBackground,
                           ),
-                          back: Consumer<ControllerClass>(
-                              builder: (context, snapshot, _) {
-                            CustomWidget val =
-                                snapshot.pages[snapshot.activePage].widgetTree;
-                            // print(val.toJson().toString());
-                            return Container(
-                              //depth: 25,
-                              height: size.height * 0.75,
-                              width: size.width * 0.25,
-                              child: ListView(
-                                children: <Widget>[
-                                  Text(val.code),
-                                ],
-                              ),
-                            );
-                          }),
-                        ),
-                        SizedBox(
-                          height: size.shortestSide * 0.02,
-                        ),
-                      ],
-                    ),
-                  ),
-                  NeuCard(
-                    bevel: 10,
-                    decoration: NeumorphicDecoration(
-                      color: neuBackground,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(radius),
-                          bottomLeft: Radius.circular(radius)),
-                    ),
-                    // customBorderRadius:
-                    // borderRadius: radius,
-                    // color: neuBackground,
-                    width: size.width * 0.3,
-                    child: RightWindow(
-                      size: size,
-                    ),
-                  ),
-
-                  // })
-                ],
-              ),
+                          child: Text("Block"),
+                          onPressed: () {
+                            // print("Called Save Icon Press");
+                            // Provider.of<ControllerClass>(context, listen: false)
+                            snapshot.isUI = false;
+                            snapshot.notify();
+                            //save(context);
+                          })
+                      : NeuButton(
+                          decoration: NeumorphicDecoration(
+                            color: neuBackground,
+                          ),
+                          child: Text("UI"),
+                          onPressed: () {
+                            // print("Called Save Icon Press");
+                            // Provider.of<ControllerClass>(context, listen: false)
+                            snapshot.isUI = true;
+                            snapshot.notify();
+                            //save(context);
+                          });
+                })
+              ],
             ),
+            Consumer<ControllerClass>(builder: (context, snapshot, _) {
+              return snapshot.isUI
+                  ? UIGeneration(size: size, cardKey: cardKey)
+                  : Container(
+                      height: size.height,
+                      child: CodeBuilder(
+                          classModel:
+                              snapshot.pages[snapshot.activePage].classModel),
+                    );
+            }),
             SizedBox(height: 25),
             Consumer<ControllerClass>(builder: (context, snapshot, _) {
               return NeuCard(
@@ -204,6 +160,112 @@ class _DragDropState extends State<DragDrop> {
             }),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class UIGeneration extends StatelessWidget {
+  const UIGeneration({
+    Key key,
+    @required this.size,
+    @required this.cardKey,
+  }) : super(key: key);
+
+  final Size size;
+  final GlobalKey<FlipCardState> cardKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return NeuCard(
+      color: neuBackground,
+      height: size.height,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          NeuCard(
+            bevel: 10,
+
+            decoration: NeumorphicDecoration(
+                color: neuBackground,
+                borderRadius: BorderRadius.circular(radius)),
+            // borderRadius: radius,
+            // color:Colo neuBackground,
+            // color: Colors.white,
+            width: size.width * 0.3,
+            height: size.height,
+            child: WidgetWindow(size: size),
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(
+              top: size.height * 0.02,
+              // bottom: size.height * 0.05,
+            ),
+            child: Column(
+              children: <Widget>[
+                NeumorphicButton(
+                  minDistance: 3,
+                  style: NeumorphicStyle(color: neuBackground),
+                  child: Text("Code"),
+                  onClick: () {
+                    // print(val.code);
+                    cardKey.currentState.toggleCard();
+                  },
+                ),
+                SizedBox(
+                  height: size.shortestSide * 0.02,
+                ),
+                FlipCard(
+                  key: cardKey,
+                  flipOnTouch: false,
+                  front: MobileWidget(
+                    size: size,
+                  ),
+                  back: Consumer<ControllerClass>(
+                      builder: (context, snapshot, _) {
+                    print("@@@@@@@@@@@@@@@@ ${snapshot.pages.length} ");
+                    CustomWidget val =
+                        snapshot.pages[snapshot.activePage].widgetTree;
+                    // print(val.toJson().toString());
+                    return Container(
+                      //depth: 25,
+                      height: size.height * 0.75,
+                      width: size.width * 0.25,
+                      child: ListView(
+                        children: <Widget>[
+                          Text(val.code),
+                        ],
+                      ),
+                    );
+                  }),
+                ),
+                SizedBox(
+                  height: size.shortestSide * 0.02,
+                ),
+              ],
+            ),
+          ),
+          NeuCard(
+            bevel: 10,
+            decoration: NeumorphicDecoration(
+              color: neuBackground,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(radius),
+                  bottomLeft: Radius.circular(radius)),
+            ),
+            // customBorderRadius:
+            // borderRadius: radius,
+            // color: neuBackground,
+            width: size.width * 0.3,
+            child: RightWindow(
+              size: size,
+            ),
+          ),
+
+          // })
+        ],
       ),
     );
   }
@@ -273,6 +335,7 @@ class _RightWindowState extends State<RightWindow> {
       height: widget.size.height,
       alignment: Alignment.center,
       child: Consumer<ControllerClass>(builder: (context, snapshot, _) {
+        // print("INSIDE HERE ${snapshot == null} ");
         return snapshot.properties(context);
       }),
     );

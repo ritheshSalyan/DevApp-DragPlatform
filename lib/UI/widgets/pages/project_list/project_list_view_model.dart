@@ -6,6 +6,7 @@ import 'package:flutter_drag_and_drop/UI/widgets/pages/project_list/create_proje
 import 'package:flutter_drag_and_drop/controller/project/project_service.dart';
 import 'package:flutter_drag_and_drop/home_page.dart';
 import 'package:flutter_drag_and_drop/models/project.dart';
+import 'package:flutter_drag_and_drop/roure.dart';
 import 'package:provider/provider.dart';
 
 class ProjectListViewModel with ChangeNotifier {
@@ -50,12 +51,14 @@ class ProjectListViewModel with ChangeNotifier {
   }
 
   void moveToBuilding(BuildContext context, Project project) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => DragDrop(
-          project: project,
-        ),
-      ),
+    Navigator.of(context).pushNamed(
+      BUILD_ROUTE,
+      arguments: project
+      // MaterialPageRoute(
+      //   builder: (_) => DragDrop(
+      //     project: project,
+      //   ),
+      // ),
     );
   }
 }

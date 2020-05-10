@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_counter/flutter_counter.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
+import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/multi_choice_selector.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:provider/provider.dart';
 
 class CustomText with CustomWidget {
   String data = "hello";
@@ -41,6 +43,7 @@ class CustomText with CustomWidget {
   Widget properties(BuildContext context,_) {
     return ListView(
       children: <Widget>[
+        // Provider.of<ControllerClass>(context,listen: false).
         TextField(
           onChanged: (string) {
             data = string;
