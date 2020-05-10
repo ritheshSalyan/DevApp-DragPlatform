@@ -4,6 +4,7 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/class_model_gener
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/arithmatic/addition.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/custom_print.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/update_ui.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/variables/variables.dart';
 
 class CodeBuilder extends StatefulWidget {
@@ -55,6 +56,20 @@ class _CodeBuilderState extends State<CodeBuilder> {
                     color: Colors.cyanAccent,
                   ),
                 ),
+                Draggable<CustomInstruction>(
+                  data: CustomUpdateUi(),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    child: Text("notify"),
+                    color: Colors.cyanAccent,
+                  ),
+                  feedback: Container(
+                    width: 50,
+                    height: 50,
+                    color: Colors.cyanAccent,
+                  ),
+                ),
                 Draggable<CustomFunction>(
                   data: CustomFunction(""),
                   child: Container(
@@ -70,7 +85,7 @@ class _CodeBuilderState extends State<CodeBuilder> {
                   ),
                 ),
                 Draggable<CustomVariables>(
-                  data: CustomConstInt(variableValue: 20),
+                  data: CustomConstInt(variableValue: 1),
                   child: Container(
                     width: 50,
                     height: 50,

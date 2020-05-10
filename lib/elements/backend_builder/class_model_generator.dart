@@ -15,12 +15,36 @@ class CustomClassModel {
   }
   List<CustomFunction> functions;
   List<CustomVariables> globalVariables = [];
+    String getClassName() {
+    String classname =
+        pageName.substring(0, 1).toUpperCase() + pageName.substring(1).toLowerCase()+"ViewModel";
+    return classname;
+  }
 
   String get code => '''
-        class $pageName {
-          ${functions.first.code}
-        }
+import 'package:flutter/foundation.dart';
+
+class ${getClassName()} with with ChangeNotifier {
+  ${decarationCodeGeneration()}
+
+  ${functionCodeGeneration()}
+}
    ''';
+  String decarationCodeGeneration() {
+    String code = "";
+    for (var item in globalVariables) {
+      code += "${item.type} ${item.name} = ${item.initialValue} ;";
+    }
+    return code;
+  }
+
+  String functionCodeGeneration() {
+    String fcode = "";
+    for (var item in functions) {
+      fcode += item.code+"\n\n";
+    }
+    return fcode;
+  }
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -45,7 +69,7 @@ class CustomClassModel {
                           )),
                 ),
                 RaisedButton(onPressed: () {
-                  functions.first.execute();
+                  functions.first.execute(context);
                 })
               ],
             ),
@@ -53,9 +77,9 @@ class CustomClassModel {
               width: size.width * 0.25,
               height: size.height, //* 0.75,
               color: Colors.blue,
-              child: ListView.builder(
-                  itemCount: functions.length,
-                  itemBuilder: (context, i) => Text(functions[i].code)),
+              child: SingleChildScrollView(
+                child: Text(code),
+              ),
             ),
           ],
         );

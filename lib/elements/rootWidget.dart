@@ -139,7 +139,14 @@ import 'package:flutter/material.dart';
 class ${getClassName()} extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-      return ${child != null ? child.code : "Scaffold()"}
+    return ChangeNotifierProvider<${getClassName()}ViewModel>(
+      create:(_)=>${getClassName()}ViewModel(),
+      child:Consumer<>(
+        builder:(context,viewModel,_){
+          return ${child != null ? child.code : "Scaffold()"};
+        }
+      )
+    );
   }
 }  '''; //throw UnimplementedError();
 

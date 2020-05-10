@@ -23,7 +23,7 @@ class CustomFunction {
   String instructionCodeGeneration() {
     String instuctionCode = "";
     for (var inst in instructionSet) {
-      instuctionCode += inst.code + ";\n";
+      instuctionCode += inst.code + "\n";
     }
 
     return instuctionCode;
@@ -31,9 +31,9 @@ class CustomFunction {
 
   String decarationCodeGeneration() {
     String code = "";
-    for (var item in localVariables) {
-      code += "${item.type} ${item.name} = ${item.initialValue} ;";
-    }
+    // for (var item in localVariables) {
+    //   code += "${item.type} ${item.name} = ${item.initialValue} ;";
+    // }
     return code;
   }
 
@@ -79,9 +79,9 @@ class CustomFunction {
     Provider.of<ControllerClass>(context, listen: false).notify();
   }
 
-  void execute() {
+  void execute(BuildContext context) {
     for (var inst in instructionSet) {
-      inst.performOperation(this);
+      inst.performOperation(context,this);
     }
   }
 }

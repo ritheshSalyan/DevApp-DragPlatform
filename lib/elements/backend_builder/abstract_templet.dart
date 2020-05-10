@@ -3,7 +3,7 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.d
 
 mixin CustomInstruction {
   String get code;
-  void performOperation(CustomFunction function);
+  void performOperation(BuildContext context, CustomFunction customFunction);
   Widget build(
       BuildContext context, //CustomClassModel classModel,
       CustomFunction function);

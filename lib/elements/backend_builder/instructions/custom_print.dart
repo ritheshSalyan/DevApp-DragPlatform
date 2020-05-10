@@ -39,7 +39,7 @@ class CustomPrint with CustomInstruction {
   String get code => '''print(\'\$\{${a?.name ?? ""}\}\')  ''';
 
   @override
-  void performOperation(CustomFunction function) {
+  void performOperation(_,CustomFunction function) {
     print("${a.value}");
   }
 

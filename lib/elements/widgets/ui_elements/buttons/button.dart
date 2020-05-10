@@ -37,7 +37,7 @@ class CustomButton with CustomWidget {
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return RaisedButton(
         onPressed: () {
-          function.execute();
+          function.execute(context);
           // if (navigateTo == null) {
           //   return;
           // }
@@ -79,7 +79,7 @@ class CustomButton with CustomWidget {
         Consumer<ControllerClass>(
           builder: (context, value, child) {
             return DropdownButton<CustomFunction>(
-              value: function,
+                value: function,
                 items: List<DropdownMenuItem<CustomFunction>>.from(value
                     .pages[value.activePage].classModel.functions
                     .map((e) => DropdownMenuItem<CustomFunction>(
@@ -111,7 +111,9 @@ class CustomButton with CustomWidget {
   @override
   // TODO: implement code
   String get code => '''RaisedButton(
-        onPressed: () {},
+        onPressed: () {
+         ${function != null ? "viewModel." + function.functionName + "();" : ""}
+        },
         ${child == null ? "" : "child:" + child.code + ','}
       )''';
 

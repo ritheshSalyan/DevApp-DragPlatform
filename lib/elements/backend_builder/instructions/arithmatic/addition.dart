@@ -86,7 +86,7 @@ class CustomArithmaticOperation with CustomInstruction {
       ''' ${c?.name??"_"} =  ${a?.name??0} ${getOperator(type)} ${b?.name??0} ;''';
 
   @override
-  void performOperation(CustomFunction function) {
+  void performOperation(_,CustomFunction function) {
     // print("Inside Addition");
     c.value = getResult(type); //a.value + b.value;
   }

@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_counter/flutter_counter.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/responsive_textfield/responsive_textfield.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/responsive_textfield/textfield_enums.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/multi_choice_selector.dart';
+import 'package:flutter_drag_and_drop/models/page.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 
 class CustomText with CustomWidget {
   String data = "hello";
+  CustomVariables variables;
   Color color = Colors.black;
   TextAlign textAlign = TextAlign.left;
   CustomText();
   double fontSize = 13;
   FontWeight fontWeight = FontWeight.w400;
+  bool isVar = false;
   @override
   Widget build(context) {
     // print("data $this");
     return Text(
-      "$data",
+      "${isVar?variables?.value??"":data}",
       textAlign: textAlign,
       style: TextStyle(
         color: color,
@@ -40,28 +46,51 @@ class CustomText with CustomWidget {
   get name => "Text";
 
   @override
-  Widget properties(BuildContext context,_) {
+  Widget properties(BuildContext context, CustomPage page) {
     return ListView(
       children: <Widget>[
         // Provider.of<ControllerClass>(context,listen: false).
-        TextField(
-          onChanged: (string) {
-            data = string;
-            print(data);
-            super.properties(context,_);
-          },
-        ),
+        DropdownButton<CustomVariables>(
+            value: variables,
+            items: List<DropdownMenuItem<CustomVariables>>.from(page
+                .classModel.globalVariables
+                .map((e) => DropdownMenuItem<CustomVariables>(
+                      child: Text(e.name),
+                      value: e,
+                    ))),
+            onChanged: (newFunction) {
+              variables = newFunction;
+              isVar = true;
+              super.properties(context, page);
+            }),
+        // page.classModel.globalVariables.forEach((element) {}),
+        Text("OR"),
+        ResponsiveTextField(
+            validate: (string) {
+              data = string;
+              print(data);
+              isVar = false;
+              super.properties(context, page);
+              return TextFieldState.VALID;
+            },
+            setMessage: (_, __) => null),
+
+        // TextField(
+        //   onChanged: (string) {
+
+        //   },
+        // ),
         CustomColorPicker(
             color: color,
             lable: "Choose Text Color",
             onSelected: (color) {
               this.color = color;
-              super.properties(context,_);
+              super.properties(context, page);
             }),
         CustomNeumorpicRadio(
           onSelect: (select) {
             textAlign = select;
-            super.properties(context,_);
+            super.properties(context, page);
           },
           initialSelect: textAlign,
           lable: "Alignment",
@@ -116,7 +145,7 @@ class CustomText with CustomWidget {
 
                 fontSize = value;
                 // refresh();
-                super.properties(context,_);
+                super.properties(context, page);
               },
             ),
           ],
@@ -137,7 +166,7 @@ class CustomText with CustomWidget {
                     )),
             onChanged: (fw) {
               fontWeight = fw;
-              super.properties(context,_);
+              super.properties(context, page);
             }),
       ],
     );
@@ -145,7 +174,7 @@ class CustomText with CustomWidget {
 
   @override
   String get code => ''' Text(
-      "$data",
+      ${isVar?"viewModel."+variables?.name??"":data}
       textAlign: $textAlign,
       style: TextStyle(
         color: $color,
