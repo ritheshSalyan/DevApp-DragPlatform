@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/responsive_textfield/responsive_textfield.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/responsive_textfield/textfield_enums.dart';
+import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
@@ -15,9 +16,10 @@ class CustomClassModel {
   }
   List<CustomFunction> functions;
   List<CustomVariables> globalVariables = [];
-    String getClassName() {
-    String classname =
-        pageName.substring(0, 1).toUpperCase() + pageName.substring(1).toLowerCase()+"ViewModel";
+  String getClassName() {
+    String classname = pageName.substring(0, 1).toUpperCase() +
+        pageName.substring(1).toLowerCase() +
+        "ViewModel";
     return classname;
   }
 
@@ -41,49 +43,41 @@ class ${getClassName()} with with ChangeNotifier {
   String functionCodeGeneration() {
     String fcode = "";
     for (var item in functions) {
-      fcode += item.code+"\n\n";
+      fcode += item.code + "\n\n";
     }
     return fcode;
   }
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return DragTarget<CustomFunction>(
-      onAccept: (data) {
-        functions.add(data.copy("function${functions.length}"));
-      },
-      builder: (BuildContext context, List<CustomFunction> candidateData,
-          List<dynamic> rejectedData) {
-        return Row(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Container(
-                  width: size.width * 0.5,
-                  height: size.height * 0.5, //* 0.75,
-                  color: Colors.blue,
-                  child: ListView.builder(
-                      itemCount: functions.length,
-                      itemBuilder: (context, i) => functions[i].build(
-                            context,
-                          )),
+    return NeuCard(
+      curveType: CurveType.emboss,
+      color: neuBackground,
+
+          child: DragTarget<CustomFunction>(
+        onAccept: (data) {
+          functions.add(data.copy("function${functions.length}"));
+        },
+        builder: (BuildContext context, List<CustomFunction> candidateData,
+            List<dynamic> rejectedData) {
+          return Container(
+            width: size.width * 0.75,
+            height: size.height, //* 0.75,
+            color: Colors.transparent,
+            child: Stack(
+              // itemCount: functions.length,
+              // itemBuilder: (context, i) =>
+              children: List<Widget>.from(
+                functions.map(
+                  (f) => f.build(
+                    context,
+                  ),
                 ),
-                RaisedButton(onPressed: () {
-                  functions.first.execute(context);
-                })
-              ],
-            ),
-            Container(
-              width: size.width * 0.25,
-              height: size.height, //* 0.75,
-              color: Colors.blue,
-              child: SingleChildScrollView(
-                child: Text(code),
               ),
             ),
-          ],
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -115,10 +109,11 @@ class _VariableAddingWidgetState extends State<VariableAddingWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.height * 0.25,
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.25,
       child: Form(
         key: _formKey,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             ResponsiveTextField(
                 lableText: "Name",

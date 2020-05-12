@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 
 mixin CustomInstruction {
+  // Offset get position;
+  // set position(Offset pos);
+
   String get code;
   void performOperation(BuildContext context, CustomFunction customFunction);
   Widget build(
-      BuildContext context, //CustomClassModel classModel,
+      BuildContext context, 
       CustomFunction function);
   CustomInstruction copy();
 }

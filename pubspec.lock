@@ -404,12 +404,10 @@ packages:
   reorderables:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "3f0c2a2a5d8facf427ee3ca8f0d91f6f6e4fa586"
-      url: "https://github.com/ritheshSalyan/reorderables.git"
-    source: git
-    version: "0.2.12"
+      name: reorderables
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2"
   responsive_builder:
     dependency: "direct main"
     description:
