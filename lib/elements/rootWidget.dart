@@ -83,6 +83,7 @@ class CustomRootWidget with CustomWidget {
   @override
   Widget properties(BuildContext context,CustomPage page) {
     return ListView(
+      controller: ScrollController(),
       children: <Widget>[
         ResponsiveTextField(
           controller: nameController,

@@ -98,6 +98,7 @@ class CustomContainer with CustomWidget {
     print("Properitis called");
 
     return ListView(
+      controller: ScrollController(),
       children: <Widget>[
         CustomColorPicker(
           color: color,

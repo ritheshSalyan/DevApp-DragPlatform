@@ -62,6 +62,7 @@ class CustomButton with CustomWidget {
   @override
   Widget properties(BuildContext context, CustomPage page) {
     return ListView(
+      controller: ScrollController(),
       children: <Widget>[
         // TextField(
         //   onChanged: (string) {

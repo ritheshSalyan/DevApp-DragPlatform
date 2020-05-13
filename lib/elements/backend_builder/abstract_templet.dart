@@ -4,7 +4,8 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.d
 mixin CustomInstruction {
   // Offset get position;
   // set position(Offset pos);
-
+  String get name;
+  Widget iconBuilder(BuildContext context);
   String get code;
   void performOperation(BuildContext context, CustomFunction customFunction);
   Widget build(

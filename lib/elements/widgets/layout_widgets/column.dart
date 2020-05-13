@@ -85,6 +85,7 @@ class CustomColumn with CustomWidget {
   @override
   Widget properties(BuildContext context,_) {
     return ListView(
+      controller: ScrollController(),
       children: <Widget>[
         TextField(
           onChanged: (string) {

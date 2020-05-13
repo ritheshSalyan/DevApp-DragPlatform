@@ -47,6 +47,25 @@ class CustomBlock {
     return CustomBlock();
   }
 
+//  List<BoxShadow> shadowList = ;
+  Color _getAdjustColor(Color baseColor, double amount) {
+    Map<String, int> colors = {
+      'r': baseColor.red,
+      'g': baseColor.green,
+      'b': baseColor.blue
+    };
+
+    colors = colors.map((key, value) {
+      if (value + amount < 0) {
+        return MapEntry(key, 0);
+      }
+      if (value + amount > 255) {
+        return MapEntry(key, 255);
+      }
+      return MapEntry(key, (value + amount).floor());
+    });
+    return Color.fromRGBO(colors['r'], colors['g'], colors['b'], 1);
+  }
   // void declareVariables(CustomVariables variables) {
   //   // if (localVariables..contains(variables)) {
   //   //   return;
@@ -83,9 +102,21 @@ class CustomBlock {
           ),
           child: Padding(
             padding: EdgeInsets.only(top: 20.0, left: 20, bottom: 10),
-            child: NeuCard(
-              curveType: CurveType.flat,
-              decoration: NeumorphicDecoration(
+            child: Container(
+              // curveType: CurveType.flat,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: _getAdjustColor(neuBackground, -10),
+                    offset: Offset(-10, -10),
+                    blurRadius: 10,
+                  ),
+                  BoxShadow(
+                    color: _getAdjustColor(neuBackground, 10),
+                    offset: Offset(10, 10),
+                    blurRadius: 10,
+                  )
+                ],
                 borderRadius: BorderRadius.circular(radius),
                 color: neuBackground,
               ),
@@ -105,6 +136,7 @@ class CustomBlock {
                       onReorder: (oldIndex, newIndex) {
                         LinkedListNode temp = instructions.removeAt(oldIndex);
                         instructions.insert(newIndex, temp);
+                        notify(context);
                       },
                       // itemCount: instructionSet.length,
                       // itemBuilder: (context, i) =>
@@ -118,6 +150,9 @@ class CustomBlock {
                           alignment: Alignment.topLeft,
                           padding: EdgeInsets.symmetric(vertical: 10),
 
+
+
+
                           // curveType: CurveType.emboss,
                           // decoration: NeumorphicDecoration(
                           //   borderRadius: BorderRadius.only(
@@ -125,6 +160,9 @@ class CustomBlock {
                           //       topLeft: Radius.circular(radius)),
                           //   color: neuBackground,
                           // ),
+
+
+
                           child: instructions[i]
                               .instruction
                               .build(context, function),

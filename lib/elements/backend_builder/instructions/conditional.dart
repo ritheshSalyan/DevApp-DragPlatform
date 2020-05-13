@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/instruction_block.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class CustomConditionalOperation with CustomInstruction {
   CustomVariables a, b;
@@ -140,6 +142,17 @@ class CustomConditionalOperation with CustomInstruction {
         break;
     }
   }
+@override
+  Widget iconBuilder(BuildContext context) {
+    return Icon(
+      MaterialIcons.call_split,
+      color: green,
+    );
+  }
+
+  @override
+  // TODO: implement name
+  String get name => "Condition";
 }
 
 enum ComparisonOperationType {

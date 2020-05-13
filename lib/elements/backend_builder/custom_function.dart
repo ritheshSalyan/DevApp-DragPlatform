@@ -76,9 +76,9 @@ class CustomFunction {
         feedback: Opacity(
           opacity: 0.5,
           child: Container(
-            width: size.width * 0.5,
-            height: size.height * 0.75,
-            color: Colors.red,
+            width: size.width * 0.25,
+            height: size.height * 0.25,
+            color: neuBackground //Colors.red,
             // child: ListView.builder(
             //     itemCount: instructionSet.length,
             //     itemBuilder: (context, i) =>
@@ -122,12 +122,13 @@ class CustomFunction {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     ReorderableColumn(
-                          //  scrollController: ScrollController(),                 // scrollController: controller,
+                    //  scrollController: ScrollController(),                 // scrollController: controller,
                       // mainAxisAlignment: MainAxisAlignment.start,
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       onReorder: (oldIndex, newIndex) {
-                       LinkedListNode temp = instructions.removeAt(oldIndex);
-                       instructions.insert(newIndex, temp);
+                        LinkedListNode temp = instructions.removeAt(oldIndex);
+                        instructions.insert(newIndex, temp);
+                        notify(context);
                       },
 
                       // itemCount: instructionSet.length,
@@ -149,7 +150,7 @@ class CustomFunction {
                           //       topLeft: Radius.circular(radius)),
                           //   color: neuBackground,
                           // ),
-  
+
                           child:
                               instructions[i].instruction.build(context, this),
                           // child: InstructionNode(

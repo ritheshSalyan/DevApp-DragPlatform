@@ -48,6 +48,7 @@ class CustomCard with CustomWidget {
   @override
   Widget properties(BuildContext context,page) {
     return ListView(
+      controller: ScrollController(),
       children: <Widget>[
         TextField(
           onChanged: (string) {

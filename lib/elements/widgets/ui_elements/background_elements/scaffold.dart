@@ -113,6 +113,7 @@ class CustomScaffoldWithAppbar with CustomWidget {
   @override
   Widget properties(BuildContext context,page) {
     return ListView(
+      controller: ScrollController(),
       children: <Widget>[
         CustomColorPicker(
           color: backgroundColor,

@@ -1,37 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 
 class CustomUpdateUi with CustomInstruction {
-  // CustomVariables a;
-  // bool checkVariable(CustomVariables variables, CustomFunction function) {
-  //   if (!variables.type.toString().contains(CONST_PREFIX)) {
-  //     function.declareVariables(variables);
-  //   }
-  //   return !variables.type.toString().contains(CONST_PREFIX);
-  // }
-
   @override
   Widget build(BuildContext context, CustomFunction function) {
     return Row(
       children: <Widget>[
-        // DragTarget<CustomVariables>(
-        //   onAccept: (data) {
-        //     // checkVariable(data, function);
-        //     a = data;
-        //     print("INSIDE PRINT ${data.value} ");
-        //     function.notify(context);
-        //   },
-
-        //   builder: (context, candidateData, rejectedData) =>
         Container(
           width: 30,
           height: 30,
           color: Colors.yellow,
-          // child: /?.build(context),
         ),
         // )
       ],
@@ -52,4 +36,16 @@ class CustomUpdateUi with CustomInstruction {
   CustomInstruction copy() {
     return CustomUpdateUi();
   }
+
+  @override
+  Widget iconBuilder(BuildContext context) {
+    return Icon(
+      Octicons.desktop_download,
+      color: green,
+    );
+  }
+
+  @override
+  // TODO: implement name
+  String get name => "Update UI";
 }

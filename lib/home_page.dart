@@ -45,6 +45,7 @@ class _DragDropState extends State<DragDrop> {
         backgroundColor: neuBackground,
         // appBar:
         body: ListView(
+          controller: ScrollController(),
           children: <Widget>[
             AppBar(
               elevation: 0,
@@ -234,6 +235,7 @@ class UIGeneration extends StatelessWidget {
                       height: size.height * 0.75,
                       width: size.width * 0.25,
                       child: ListView(
+                        controller: ScrollController(),
                         children: <Widget>[
                           Text(val.code),
                         ],

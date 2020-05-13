@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_drag_and_drop/UI/widgets/common/block_preview.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/class_model_generator.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
@@ -27,125 +28,135 @@ class _CodeBuilderState extends State<CodeBuilder> {
           Row(
             children: <Widget>[
               widget.classModel.build(context),
-              Container(
-                width: 50,
-                child: Column(
-                  children: <Widget>[
-                    
-                    Draggable<CustomInstruction>(
-                      data: CustomPrint(),
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Text("prin"),
-                        color: Colors.cyanAccent,
-                      ),
-                      feedback: Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.cyanAccent,
-                      ),
-                    ),
-                    Draggable<CustomInstruction>(
-                      data: CustomUpdateUi(),
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Text("notify"),
-                        color: Colors.cyanAccent,
-                      ),
-                      feedback: Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.cyanAccent,
-                      ),
-                    ),
-                    Draggable<CustomInstruction>(
-                      data: CustomArithmaticOperation(),
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Text("inst"),
-                        color: Colors.cyanAccent,
-                      ),
-                      feedback: Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.cyanAccent,
-                      ),
-                    ),
-                    Draggable<CustomInstruction>(
-                      data: CustomConditionalOperation(),
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Text("Condition"),
-                        color: Colors.cyanAccent,
-                      ),
-                      feedback: Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.cyanAccent,
-                      ),
-                    ),
-                    Draggable<CustomFunction>(
-                      data: CustomFunction(""),
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Text("Fun"),
-                        color: Colors.amber,
-                      ),
-                      feedback: Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.amber,
-                      ),
-                    ),
-                    Draggable<CustomVariables>(
-                      data: CustomConstInt(variableValue: 1),
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        child: Text("int"),
-                        color: Colors.teal,
-                      ),
-                      feedback: Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.teal,
-                      ),
-                    ),
-                    Column(
-                      children:
-                          List<Widget>.from(widget.classModel.globalVariables.map(
-                        (e) => Draggable<CustomVariables>(
-                          data: e, //CustomConstInt(variableValue: 20),
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            child: Text(e.name),
-                            color: Colors.teal,
-                          ),
-                          feedback: Container(
-                            width: 50,
-                            height: 50,
-                            color: Colors.teal,
-                          ),
-                        ),
-                      )),
-                    ),
-                  ],
-                ),
-              ),
-              
-
+              BlockListing(widget: widget),
             ],
           ),
           Align(
-            alignment: Alignment.bottomRight,
-            child: widget.classModel.variableCreation(context)),
+              alignment: Alignment.bottomRight,
+              child: widget.classModel.variableCreation(context)),
         ],
+      ),
+    );
+  }
+}
+
+class BlockListing extends StatelessWidget {
+  const BlockListing({
+    Key key,
+    @required this.widget,
+  }) : super(key: key);
+
+  final CodeBuilder widget;
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height,
+      width: size.width * 0.15,
+      child: ListView(
+        controller: ScrollController(),
+        children: <Widget>[
+          InstructionDraggable(
+            instruction: CustomPrint(),
+          ),
+          InstructionDraggable(
+            instruction: CustomUpdateUi(),
+          ),
+          InstructionDraggable(
+            instruction: CustomArithmaticOperation(),
+          ),
+          InstructionDraggable(
+            instruction: CustomConditionalOperation(),
+          ),
+
+
+          Draggable<CustomFunction>(
+            data: CustomFunction(""),
+            child: Container(
+              width: 50,
+              height: 50,
+              child: Text("Fun"),
+              color: Colors.amber,
+            ),
+            feedback: Container(
+              width: 50,
+              height: 50,
+              color: Colors.amber,
+            ),
+          ),
+          Draggable<CustomVariables>(
+            data: CustomConstInt(variableValue: 1),
+            child: Container(
+              width: 50,
+              height: 50,
+              child: Text("int"),
+              color: Colors.teal,
+            ),
+            feedback: Container(
+              width: 50,
+              height: 50,
+              color: Colors.teal,
+            ),
+          ),
+          VariableListing(widget: widget),
+        ],
+      ),
+    );
+  }
+}
+
+class InstructionDraggable extends StatelessWidget {
+  const InstructionDraggable({Key key, @required this.instruction})
+      : super(key: key);
+  final CustomInstruction instruction;
+  @override
+  Widget build(BuildContext context) {
+    return Draggable<CustomInstruction>(
+      data: instruction, //CustomPrint(),
+      child: InstructionPreview(
+        customInstruction: instruction, // CustomPrint(),
+      ),
+      feedback: Opacity(
+        opacity: 0.5,
+        child: Material(
+          child: InstructionPreview(
+            customInstruction: instruction, // CustomPrint(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class VariableListing extends StatelessWidget {
+  const VariableListing({
+    Key key,
+    @required this.widget,
+  }) : super(key: key);
+
+  final CodeBuilder widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: List<Widget>.from(
+        widget.classModel.globalVariables.map(
+          (e) => Draggable<CustomVariables>(
+            data: e, //CustomConstInt(variableValue: 20),
+            child: Container(
+              width: 50,
+              height: 50,
+              child: Text(e.name),
+              color: Colors.teal,
+            ),
+            feedback: Container(
+              width: 50,
+              height: 50,
+              color: Colors.teal,
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -50,6 +50,7 @@ class HomePage extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           child: ListView.builder(
+      controller: ScrollController(),
                               shrinkWrap: true,
                               itemCount: 10,
                               itemBuilder: (context, i) => Text(i.toString(),

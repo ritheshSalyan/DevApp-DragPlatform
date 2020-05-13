@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 
@@ -47,4 +48,13 @@ class CustomPrint with CustomInstruction {
   CustomInstruction copy() {
     return CustomPrint();
   }
+
+  @override
+  Widget iconBuilder(BuildContext context) {
+    return Icon(Icons.description,color: green);
+  }
+
+  @override
+  // TODO: implement name
+  String get name => "Print";
 }

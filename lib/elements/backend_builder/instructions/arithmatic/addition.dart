@@ -3,6 +3,7 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 
 import 'package:flutter_drag_and_drop/constants.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class CustomArithmaticOperation with CustomInstruction {
   CustomVariables a, b, c;
@@ -120,6 +121,18 @@ class CustomArithmaticOperation with CustomInstruction {
         break;
     }
   }
+
+@override
+  Widget iconBuilder(BuildContext context) {
+    return Icon(
+      SimpleLineIcons.calculator,
+      color: green,
+    );
+  }
+
+  @override
+  // TODO: implement name
+  String get name => "Arithmatic Operation";
 }
 
 enum ArithmaticOperationType {

@@ -48,6 +48,7 @@ class CustomText with CustomWidget {
   @override
   Widget properties(BuildContext context, CustomPage page) {
     return ListView(
+      controller: ScrollController(),
       children: <Widget>[
         // Provider.of<ControllerClass>(context,listen: false).
         DropdownButton<CustomVariables>(

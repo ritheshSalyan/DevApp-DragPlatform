@@ -3,7 +3,7 @@ import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
-import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
+// import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/multi_choice_selector.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
@@ -62,6 +62,7 @@ class CustomListView with CustomWidget {
                   ]),
             )
           : ListView(
+      controller: ScrollController(),
               scrollDirection: scrollDirection,
               // needsLongPressDraggable: false,
               // onReorder: (int oldIndex, int newIndex) {
@@ -95,6 +96,7 @@ class CustomListView with CustomWidget {
   @override
   Widget properties(BuildContext context,page) {
     return ListView(
+      controller: ScrollController(),
       children: <Widget>[
         Text("ListView Properties"),
         CustomNeumorpicRadio(
@@ -186,6 +188,7 @@ class CustomListView with CustomWidget {
       height: constraints.height * 0.9,
       child: ListView(
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
+      controller: ScrollController(),
         children: <Widget>[
           Container(
             width: constraints.width * 0.9,
