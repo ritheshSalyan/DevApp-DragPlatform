@@ -28,6 +28,7 @@ class CustomRow with CustomWidget {
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
       return ReorderableRow(
+      scrollController: ScrollController(),
         needsLongPressDraggable: false,
         onReorder: (int oldIndex, int newIndex) {
           addChild(context, children.removeAt(oldIndex), position: newIndex);

@@ -91,6 +91,130 @@ class CustomBlock {
       },
       builder: (BuildContext context, List<CustomInstruction> candidateData,
           List<dynamic> rejectedData) {
+               return Container(
+              //   NeuCard(
+              // curveType: CurveType.flat,
+              // decoration: NeumorphicDecoration(
+              //   borderRadius: BorderRadius.circular(radius),
+              //   color: neuBackground,
+              // ),
+              // child: Padding(
+              //   padding: EdgeInsets.only(
+              //     top: radius + radius,
+              //     bottom: radius + radius,
+              //     left: 15.0,
+              //   ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    NeuCard(
+                      width: 50,
+                      curveType: CurveType.flat,
+                      bevel: 5,
+                      decoration: NeumorphicDecoration(
+                        
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(radius), bottomLeft: Radius.circular(radius) ),
+                          color: neuBackground,
+                          ),
+                    ),
+                       Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                            Container(
+                              // key: ValueKey(i*randomNo),
+                                width: size.width * 0.25,
+                              height: size.height * 0.1,
+                              decoration: BoxDecoration(
+                                color: neuBackground,
+                                 borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(radius),
+                                    // topLeft: Radius.circular(radius)
+                                    ),
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(-1, -6),
+                                      color: Colors.white,
+                                      blurRadius: 6
+                                  ),
+                                   BoxShadow(
+                                      offset: Offset(3, 5),
+                                      color: Colors.grey[100],
+                                      blurRadius: 5
+                                  ),
+                                ]
+                              ),
+                              
+                              ),
+                          ReorderableColumn(
+                             scrollController: ScrollController(),                 // scrollController: controller,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            onReorder: (oldIndex, newIndex) {
+                              LinkedListNode temp =
+                                  instructions.removeAt(oldIndex);
+                              instructions.insert(newIndex, temp);
+                              notify(context);
+                            },
+
+
+                            children: List<Widget>.generate(
+                              instructions.length,
+                              (int i) => Container(
+                                key: ValueKey(i * randomNo),
+                                color: neuBackground,
+                                alignment: Alignment.topLeft,
+                                padding: EdgeInsets.symmetric(vertical: 10),
+
+                        
+                                child: instructions[i]
+                                    .instruction
+                                    .build(context, function),
+                               
+                              ),
+                            ),
+                          ),
+                               Container(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              width: size.width * 0.25,
+                              height: size.height * 0.1,
+
+                                color: Colors.transparent,
+                              ),
+                           Container(
+                              // key: ValueKey(i*randomNo),
+                                width: size.width * 0.25,
+                              height: size.height * 0.1,
+                              decoration: BoxDecoration(
+                                color: neuBackground,
+                                 borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(radius),
+                                    // topLeft: Radius.circular(radius)
+                                    ),
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(-1, -6),
+                                      color: _getAdjustColor(neuBackground, -10),//Colors.white,
+                                      blurRadius: 6
+                                  ),
+                                   BoxShadow(
+                                      offset: Offset(3, 5),
+                                      color:_getAdjustColor(neuBackground, -10),// Colors.grey[100],
+                                      blurRadius: 5
+                                  ),
+                                ]
+                              ),
+                              
+                              ),
+                        ],
+                      ),
+                    // ),
+                  ],
+                ),
+              ),
+              // ),
+            );
         return NeuCard(
           curveType: CurveType.emboss,
           // color: neuBackground,
@@ -207,6 +331,8 @@ class CustomBlock {
             ),
           ),
         );
+     
+     
       },
     );
   }

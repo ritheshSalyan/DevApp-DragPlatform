@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/arithmatic/addition.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/instruction_block.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:neumorphic/neumorphic.dart';
 
 class CustomConditionalOperation with CustomInstruction {
   CustomVariables a, b;
@@ -16,16 +18,20 @@ class CustomConditionalOperation with CustomInstruction {
   }
 
   CustomBlock trueBlock = CustomBlock();
+
   @override
   Widget build(BuildContext context, CustomFunction function) {
     return Container(
       // width: 150,
       // height: ,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            width:500,
-                      child: Row(
+            // width:500,
+            color: neuBackground,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -44,19 +50,27 @@ class CustomConditionalOperation with CustomInstruction {
                 //   ),
                 // ),
                 // Text("="),
-                DragTarget<CustomVariables>(
+                InstuctionVariablePlaceHolder(
                   onAccept: (data) {
                     checkVariable(data, function);
                     a = data;
                     function.notify(context);
                   },
-                  builder: (context, candidateData, rejectedData) => Container(
-                    width: 30,
-                    height: 30,
-                    color: Colors.yellow,
-                    child: a?.build(context),
-                  ),
+                  child: a?.build(context),
                 ),
+                // DragTarget<CustomVariables>(
+                //   onAccept: (data) {
+                //     checkVariable(data, function);
+                //     a = data;
+                //     function.notify(context);
+                //   },
+                //   builder: (context, candidateData, rejectedData) => Container(
+                //     width: 30,
+                //     height: 30,
+                //     color: Colors.yellow,
+                //     child: a?.build(context),
+                //   ),
+                // ),
                 SizedBox(width: 10),
                 // Text("${getOperator(type)}"),
                 Flexible(
@@ -76,19 +90,27 @@ class CustomConditionalOperation with CustomInstruction {
                     },
                   ),
                 ),
-                DragTarget<CustomVariables>(
+                InstuctionVariablePlaceHolder(
                   onAccept: (data) {
                     checkVariable(data, function);
                     b = data;
                     function.notify(context);
                   },
-                  builder: (context, candidateData, rejectedData) => Container(
-                    width: 30,
-                    height: 30,
-                    color: Colors.yellow,
-                    child: b?.build(context),
-                  ),
-                )
+                  child: b?.build(context),
+                ),
+                // DragTarget<CustomVariables>(
+                //   onAccept: (data) {
+                //     checkVariable(data, function);
+                //     b = data;
+                //     function.notify(context);
+                //   },
+                //   builder: (context, candidateData, rejectedData) => Container(
+                //     width: 30,
+                //     height: 30,
+                //     color: Colors.yellow,
+                //     child: b?.build(context),
+                //   ),
+                // )
               ],
             ),
           ),
@@ -142,7 +164,8 @@ class CustomConditionalOperation with CustomInstruction {
         break;
     }
   }
-@override
+
+  @override
   Widget iconBuilder(BuildContext context) {
     return Icon(
       MaterialIcons.call_split,
@@ -162,7 +185,6 @@ enum ComparisonOperationType {
   GRATER_THAN_OR_EQUAL_TO,
   LESS_THAN,
   LESS_THAN_OR_EQUAL_TO,
-  // MODULO,
 }
 
 String getOperator(ComparisonOperationType type) {

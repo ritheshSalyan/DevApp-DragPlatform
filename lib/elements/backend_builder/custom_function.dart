@@ -76,14 +76,14 @@ class CustomFunction {
         feedback: Opacity(
           opacity: 0.5,
           child: Container(
-            width: size.width * 0.25,
-            height: size.height * 0.25,
-            color: neuBackground //Colors.red,
-            // child: ListView.builder(
-            //     itemCount: instructionSet.length,
-            //     itemBuilder: (context, i) =>
-            //         instructionSet[i].build(context, this)),
-          ),
+              width: size.width * 0.25,
+              height: size.height * 0.25,
+              color: neuBackground //Colors.red,
+              // child: ListView.builder(
+              //     itemCount: instructionSet.length,
+              //     itemBuilder: (context, i) =>
+              //         instructionSet[i].build(context, this)),
+              ),
         ),
         // child: CustomPaint(
         //   painter: MultipleLinePainter(instructions),
@@ -103,94 +103,129 @@ class CustomFunction {
           },
           builder: (BuildContext context, List<CustomInstruction> candidateData,
               List<dynamic> rejectedData) {
-            return NeuCard(
-              // width: size.width * 0.5,
-              // height: size.height * 0.75,
-              curveType: CurveType.flat,
-              decoration: NeumorphicDecoration(
-                borderRadius: BorderRadius.circular(radius),
-                color: neuBackground,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: radius + radius,
-                  bottom: radius + radius,
-                  left: 15.0,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            return Container(
+              //   NeuCard(
+              // curveType: CurveType.flat,
+              // decoration: NeumorphicDecoration(
+              //   borderRadius: BorderRadius.circular(radius),
+              //   color: neuBackground,
+              // ),
+              // child: Padding(
+              //   padding: EdgeInsets.only(
+              //     top: radius + radius,
+              //     bottom: radius + radius,
+              //     left: 15.0,
+              //   ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    ReorderableColumn(
-                    //  scrollController: ScrollController(),                 // scrollController: controller,
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      onReorder: (oldIndex, newIndex) {
-                        LinkedListNode temp = instructions.removeAt(oldIndex);
-                        instructions.insert(newIndex, temp);
-                        notify(context);
-                      },
-
-                      // itemCount: instructionSet.length,
-                      // itemBuilder: (context, i) =>
-                      // instructionSet[i].build(context, this)
-
-                      children: List<Widget>.generate(
-                        instructions.length,
-                        (int i) => Container(
-                          key: ValueKey(i * randomNo),
-                          color: neuBackground,
-                          alignment: Alignment.topLeft,
-                          padding: EdgeInsets.symmetric(vertical: 10),
-
-                          // curveType: CurveType.emboss,
-                          // decoration: NeumorphicDecoration(
-                          //   borderRadius: BorderRadius.only(
-                          //       bottomLeft: Radius.circular(radius),
-                          //       topLeft: Radius.circular(radius)),
-                          //   color: neuBackground,
-                          // ),
-
-                          child:
-                              instructions[i].instruction.build(context, this),
-                          // child: InstructionNode(
-                          //   // position: map.values.elementAt(i),
-                          //   // nodePoint:nodePoint[i],
-                          //   // connectTo:
-                          //   function: this,
-                          //   linkedNode: instructions[i],
-                          //   shouldpositionUpdate: (newPosition) {
-                          //     // print("New Position $newPosition");
-                          //     if (newPosition.dx > (x + size.width * 0.5) ||
-                          //         newPosition.dy > (y + size.height * 0.75)) {
-                          //       // map[e] = newPosition;
-                          //       return false;
-                          //     }
-                          //     instructions[i].updatePosition(
-                          //         Offset(newPosition.dx - x, newPosition.dy - y),
-                          //         Offset(x, y));
-                          //     return true;
-                          //   },
-                          //   // child:  map.keys.elementAt(i).build(context, this),
-                          // ),
-                        ),
-                      ),
-                    ),
                     NeuCard(
-                        // key: ValueKey(i*randomNo),
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        width: size.width * 0.25,
-                        height: size.height * 0.1,
-                        curveType: CurveType.emboss,
-                        decoration: NeumorphicDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(radius),
-                              topLeft: Radius.circular(radius)),
+                      width: 50,
+                      curveType: CurveType.flat,
+                      bevel: 5,
+                      decoration: NeumorphicDecoration(
+                        
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(radius), bottomLeft: Radius.circular(radius) ),
                           color: neuBackground,
-                        )),
+                          ),
+                    ),
+                       Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                            Container(
+                              // key: ValueKey(i*randomNo),
+                                width: size.width * 0.25,
+                              height: size.height * 0.1,
+                              decoration: BoxDecoration(
+                                color: neuBackground,
+                                 borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(radius),
+                                    // topLeft: Radius.circular(radius)
+                                    ),
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(-1, -6),
+                                      color: Colors.white,
+                                      blurRadius: 6
+                                  ),
+                                   BoxShadow(
+                                      offset: Offset(3, 5),
+                                      color: Colors.grey[100],
+                                      blurRadius: 5
+                                  ),
+                                ]
+                              ),
+                              
+                              ),
+                          ReorderableColumn(
+                            //  scrollController: ScrollController(),                 // scrollController: controller,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            onReorder: (oldIndex, newIndex) {
+                              LinkedListNode temp =
+                                  instructions.removeAt(oldIndex);
+                              instructions.insert(newIndex, temp);
+                              notify(context);
+                            },
+
+
+                            children: List<Widget>.generate(
+                              instructions.length,
+                              (int i) => Container(
+                                key: ValueKey(i * randomNo),
+                                color: Colors.transparent,
+                                alignment: Alignment.topLeft,
+                                padding: EdgeInsets.symmetric(vertical: 10),
+
+                        
+                                child: instructions[i]
+                                    .instruction
+                                    .build(context, this),
+                               
+                              ),
+                            ),
+                          ),
+                               Container(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              width: size.width * 0.25,
+                              height: size.height * 0.1,
+
+                                color: Colors.transparent,
+                              ),
+                           Container(
+                              // key: ValueKey(i*randomNo),
+                                width: size.width * 0.25,
+                              height: size.height * 0.1,
+                              decoration: BoxDecoration(
+                                color: neuBackground,
+                                 borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(radius),
+                                    // topLeft: Radius.circular(radius)
+                                    ),
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: Offset(-1, -6),
+                                      color: Colors.white,
+                                      blurRadius: 6
+                                  ),
+                                   BoxShadow(
+                                      offset: Offset(3, 5),
+                                      color: Colors.grey[100],
+                                      blurRadius: 5
+                                  ),
+                                ]
+                              ),
+                              
+                              ),
+                        ],
+                      ),
+                    // ),
                   ],
                 ),
               ),
+              // ),
             );
           },
         ),

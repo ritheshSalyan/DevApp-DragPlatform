@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/arithmatic/addition.dart';
 
 class CustomPrint with CustomInstruction {
   CustomVariables a;
@@ -17,30 +18,37 @@ class CustomPrint with CustomInstruction {
   Widget build(BuildContext context, CustomFunction function) {
     return Row(
       children: <Widget>[
-        DragTarget<CustomVariables>(
-          onAccept: (data) {
-            checkVariable(data, function);
-            a = data;
-            print("INSIDE PRINT ${data.value} ");
-            function.notify(context);
-          },
-          builder: (context, candidateData, rejectedData) => Container(
-            width: 30,
-            height: 30,
-            color: Colors.yellow,
+        InstuctionVariablePlaceHolder(
+            onAccept: (data) {
+              checkVariable(data, function);
+              a = data;
+              function.notify(context);
+            },
             child: a?.build(context),
           ),
-        )
+        // DragTarget<CustomVariables>(
+        //   onAccept: (data) {
+        //     checkVariable(data, function);
+        //     a = data;
+        //     print("INSIDE PRINT ${data.value} ");
+        //     function.notify(context);
+        //   },
+        //   builder: (context, candidateData, rejectedData) => Container(
+        //     width: 30,
+        //     height: 30,
+        //     color: Colors.yellow,
+        //     child: a?.build(context),
+        //   ),
+        // )
       ],
     );
   }
 
   @override
-  // TODO: implement code
   String get code => '''print(\'\$\{${a?.name ?? ""}\}\')  ''';
 
   @override
-  void performOperation(_,CustomFunction function) {
+  void performOperation(_, CustomFunction function) {
     print("${a.value}");
   }
 
@@ -51,7 +59,7 @@ class CustomPrint with CustomInstruction {
 
   @override
   Widget iconBuilder(BuildContext context) {
-    return Icon(Icons.description,color: green);
+    return Icon(Icons.description, color: green);
   }
 
   @override

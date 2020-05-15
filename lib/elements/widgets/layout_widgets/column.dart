@@ -36,6 +36,7 @@ class CustomColumn with CustomWidget {
       return Container(
         height: size.height,
         child: ReorderableColumn(
+      scrollController: ScrollController(),
           needsLongPressDraggable: false,
           onReorder: (int oldIndex, int newIndex) {
             addChild(context, children.removeAt(oldIndex), position: newIndex);

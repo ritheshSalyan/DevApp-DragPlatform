@@ -4,6 +4,33 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:neumorphic/neumorphic.dart';
 
+
+
+class InstructionDraggable extends StatelessWidget {
+  const InstructionDraggable({Key key, @required this.instruction})
+      : super(key: key);
+  final CustomInstruction instruction;
+  @override
+  Widget build(BuildContext context) {
+    return Draggable<CustomInstruction>(
+      data: instruction, //CustomPrint(),
+      child: InstructionPreview(
+        customInstruction: instruction, // CustomPrint(),
+      ),
+      feedback: Opacity(
+        opacity: 0.5,
+        child: Material(
+          child: InstructionPreview(
+            customInstruction: instruction, // CustomPrint(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
 class InstructionPreview extends StatelessWidget {
   final CustomInstruction customInstruction;
 
@@ -60,3 +87,5 @@ class InstructionPreview extends StatelessWidget {
     );
   }
 }
+
+

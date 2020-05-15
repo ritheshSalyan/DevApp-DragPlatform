@@ -4,6 +4,7 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.d
 
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:neumorphic/neumorphic.dart';
 
 class CustomArithmaticOperation with CustomInstruction {
   CustomVariables a, b, c;
@@ -18,74 +19,91 @@ class CustomArithmaticOperation with CustomInstruction {
   @override
   Widget build(BuildContext context, CustomFunction function) {
     return Container(
-      width: 150,
+      // width: 150,
       // height: ,
       color: neuBackground,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          DragTarget<CustomVariables>(
-            onAccept: (data) {
-              if (checkVariable(data, function)) {
-                c = data;
-                function.notify(context);
-              }
-            },
-            builder: (context, candidateData, rejectedData) => Container(
-              width: 30,
-              height: 30,
-              color: Colors.yellow,
+      child: Padding(
+        padding:  EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            InstuctionVariablePlaceHolder(
+              onAccept: (data) {
+                if (checkVariable(data, function)) {
+                  c = data;
+                  function.notify(context);
+                }
+              },
               child: c?.build(context),
             ),
-          ),
-          Text("="),
-          DragTarget<CustomVariables>(
-            onAccept: (data) {
-              checkVariable(data, function);
-              a = data;
-              function.notify(context);
-            },
-            builder: (context, candidateData, rejectedData) => Container(
-              width: 30,
-              height: 30,
-              color: Colors.yellow,
-              child: a?.build(context),
-            ),
-          ),
-          SizedBox(width: 10),
-          // Text("${getOperator(type)}"),
-          Flexible(
-            child: DropdownButton<ArithmaticOperationType>(
-              value: type,
-              items: List<DropdownMenuItem<ArithmaticOperationType>>.from(
-                ArithmaticOperationType.values.map(
-                  (e) => DropdownMenuItem<ArithmaticOperationType>(
-                    child: Text(getOperator(e)),
-                    value: e,
-                  ),
-                ),
-              ),
-              onChanged: (newType) {
-                type = newType;
+            // DragTarget<CustomVariables>(
+            //   onAccept: (data) {
+            //     if (checkVariable(data, function)) {
+            //       c = data;
+            //       function.notify(context);
+            //     }
+            //   },
+            //   builder: (context, candidateData, rejectedData) => Container(
+            //     width: 30,
+            //     height: 30,
+            //     color: Colors.yellow,
+            //     child: c?.build(context),
+            //   ),
+            // ),
+            SizedBox(width: 10),
+            Text("="),
+            SizedBox(width: 10),
+            InstuctionVariablePlaceHolder(
+              onAccept: (data) {
+                checkVariable(data, function);
+                a = data;
                 function.notify(context);
               },
+              child: a?.build(context),
             ),
-          ),
-          DragTarget<CustomVariables>(
-            onAccept: (data) {
-              checkVariable(data, function);
-              b = data;
-              function.notify(context);
-            },
-            builder: (context, candidateData, rejectedData) => Container(
-              width: 30,
-              height: 30,
-              color: Colors.yellow,
+            SizedBox(width: 10),
+            // Text("${getOperator(type)}"),
+            Flexible(
+              child: DropdownButton<ArithmaticOperationType>(
+                value: type,
+                items: List<DropdownMenuItem<ArithmaticOperationType>>.from(
+                  ArithmaticOperationType.values.map(
+                    (e) => DropdownMenuItem<ArithmaticOperationType>(
+                      child: Text(getOperator(e)),
+                      value: e,
+                    ),
+                  ),
+                ),
+                onChanged: (newType) {
+                  type = newType;
+                  function.notify(context);
+                },
+              ),
+            ),
+            InstuctionVariablePlaceHolder(
+              onAccept: (data) {
+                checkVariable(data, function);
+                b = data;
+                function.notify(context);
+              },
               child: b?.build(context),
             ),
-          )
-        ],
+            // DragTarget<CustomVariables>(
+            // onAccept: (data) {
+            //   checkVariable(data, function);
+            //   b = data;
+            //   function.notify(context);
+            // },
+            //   builder: (context, candidateData, rejectedData) => Container(
+            //     width: 30,
+            //     height: 30,
+            //     color: Colors.yellow,
+            //     child: b?.build(context),
+            //   ),
+            // )
+          ],
+        ),
       ),
     );
   }
@@ -122,7 +140,7 @@ class CustomArithmaticOperation with CustomInstruction {
     }
   }
 
-@override
+  @override
   Widget iconBuilder(BuildContext context) {
     return Icon(
       SimpleLineIcons.calculator,
@@ -133,6 +151,93 @@ class CustomArithmaticOperation with CustomInstruction {
   @override
   // TODO: implement name
   String get name => "Arithmatic Operation";
+}
+
+class InstuctionVariablePlaceHolder extends StatelessWidget {
+  const InstuctionVariablePlaceHolder({
+    Key key,
+    @required this.onAccept,
+    @required this.child,
+  }) : super(key: key);
+
+  final void Function(CustomVariables) onAccept;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return DragTarget<CustomVariables>(
+      onAccept: onAccept,
+      builder: (context, candidateData, rejectedData) => Row(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          NeuCard(
+              width: 20,
+              height: 20,
+              curveType:child!=null?CurveType.flat: CurveType.emboss,
+               bevel: child!=null?1: 10,
+              decoration: NeumorphicDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(25),
+                  topLeft: Radius.circular(25),
+                ),
+                color: neuBackground,
+              )
+              // decoration: BoxDecoration(
+              //   color: neuBackground,
+              //   boxShadow: [
+              //     BoxShadow(
+              //       offset: Offset(-5, -5),
+              //       color: Colors.white,
+              //       blurRadius: 6,
+              //     ),
+              //     BoxShadow(
+              //       offset: Offset(10, 10),
+              //       color: Colors.grey[300],
+              //       blurRadius: 20,
+              //     ),
+              //   ],
+              // borderRadius: BorderRadius.only(
+              //   bottomLeft: Radius.circular(25),
+              //   topLeft: Radius.circular(25),
+              // ),
+              // ),
+              ),
+          NeuCard(
+              width: MediaQuery.of(context).size.width * 0.1,
+              height: 50,
+              // decoration: BoxDecoration(
+              //   color: neuBackground,
+              //   boxShadow: [
+              //     BoxShadow(
+              //       offset: Offset(0, -10),
+              //       color: Colors.white,
+              //       blurRadius: 20,
+              //     ),
+              //     BoxShadow(
+              //       offset: Offset(10, 10),
+              //       color: Colors.grey[300],
+              //       blurRadius: 20,
+              //     ),
+              //   ],
+              // ),
+              bevel: child!=null?1: 10,
+              curveType:child!=null?CurveType.flat: CurveType.emboss,
+              decoration: NeumorphicDecoration(
+                // borderRadius: BorderRadius.only(
+                //   bottomLeft: Radius.circular(25),
+                //   topLeft: Radius.circular(25),
+                // ),
+                color: neuBackground,
+              ),
+              alignment: Alignment.center,
+              child: child // Text("${variable.name}"),
+              ),
+        ],
+      ),
+    );
+  }
 }
 
 enum ArithmaticOperationType {

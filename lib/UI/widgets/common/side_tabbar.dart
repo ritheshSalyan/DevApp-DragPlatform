@@ -31,8 +31,10 @@ class _CustomTabbarState extends State<CustomTabbar> {
     return NeuCard(
       curveType: CurveType.flat,
       color: neuBackground,
+      alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: List<Widget>.generate(
           titles.length,
           (index) => InkWell(

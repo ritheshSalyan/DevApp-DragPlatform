@@ -53,25 +53,19 @@ class ${getClassName()} with with ChangeNotifier {
     return NeuCard(
       curveType: CurveType.emboss,
       color: neuBackground,
-
-          child: DragTarget<CustomFunction>(
+      child: DragTarget<CustomFunction>(
         onAccept: (data) {
           functions.add(data.copy("function${functions.length}"));
         },
         builder: (BuildContext context, List<CustomFunction> candidateData,
             List<dynamic> rejectedData) {
-          return Container(
-            width: size.width * 0.75,
-            height: size.height, //* 0.75,
-            color: Colors.transparent,
-            child: Stack(
-              // itemCount: functions.length,
-              // itemBuilder: (context, i) =>
-              children: List<Widget>.from(
-                functions.map(
-                  (f) => f.build(
-                    context,
-                  ),
+          return Stack(
+            // itemCount: functions.length,
+            // itemBuilder: (context, i) =>
+            children: List<Widget>.from(
+              functions.map(
+                (f) => f.build(
+                  context,
                 ),
               ),
             ),
@@ -116,14 +110,23 @@ class _VariableAddingWidgetState extends State<VariableAddingWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             ResponsiveTextField(
-                lableText: "Name",
-                validate: (text) {
+              lableText: "Name",
+              validate: (text) {
+                varName = text;
+                if (RegExp(r'^[a-z][a-zA-Z_0-9]*$').hasMatch(text)) {
                   varName = text;
                   return TextFieldState.VALID;
-                },
-                setMessage: (_, __) {
+                }
+                return TextFieldState.ERROR;
+              },
+              setMessage: (TextFieldState fieldState, text) {
+                if (fieldState == TextFieldState.VALID) {
                   return null;
-                }),
+                }
+
+                return "Variable name can contain alpha Numeric character";
+              },
+            ),
             ResponsiveTextField(
                 lableText: "initial Value",
                 validate: (text) {
@@ -133,11 +136,17 @@ class _VariableAddingWidgetState extends State<VariableAddingWidget> {
                 setMessage: (_, __) {
                   return null;
                 }),
-            NeuButton(onPressed: () {
-              if (_formKey.currentState.validate()) {
-                widget.addVariable(varName, initialValue);
-              }
-            })
+            NeuButton(
+                child: Text("Create Variable",
+                    style: TextStyle(color: Colors.black)),
+                decoration: NeumorphicDecoration(
+                  color: neuBackground,
+                ),
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                    widget.addVariable(varName, initialValue);
+                  }
+                })
           ],
         ),
       ),
