@@ -5,6 +5,7 @@ import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
@@ -26,53 +27,56 @@ class CustomColumn with CustomWidget {
   Widget build(context) {
     Size size = Provider.of<ControllerClass>(context, listen: false).size;
     
-    return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-      print("CustomColumn");
-      addChild(
-        context,
-        data.copy(),
-      );
-    }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-      return Container(
-        height: size.height,
-        child: ReorderableColumn(
-      scrollController: ScrollController(),
-          needsLongPressDraggable: false,
-          onReorder: (int oldIndex, int newIndex) {
-            addChild(context, children.removeAt(oldIndex), position: newIndex);
-          },
-          children: children.isEmpty
-              ? <Widget>[
-                  EmptyRepresenter(
-                    key: ValueKey(0),
-                    width: size.width * 0.5,
-                    height: size.height / 3,
-                  ),
-                  EmptyRepresenter(
-                    key: ValueKey(1),
-                    width: size.width * 0.5,
-                    height: size.height / 3,
-                  ),
-                  EmptyRepresenter(
-                    key: ValueKey(2),
-                    width: size.width * 0.5,
-                    height: size.height / 3,
-                  ),
-                ]
-              : List.generate(children.length + accept.length, (i) {
-                  if (i < children.length) {
-                    return SizedBox(
-                        key: ValueKey(i), child: children[i].build(context));
-                  } else {
-                     return Container(
-                    key: ValueKey(i),
-                    child: accept[i - children.length ].build(context),
-                  );
-                  }
-                }),
-        ),
-      ); //currentWidget(type, child, context);
-    });
+    return WidgetSelection(
+      customWidget: this,
+          child: DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
+        print("CustomColumn");
+        addChild(
+          context,
+          data.copy(),
+        );
+      }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
+        return Container(
+          height: size.height,
+          child: ReorderableColumn(
+        scrollController: ScrollController(),
+            needsLongPressDraggable: false,
+            onReorder: (int oldIndex, int newIndex) {
+              addChild(context, children.removeAt(oldIndex), position: newIndex);
+            },
+            children: children.isEmpty
+                ? <Widget>[
+                    EmptyRepresenter(
+                      key: ValueKey(0),
+                      width: size.width * 0.5,
+                      height: size.height / 3,
+                    ),
+                    EmptyRepresenter(
+                      key: ValueKey(1),
+                      width: size.width * 0.5,
+                      height: size.height / 3,
+                    ),
+                    EmptyRepresenter(
+                      key: ValueKey(2),
+                      width: size.width * 0.5,
+                      height: size.height / 3,
+                    ),
+                  ]
+                : List.generate(children.length + accept.length, (i) {
+                    if (i < children.length) {
+                      return SizedBox(
+                          key: ValueKey(i), child: children[i].build(context));
+                    } else {
+                       return Container(
+                      key: ValueKey(i),
+                      child: accept[i - children.length ].build(context),
+                    );
+                    }
+                  }),
+          ),
+        ); //currentWidget(type, child, context);
+      }),
+    );
   }
 
   @override

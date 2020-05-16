@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:tree_view/tree_view.dart';
 
@@ -20,20 +21,23 @@ class CustomCard with CustomWidget {
 
   @override
   Widget build(context) {
-    return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-      print("CustomCard");
-      addChild(
-        context,
-        data.copy(),
-      );
-    }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-      return Card(
-        color: Colors.red,
-        child: child == null
-            ? null //Card()
-            : child.build(context), //Text("data"),
-      ); //currentWidget(type, child, context);
-    });
+    return WidgetSelection(
+      customWidget: this,
+          child: DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
+        print("CustomCard");
+        addChild(
+          context,
+          data.copy(),
+        );
+      }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
+        return Card(
+          color: Colors.red,
+          child: child == null
+              ? null //Card()
+              : child.build(context), //Text("data"),
+        ); //currentWidget(type, child, context);
+      }),
+    );
   }
 
   @override

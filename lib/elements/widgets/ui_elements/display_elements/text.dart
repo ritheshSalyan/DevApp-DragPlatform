@@ -8,6 +8,7 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/multi_choice_selector.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/models/page.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
@@ -24,13 +25,16 @@ class CustomText with CustomWidget {
   @override
   Widget build(context) {
     // print("data $this");
-    return Text(
-      "${isVar?variables?.value??"":data}",
-      textAlign: textAlign,
-      style: TextStyle(
-        color: color,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
+    return WidgetSelection(
+      customWidget: this,
+          child: Text(
+        "${isVar?variables?.value??"":data}",
+        textAlign: textAlign,
+        style: TextStyle(
+          color: color,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+        ),
       ),
     );
   }

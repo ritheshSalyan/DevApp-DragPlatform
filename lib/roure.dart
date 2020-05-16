@@ -30,8 +30,8 @@ class AppModule extends MainModule {
               cardColor: neuBackground,
               primaryColor: green,
             ),
-            child: CodeBuilder(classModel: CustomClassModel("pageName"),)
-            //   LandingPage(), //DragDrop(title: 'Flutter Demo Home Page'),// HomePage(),//
+            child:// CodeBuilder(classModel: CustomClassModel("pageName"),)
+              LandingPage(), //DragDrop(title: 'Flutter Demo Home Page'),// HomePage(),//
           ),
         ),
         Router(LOGIN_ROUTE,

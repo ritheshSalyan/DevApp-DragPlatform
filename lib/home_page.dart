@@ -51,19 +51,20 @@ class _DragDropState extends State<DragDrop> {
               elevation: 0,
               backgroundColor: Colors.transparent,
               iconTheme: IconThemeData(color: Colors.black),
-              title: Text("Titile", // widget.project.projectName ?? "",
+              title: Text(widget.project.projectName ?? "",
                   style: Theme.of(context).textTheme.headline6.copyWith(
                       color: Colors.black) //TextStyle(color: Colors.black),
                   ),
               actions: <Widget>[
                 Consumer<ControllerClass>(builder: (context, snapshot, _) {
                   return IconButton(
-                      icon: Icon(AntDesign.save),
-                      onPressed: () {
-                        print("Called Save Icon Press");
-                        // Provider.of<ControllerClass>(context, listen: false)
-                        snapshot.save(context);
-                      });
+                    icon: Icon(AntDesign.save),
+                    onPressed: () {
+                      print("Called Save Icon Press");
+                      // Provider.of<ControllerClass>(context, listen: false)
+                      snapshot.save(context);
+                    },
+                  );
                 }),
                 Consumer<ControllerClass>(builder: (context, snapshot, _) {
                   return snapshot.isUI
@@ -71,7 +72,10 @@ class _DragDropState extends State<DragDrop> {
                           decoration: NeumorphicDecoration(
                             color: neuBackground,
                           ),
-                          child: Text("Block"),
+                          child: Text(
+                            "Block",
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
                           onPressed: () {
                             // print("Called Save Icon Press");
                             // Provider.of<ControllerClass>(context, listen: false)
@@ -83,7 +87,8 @@ class _DragDropState extends State<DragDrop> {
                           decoration: NeumorphicDecoration(
                             color: neuBackground,
                           ),
-                          child: Text("UI"),
+                          child: Text("UI",
+                              style: Theme.of(context).textTheme.headline6),
                           onPressed: () {
                             // print("Called Save Icon Press");
                             // Provider.of<ControllerClass>(context, listen: false)

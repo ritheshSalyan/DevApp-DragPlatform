@@ -9,6 +9,7 @@ import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:flutter_drag_and_drop/models/page.dart';
 import 'package:provider/provider.dart';
@@ -52,22 +53,25 @@ class CustomRootWidget with CustomWidget {
   Widget build(context) {
     print("CustomScaffold");
 
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: child != null
-          ? child.build(context)
-          : DragTarget(onAccept: (CustomWidget data) {
-              // print("CustomScaffold");
-              addChild(
-                context,
-                data.copy(),
-              );
-            }, builder:
-              (context, List<CustomWidget> accept, List<dynamic> reject) {
-              return accept != null && accept.isNotEmpty
-                  ? accept.first.build(context)
-                  : EmptyRepresenter();
-            }),
+    return WidgetSelection(
+      customWidget: this,
+          child: Scaffold(
+        backgroundColor: backgroundColor,
+        body: child != null
+            ? child.build(context)
+            : DragTarget(onAccept: (CustomWidget data) {
+                // print("CustomScaffold");
+                addChild(
+                  context,
+                  data.copy(),
+                );
+              }, builder:
+                (context, List<CustomWidget> accept, List<dynamic> reject) {
+                return accept != null && accept.isNotEmpty
+                    ? accept.first.build(context)
+                    : EmptyRepresenter();
+              }),
+      ),
     );
   }
 

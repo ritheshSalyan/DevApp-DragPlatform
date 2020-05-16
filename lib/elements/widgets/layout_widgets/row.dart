@@ -3,6 +3,7 @@ import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:tree_view/tree_view.dart';
@@ -20,55 +21,58 @@ class CustomRow with CustomWidget {
 
   @override
   Widget build(context) {
-    return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-      print("CustomColumn");
-      addChild(
-        context,
-        data.copy(),
-      );
-    }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-      return ReorderableRow(
-      scrollController: ScrollController(),
-        needsLongPressDraggable: false,
-        onReorder: (int oldIndex, int newIndex) {
-          addChild(context, children.removeAt(oldIndex), position: newIndex);
-        },
-        children: children.isEmpty
-            ? <Widget>[
-                EmptyRepresenter(
-                  key: ValueKey(0),
-                  width: MediaQuery.of(context).size.width * 0.125,
-                  height: MediaQuery.of(context).size.height * 0.2,
-                ),
-                EmptyRepresenter(
-                  key: ValueKey(1),
-                  width: MediaQuery.of(context).size.width * 0.125,
-                  height: MediaQuery.of(context).size.height * 0.2,
-                ),
-                // EmptyRepresenter(
-                //   key: ValueKey(2),
-                //   width: MediaQuery.of(context).size.width * 0.1,
-                //   height: MediaQuery.of(context).size.height * 0.2,
-                // ),
-              ]
-            : List.generate(children.length + accept.length, (i) {
-                if (i < children.length) {
-                  return Container(
-                    key: ValueKey(i),
-                    child: children[i].build(
-                      context,
-                    ),
-                    color: Colors.transparent,
-                  );
-                } else {
-                  return Container(
-                    key: ValueKey(i),
-                    child: accept[i - children.length].build(context),
-                  );
-                }
-              }),
-      ); //currentWidget(type, child, context);
-    });
+    return WidgetSelection(
+      customWidget: this,
+          child: DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
+        print("CustomColumn");
+        addChild(
+          context,
+          data.copy(),
+        );
+      }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
+        return ReorderableRow(
+        scrollController: ScrollController(),
+          needsLongPressDraggable: false,
+          onReorder: (int oldIndex, int newIndex) {
+            addChild(context, children.removeAt(oldIndex), position: newIndex);
+          },
+          children: children.isEmpty
+              ? <Widget>[
+                  EmptyRepresenter(
+                    key: ValueKey(0),
+                    width: MediaQuery.of(context).size.width * 0.125,
+                    height: MediaQuery.of(context).size.height * 0.2,
+                  ),
+                  EmptyRepresenter(
+                    key: ValueKey(1),
+                    width: MediaQuery.of(context).size.width * 0.125,
+                    height: MediaQuery.of(context).size.height * 0.2,
+                  ),
+                  // EmptyRepresenter(
+                  //   key: ValueKey(2),
+                  //   width: MediaQuery.of(context).size.width * 0.1,
+                  //   height: MediaQuery.of(context).size.height * 0.2,
+                  // ),
+                ]
+              : List.generate(children.length + accept.length, (i) {
+                  if (i < children.length) {
+                    return Container(
+                      key: ValueKey(i),
+                      child: children[i].build(
+                        context,
+                      ),
+                      color: Colors.transparent,
+                    );
+                  } else {
+                    return Container(
+                      key: ValueKey(i),
+                      child: accept[i - children.length].build(context),
+                    );
+                  }
+                }),
+        ); //currentWidget(type, child, context);
+      }),
+    );
   }
 
   @override

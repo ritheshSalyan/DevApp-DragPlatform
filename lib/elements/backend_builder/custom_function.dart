@@ -235,7 +235,7 @@ class CustomFunction {
   }
 
   void notify(BuildContext context) {
-    // Provider.of<ControllerClass>(context, listen: false).notify();
+    Provider.of<ControllerClass>(context, listen: false).notify();
   }
 
   void execute(BuildContext context) {

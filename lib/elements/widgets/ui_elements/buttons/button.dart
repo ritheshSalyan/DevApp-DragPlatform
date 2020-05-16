@@ -5,6 +5,7 @@ import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:flutter_drag_and_drop/models/page.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
@@ -28,25 +29,30 @@ class CustomButton with CustomWidget {
 
   @override
   Widget build(context) {
-    return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-      print("Button");
-      addChild(
-        context,
-        data.copy(),
-      );
-    }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-      return RaisedButton(
-        onPressed: () {
-          function.execute(context);
-          // if (navigateTo == null) {
-          //   return;
-          // }
-          // Provider.of<ControllerClass>(context, listen: false)
-          //     .changePage(navigateTo);
-        },
-        child: child == null ? null : child.build(context),
-      ); //currentWidget(type, child, context);
-    });
+    return WidgetSelection(
+      customWidget: this,
+      child: DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
+        print("Button");
+        addChild(
+          context,
+          data.copy(),
+        );
+      }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
+        return RaisedButton(
+          onPressed: function != null
+              ? () {
+                  function.execute(context);
+                  // if (navigateTo == null) {
+                  //   return;
+                  // }
+                  // Provider.of<ControllerClass>(context, listen: false)
+                  //     .changePage(navigateTo);
+                }
+              : null,
+          child: child == null ? null : child.build(context),
+        ); //currentWidget(type, child, context);
+      }),
+    );
   }
 
   @override
@@ -135,12 +141,12 @@ class CustomButton with CustomWidget {
             ? <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.02),
+                    left: MediaQuery.of(context).size.width * 0.02,
+                  ),
                   child: child?.buildTree(context),
                 ),
               ]
             : [],
-        // ),
       ),
     );
   }

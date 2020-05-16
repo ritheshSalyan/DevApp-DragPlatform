@@ -9,6 +9,7 @@ import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/alignment_selector.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/width_height_selector.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -58,29 +59,32 @@ class CustomContainer with CustomWidget {
         data.copy(),
       );
     }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-      return Container(
-        width: size.width * width,
-        height: size.height * height,
-        alignment: alignment,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(tlRad),
-            topRight: Radius.circular(trRad),
-            bottomLeft: Radius.circular(blRad),
-            bottomRight: Radius.circular(brRad),
+      return WidgetSelection(
+      customWidget: this,
+              child: Container(
+          width: size.width * width,
+          height: size.height * height,
+          alignment: alignment,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(tlRad),
+              topRight: Radius.circular(trRad),
+              bottomLeft: Radius.circular(blRad),
+              bottomRight: Radius.circular(brRad),
+            ),
+            boxShadow: List<BoxShadow>.generate(
+                shadows.length, (index) => shadows[index].getShadow()),
           ),
-          boxShadow: List<BoxShadow>.generate(
-              shadows.length, (index) => shadows[index].getShadow()),
+          // Colors.red,
+          child: child == null
+              ? EmptyRepresenter(
+                  width: size.width * width,
+                  height: size.height * height) //Container()
+              : child.build(
+                  context,
+                ), //Text("data"),
         ),
-        // Colors.red,
-        child: child == null
-            ? EmptyRepresenter(
-                width: size.width * width,
-                height: size.height * height) //Container()
-            : child.build(
-                context,
-              ), //Text("data"),
       ); //currentWidget(type, child, context);
     });
   }

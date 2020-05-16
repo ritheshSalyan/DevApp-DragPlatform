@@ -4,6 +4,7 @@ import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/color_picker.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:tree_view/tree_view.dart';
 // import 'package:flutter_drag_and_drop/elements/widgets/custom_fab.dart';
@@ -36,45 +37,48 @@ class CustomScaffoldWithAppbar with CustomWidget {
   Widget build(context) {
     print("CustomScaffold");
 
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: appbar != null
-          ? appbar.build(context)
-          : PreferredSize(
-              child: DragTarget<CustomAppBarWidget>(
-                  onAccept: (CustomAppBarWidget data) {
+    return WidgetSelection(
+      customWidget: this,
+          child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: appbar != null
+            ? appbar.build(context)
+            : PreferredSize(
+                child: DragTarget<CustomAppBarWidget>(
+                    onAccept: (CustomAppBarWidget data) {
+                  print("CustomScaffold");
+                  addAppbar(
+                    context,
+                    appBarWidget: data.copy(),
+                  );
+                }, builder: (context, List<CustomAppBarWidget> accept,
+                        List<dynamic> reject) {
+                  return accept != null && accept.isNotEmpty
+                      ? accept.first.build(context)
+                      : EmptyRepresenter();
+                }),
+                preferredSize: AppBar().preferredSize,
+                // Size(MediaQuery.of(context).size.width,
+                //     MediaQuery.of(context).size.height * 0.075),
+              ),
+
+        body: child != null
+            ? child.build(context)
+            : DragTarget(onAccept: (CustomWidget data) {
                 print("CustomScaffold");
-                addAppbar(
+                addChild(
                   context,
-                  appBarWidget: data.copy(),
+                  data.copy(),
                 );
-              }, builder: (context, List<CustomAppBarWidget> accept,
-                      List<dynamic> reject) {
+              }, builder:
+                (context, List<CustomWidget> accept, List<dynamic> reject) {
                 return accept != null && accept.isNotEmpty
                     ? accept.first.build(context)
                     : EmptyRepresenter();
+                // }),
               }),
-              preferredSize: AppBar().preferredSize,
-              // Size(MediaQuery.of(context).size.width,
-              //     MediaQuery.of(context).size.height * 0.075),
-            ),
-
-      body: child != null
-          ? child.build(context)
-          : DragTarget(onAccept: (CustomWidget data) {
-              print("CustomScaffold");
-              addChild(
-                context,
-                data.copy(),
-              );
-            }, builder:
-              (context, List<CustomWidget> accept, List<dynamic> reject) {
-              return accept != null && accept.isNotEmpty
-                  ? accept.first.build(context)
-                  : EmptyRepresenter();
-              // }),
-            }),
-      // floatingActionButton: ,
+        // floatingActionButton: ,
+      ),
     );
 
     // return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {

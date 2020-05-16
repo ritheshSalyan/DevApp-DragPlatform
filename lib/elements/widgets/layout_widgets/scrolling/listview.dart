@@ -6,6 +6,7 @@ import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 // import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/multi_choice_selector.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
@@ -27,62 +28,70 @@ class CustomListView with CustomWidget {
   Widget build(context) {
     Size size = Provider.of<ControllerClass>(context, listen: false).size;
 
-    return DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
-      print("CustomListView");
-      addChild(
-        context,
-        data.copy(),
-      );
-    }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
-      return children.isEmpty
-          ? Container(
-              height: size.height,
-              width: size.width,
-              child: ListView(scrollDirection: scrollDirection,
-                  // needsLongPressDraggable: false,
-                  // onReorder: (int oldIndex, int newIndex) {
-                  //   addChild(context, children.removeAt(oldIndex), position: newIndex);
-                  // },
-                  children: <Widget>[
-                    EmptyRepresenter(
-                      key: ValueKey(0),
-                      width: size.width * 0.5,
-                      height: size.height / 3,
-                    ),
-                    EmptyRepresenter(
-                      key: ValueKey(1),
-                      width: size.width * 0.5,
-                      height: size.height / 3,
-                    ),
-                    EmptyRepresenter(
-                      key: ValueKey(2),
-                      width: size.width * 0.5,
-                      height: size.height / 3,
-                    ),
-                  ]),
-            )
-          : ListView(
-      controller: ScrollController(),
-              scrollDirection: scrollDirection,
-              // needsLongPressDraggable: false,
-              // onReorder: (int oldIndex, int newIndex) {
-              //   addChild(context, children.removeAt(oldIndex), position: newIndex);
-              // },
-              children: List.generate(children.length + 1 + accept.length, (i) {
-                if (i < children.length) {
-                  return SizedBox(
-                      key: ValueKey(i), child: children[i].build(context));
-                } else if (children.length == i) {
-                  return Container(width: 30, height: 30);
-                } else {
-                  return Container(
-                    key: ValueKey(i),
-                    child: accept[i - 1 - children.length].build(context),
-                  );
-                }
-              }, growable: true),
-            ); //currentWidget(type, child, context);
-    });
+    return WidgetSelection(
+      customWidget: this,
+          child: DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
+        print("CustomListView");
+        addChild(
+          context,
+          data.copy(),
+        );
+      }, builder: (context, List<CustomWidget> accept, List<dynamic> reject) {
+        return children.isEmpty
+            ? Container(
+                height: size.height,
+                width: size.width,
+                child: ListView(scrollDirection: scrollDirection,
+                    // needsLongPressDraggable: false,
+                    // onReorder: (int oldIndex, int newIndex) {
+                    //   addChild(context, children.removeAt(oldIndex), position: newIndex);
+                    // },
+                    children: <Widget>[
+                      EmptyRepresenter(
+                        key: ValueKey(0),
+                        width: size.width * 0.5,
+                        height: size.height / 3,
+                      ),
+                      EmptyRepresenter(
+                        key: ValueKey(1),
+                        width: size.width * 0.5,
+                        height: size.height / 3,
+                      ),
+                      EmptyRepresenter(
+                        key: ValueKey(2),
+                        width: size.width * 0.5,
+                        height: size.height / 3,
+                      ),
+                    ]),
+              )
+            : ReorderableListView(
+                // controller: ScrollController(),
+                onReorder: (int oldIndex, int newIndex) {
+                  print("$oldIndex ----------------> $newIndex");
+                  addChild(context, children.removeAt(oldIndex),
+                      position: newIndex);
+                },
+                scrollDirection: scrollDirection,
+                // needsLongPressDraggable: false,
+                // onReorder: (int oldIndex, int newIndex) {
+                //   addChild(context, children.removeAt(oldIndex), position: newIndex);
+                // },
+                children: List.generate(children.length + 1 + accept.length, (i) {
+                  if (i < children.length) {
+                    return SizedBox(
+                        key: ValueKey(i), child: children[i].build(context));
+                  } else if (children.length == i) {
+                    return Container(width: 30, height: 30);
+                  } else {
+                    return Container(
+                      key: ValueKey(i),
+                      child: accept[i - 1 - children.length].build(context),
+                    );
+                  }
+                }, growable: true),
+              ); //currentWidget(type, child, context);
+      }),
+    );
   }
 
   @override
@@ -94,7 +103,7 @@ class CustomListView with CustomWidget {
   get name => "ListView";
 
   @override
-  Widget properties(BuildContext context,page) {
+  Widget properties(BuildContext context, page) {
     return ListView(
       controller: ScrollController(),
       children: <Widget>[
@@ -102,7 +111,7 @@ class CustomListView with CustomWidget {
         CustomNeumorpicRadio(
           onSelect: (select) {
             scrollDirection = select;
-            super.properties(context,page);
+            super.properties(context, page);
           },
           initialSelect: scrollDirection,
           lable: "Scroll direction",
@@ -188,7 +197,7 @@ class CustomListView with CustomWidget {
       height: constraints.height * 0.9,
       child: ListView(
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
-      controller: ScrollController(),
+        controller: ScrollController(),
         children: <Widget>[
           Container(
             width: constraints.width * 0.9,
