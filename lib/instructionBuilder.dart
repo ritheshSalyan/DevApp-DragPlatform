@@ -73,11 +73,12 @@ class _BlockListingState extends State<BlockListing> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(top: 15.0, right: 15.0),
-          child: Container(
-              width: MediaQuery.of(context).size.width * 0.2,
-              child: getSelectedPage()),
+        Container(
+          width: MediaQuery.of(context).size.width * 0.2,
+          child: Padding(
+            padding: EdgeInsets.only(top: 15.0, right: 15.0),
+            child: getSelectedPage(),
+          ),
         ),
         CustomTabbar(
           titles: [
@@ -86,7 +87,7 @@ class _BlockListingState extends State<BlockListing> {
             "Variables",
           ],
           onSelect: (i) {
-            print("object $i");
+            // print("object $i");
             setState(() {
               selected = i;
             });

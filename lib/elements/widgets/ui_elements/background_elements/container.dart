@@ -13,7 +13,7 @@ import 'package:flutter_drag_and_drop/elements/properties_elements/selection_wid
 import 'package:flutter_drag_and_drop/elements/properties_elements/width_height_selector.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:neumorphic/neumorphic.dart';
+import 'package:neumorphic/neumorphic.dart'as p;
 import 'package:provider/provider.dart';
 import 'package:stepper_counter_swipe/stepper_counter_swipe.dart';
 import 'package:tree_view/tree_view.dart';
@@ -184,7 +184,7 @@ class CustomContainer with CustomWidget {
                 // AnimatedSwitcher(duration: Duration(milliseconds: 250),child:
                 isSameRadius
                     ? Flexible(
-                        child: NeuTextField(
+                        child: p.NeuTextField(
                           controller: tlcontroller,
                           decoration: InputDecoration(hintText: "Radius"),
                           onChanged: (value) {
@@ -205,7 +205,7 @@ class CustomContainer with CustomWidget {
                             Row(
                               children: <Widget>[
                                 Flexible(
-                                  child: NeuTextField(
+                                  child:p. NeuTextField(
                                     controller: tlcontroller,
                                     decoration:
                                         InputDecoration(hintText: "Top Left"),
@@ -219,7 +219,7 @@ class CustomContainer with CustomWidget {
                                 ),
                                 SizedBox(width: 10),
                                 Flexible(
-                                  child: NeuTextField(
+                                  child:p. NeuTextField(
                                     controller: trcontroller,
                                     decoration:
                                         InputDecoration(hintText: "Top Right"),
@@ -236,7 +236,7 @@ class CustomContainer with CustomWidget {
                             Row(
                               children: <Widget>[
                                 Flexible(
-                                  child: NeuTextField(
+                                  child:p. NeuTextField(
                                     controller: blcontroller,
                                     decoration: InputDecoration(
                                         hintText: "Bottom Left"),
@@ -250,7 +250,7 @@ class CustomContainer with CustomWidget {
                                 ),
                                 SizedBox(width: 10),
                                 Flexible(
-                                  child: NeuTextField(
+                                  child:p. NeuTextField(
                                     controller: brcontroller,
                                     decoration: InputDecoration(
                                         hintText: "Bottom Right"),
@@ -291,8 +291,8 @@ class CustomContainer with CustomWidget {
                     )
                   : Container(),
               SizedBox(height: 10),
-              NeuButton(
-                  decoration: NeumorphicDecoration(
+              p.NeuButton(
+                  decoration: p.NeumorphicDecoration(
                     color: neuBackground,
                   ),
                   child: Icon(Icons.add, color: green),
@@ -432,9 +432,9 @@ class CustomBoxShadow {
   Widget propertiesWidget(BuildContext context, void Function() refresh) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 25),
-      child: NeuCard(
+      child:p. NeuCard(
         color: neuBackground,
-        curveType: CurveType.flat,
+        curveType: p.CurveType.flat,
         child: Column(
           children: <Widget>[
             Text(" Same Border radius"),

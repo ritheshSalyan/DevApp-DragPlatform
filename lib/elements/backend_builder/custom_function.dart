@@ -125,41 +125,45 @@ class CustomFunction {
                       curveType: CurveType.flat,
                       bevel: 5,
                       decoration: NeumorphicDecoration(
-                        
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(radius), bottomLeft: Radius.circular(radius) ),
-                          color: neuBackground,
-                          ),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(radius),
+                            bottomLeft: Radius.circular(radius)),
+                        color: neuBackground,
+                      ),
                     ),
-                       Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                            Container(
-                              // key: ValueKey(i*randomNo),
-                                width: size.width * 0.25,
-                              height: size.height * 0.1,
-                              decoration: BoxDecoration(
-                                color: neuBackground,
-                                 borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(radius),
-                                    // topLeft: Radius.circular(radius)
-                                    ),
-                                boxShadow: [
-                                  BoxShadow(
-                                      offset: Offset(-1, -6),
-                                      color: Colors.white,
-                                      blurRadius: 6
-                                  ),
-                                   BoxShadow(
-                                      offset: Offset(3, 5),
-                                      color: Colors.grey[100],
-                                      blurRadius: 5
-                                  ),
-                                ]
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          // key: ValueKey(i*randomNo),
+                          width: size.width * 0.25,
+                          height: size.height * 0.1,
+                          child: TextField(
+                            onChanged: (value) {
+                              functionName = value;
+                              notify(context);
+                            },
+                          ),
+                          decoration: BoxDecoration(
+                              color: neuBackground,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(radius),
+                                // topLeft: Radius.circular(radius)
                               ),
-                              
-                              ),
-                          ReorderableColumn(
+                              boxShadow: [
+                                BoxShadow(
+                                    offset: Offset(-1, -6),
+                                    color: Colors.white,
+                                    blurRadius: 6),
+                                BoxShadow(
+                                    offset: Offset(3, 5),
+                                    color: Colors.grey[100],
+                                    blurRadius: 5),
+                              ]),
+                        ),
+                        Expanded(
+                          child: ReorderableColumn(
                             //  scrollController: ScrollController(),                 // scrollController: controller,
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,57 +174,51 @@ class CustomFunction {
                               notify(context);
                             },
 
-
                             children: List<Widget>.generate(
                               instructions.length,
                               (int i) => Container(
-                                key: ValueKey(i * randomNo),
+                                key: ValueKey(i + 1 * randomNo),
+                                // width:  size.width*0.75,
                                 color: Colors.transparent,
                                 alignment: Alignment.topLeft,
                                 padding: EdgeInsets.symmetric(vertical: 10),
 
-                        
                                 child: instructions[i]
                                     .instruction
                                     .build(context, this),
-                               
                               ),
                             ),
                           ),
-                               Container(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              width: size.width * 0.25,
-                              height: size.height * 0.1,
-
-                                color: Colors.transparent,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          width: size.width * 0.25,
+                          height: size.height * 0.1,
+                          color: Colors.transparent,
+                        ),
+                        Container(
+                          // key: ValueKey(i*randomNo),
+                          width: size.width * 0.25,
+                          height: size.height * 0.1,
+                          decoration: BoxDecoration(
+                              color: neuBackground,
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(radius),
+                                // topLeft: Radius.circular(radius)
                               ),
-                           Container(
-                              // key: ValueKey(i*randomNo),
-                                width: size.width * 0.25,
-                              height: size.height * 0.1,
-                              decoration: BoxDecoration(
-                                color: neuBackground,
-                                 borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(radius),
-                                    // topLeft: Radius.circular(radius)
-                                    ),
-                                boxShadow: [
-                                  BoxShadow(
-                                      offset: Offset(-1, -6),
-                                      color: Colors.white,
-                                      blurRadius: 6
-                                  ),
-                                   BoxShadow(
-                                      offset: Offset(3, 5),
-                                      color: Colors.grey[100],
-                                      blurRadius: 5
-                                  ),
-                                ]
-                              ),
-                              
-                              ),
-                        ],
-                      ),
+                              boxShadow: [
+                                BoxShadow(
+                                    offset: Offset(-1, -6),
+                                    color: Colors.white,
+                                    blurRadius: 6),
+                                BoxShadow(
+                                    offset: Offset(3, 5),
+                                    color: Colors.grey[100],
+                                    blurRadius: 5),
+                              ]),
+                        ),
+                      ],
+                    ),
                     // ),
                   ],
                 ),

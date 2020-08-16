@@ -36,7 +36,7 @@ class _WidgetWindowState extends State<WidgetWindow> {
         CustomTabbar(
           titles: ["Background", "Layout", "Elements", "Appbar"],
           onSelect: (i) {
-            print("object $i");
+            // print("object $i");
             setState(() {
               selected = i;
             });

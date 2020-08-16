@@ -161,7 +161,10 @@ class CustomButton with CustomWidget {
           width: constraints.width,
           height: constraints.height * 0.25,
           // color: green,
-          child: RaisedButton(color: green, onPressed: () {}),
+          child: RaisedButton(
+            color: green,
+            onPressed: () {},
+          ),
         ),
       ],
     );

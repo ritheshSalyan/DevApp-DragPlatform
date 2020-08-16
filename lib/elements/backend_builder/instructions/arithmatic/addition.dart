@@ -27,6 +27,7 @@ class CustomArithmaticOperation with CustomInstruction {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             InstuctionVariablePlaceHolder(
               onAccept: (data) {

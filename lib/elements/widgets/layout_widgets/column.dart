@@ -5,15 +5,18 @@ import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/multi_choice_selector.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:tree_view/tree_view.dart';
 
 class CustomColumn with CustomWidget {
   List<CustomWidget> children = [];
-
+  MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start;
+  CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start;
   int elevation;
   void addChild(BuildContext context, CustomWidget childWidget,
       {int position}) {
@@ -26,10 +29,10 @@ class CustomColumn with CustomWidget {
   @override
   Widget build(context) {
     Size size = Provider.of<ControllerClass>(context, listen: false).size;
-    
+
     return WidgetSelection(
       customWidget: this,
-          child: DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
+      child: DragTarget<CustomWidget>(onAccept: (CustomWidget data) {
         print("CustomColumn");
         addChild(
           context,
@@ -39,10 +42,13 @@ class CustomColumn with CustomWidget {
         return Container(
           height: size.height,
           child: ReorderableColumn(
-        scrollController: ScrollController(),
+            scrollController: ScrollController(),
+            mainAxisAlignment: mainAxisAlignment,
+            crossAxisAlignment: crossAxisAlignment,
             needsLongPressDraggable: false,
             onReorder: (int oldIndex, int newIndex) {
-              addChild(context, children.removeAt(oldIndex), position: newIndex);
+              addChild(context, children.removeAt(oldIndex),
+                  position: newIndex);
             },
             children: children.isEmpty
                 ? <Widget>[
@@ -67,10 +73,10 @@ class CustomColumn with CustomWidget {
                       return SizedBox(
                           key: ValueKey(i), child: children[i].build(context));
                     } else {
-                       return Container(
-                      key: ValueKey(i),
-                      child: accept[i - children.length ].build(context),
-                    );
+                      return Container(
+                        key: ValueKey(i),
+                        child: accept[i - children.length].build(context),
+                      );
                     }
                   }),
           ),
@@ -88,15 +94,84 @@ class CustomColumn with CustomWidget {
   // TODO: implement widget
   get name => "Column";
   @override
-  Widget properties(BuildContext context,_) {
+  Widget properties(BuildContext context, page) {
     return ListView(
       controller: ScrollController(),
       children: <Widget>[
-        TextField(
-          onChanged: (string) {
-            elevation = int.parse(string);
+        CustomNeumorpicRadio(
+          initialSelect: mainAxisAlignment,
+          lable: "Vertical Alignment",
+          onSelect: (align) {
+            mainAxisAlignment = align;
+            super.properties(context,page);
+          },
+          children: {
+            MainAxisAlignment.center: Icon(Icons.vertical_align_center),
+            MainAxisAlignment.end: Icon(Icons.vertical_align_bottom),
+            MainAxisAlignment.start: Icon(Icons.vertical_align_top),
+            MainAxisAlignment.spaceAround: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+              ],
+            ),
+            MainAxisAlignment.spaceBetween: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+              ],
+            ),
+            MainAxisAlignment.spaceEvenly: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+              ],
+            ),
           },
         ),
+
+
+         CustomNeumorpicRadio(
+          initialSelect: crossAxisAlignment,
+          lable: "Horizontal Alignment",
+          onSelect: (align) {
+            crossAxisAlignment = align;
+            super.properties(context,page);
+          },
+          children: {
+            CrossAxisAlignment.center: Icon(MaterialCommunityIcons.format_horizontal_align_center),
+            CrossAxisAlignment.end: Icon(MaterialCommunityIcons.format_horizontal_align_right),
+            CrossAxisAlignment.start: Icon(MaterialCommunityIcons.format_horizontal_align_left),
+           
+          },
+        )
       ],
     );
   }
@@ -126,25 +201,26 @@ class CustomColumn with CustomWidget {
       },
       child: ExpansionTile(
         initiallyExpanded: true,
-        trailing: SizedBox(width: 1,height: 1),
+        trailing: SizedBox(width: 1, height: 1),
         title: TreeItemView(customWidget: this),
         onExpansionChanged: (value) {
           super.setActive(context, this);
         },
         children: children.isEmpty
             ? []
-            : 
+            :
             // ChildList(
             //     crossAxisAlignment: CrossAxisAlignment.center,
             //     children:
-                 List<Widget>.generate(
-                    children.length,
-                    (i) => Padding(
-                          padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * 0.02),
-                          child: children[i]?.buildTree(context),
-                        ),)
-                        // )
+            List<Widget>.generate(
+                children.length,
+                (i) => Padding(
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.02),
+                  child: children[i]?.buildTree(context),
+                ),
+              )
+        // )
         // child.buildTree(context),
         ,
       ),
@@ -162,7 +238,7 @@ class CustomColumn with CustomWidget {
         children: <Widget>[
           Container(
             width: constraints.width * 0.9,
-            height: (constraints.height * 0.05) ,
+            height: (constraints.height * 0.05),
             color: green,
           ),
           // Container(
@@ -170,7 +246,7 @@ class CustomColumn with CustomWidget {
           // ),
           Container(
             width: constraints.width * 0.9,
-            height: (constraints.height * 0.05) ,
+            height: (constraints.height * 0.05),
             color: green,
           ),
           // Container(
@@ -178,14 +254,15 @@ class CustomColumn with CustomWidget {
           // ),
           Container(
             width: constraints.width * 0.9,
-            height: (constraints.height * 0.05) ,
+            height: (constraints.height * 0.05),
             color: green,
           ),
         ],
       ),
     );
   }
-    @override
+
+  @override
   CustomWidget fromJson(Map<String, dynamic> json) {
     if (json[CHILD] != null) {
       children = List<CustomWidget>.from(

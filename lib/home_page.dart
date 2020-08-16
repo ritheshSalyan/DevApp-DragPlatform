@@ -11,7 +11,7 @@ import 'package:flutter_drag_and_drop/instructionBuilder.dart';
 import 'package:flutter_drag_and_drop/models/project.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:neumorphic/neumorphic.dart';
+import 'package:neumorphic/neumorphic.dart' as p;
 import 'package:provider/provider.dart';
 
 class DragDrop extends StatefulWidget {
@@ -68,8 +68,8 @@ class _DragDropState extends State<DragDrop> {
                 }),
                 Consumer<ControllerClass>(builder: (context, snapshot, _) {
                   return snapshot.isUI
-                      ? NeuButton(
-                          decoration: NeumorphicDecoration(
+                      ?p. NeuButton(
+                          decoration: p.NeumorphicDecoration(
                             color: neuBackground,
                           ),
                           child: Text(
@@ -83,8 +83,8 @@ class _DragDropState extends State<DragDrop> {
                             snapshot.notify();
                             //save(context);
                           })
-                      : NeuButton(
-                          decoration: NeumorphicDecoration(
+                      : p.NeuButton(
+                          decoration: p.NeumorphicDecoration(
                             color: neuBackground,
                           ),
                           child: Text("UI",
@@ -111,7 +111,7 @@ class _DragDropState extends State<DragDrop> {
             }),
             SizedBox(height: 25),
             Consumer<ControllerClass>(builder: (context, snapshot, _) {
-              return NeuCard(
+              return p.NeuCard(
                 alignment: Alignment.center,
                 height: size.height * 0.1,
                 color: neuBackground,
@@ -183,17 +183,17 @@ class UIGeneration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NeuCard(
+    return p.NeuCard(
       color: neuBackground,
       height: size.height,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          NeuCard(
+         p. NeuCard(
             bevel: 10,
 
-            decoration: NeumorphicDecoration(
+            decoration: p.NeumorphicDecoration(
                 color: neuBackground,
                 borderRadius: BorderRadius.circular(radius)),
             // borderRadius: radius,
@@ -254,9 +254,9 @@ class UIGeneration extends StatelessWidget {
               ],
             ),
           ),
-          NeuCard(
+         p. NeuCard(
             bevel: 10,
-            decoration: NeumorphicDecoration(
+            decoration: p.NeumorphicDecoration(
               color: neuBackground,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(radius),
@@ -313,7 +313,7 @@ class _RightWindowState extends State<RightWindow> {
             "Widget Tree",
           ],
           onSelect: (i) {
-            print("object $i");
+            // print("object $i");
             setState(() {
               selected = i;
             });

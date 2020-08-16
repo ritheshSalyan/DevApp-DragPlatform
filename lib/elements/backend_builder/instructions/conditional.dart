@@ -27,93 +27,94 @@ class CustomConditionalOperation with CustomInstruction {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-            // width:500,
-            color: neuBackground,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                // DragTarget<CustomVariables>(
-                //   onAccept: (data) {
-                //     if (checkVariable(data, function)) {
-                //       c = data;
-                //       function.notify(context);
-                //     }
-                //   },
-                //   builder: (context, candidateData, rejectedData) => Container(
-                //     width: 30,
-                //     height: 30,
-                //     color: Colors.yellow,
-                //     child: c?.build(context),
-                //   ),
-                // ),
-                // Text("="),
-                InstuctionVariablePlaceHolder(
-                  onAccept: (data) {
-                    checkVariable(data, function);
-                    a = data;
-                    function.notify(context);
-                  },
-                  child: a?.build(context),
-                ),
-                // DragTarget<CustomVariables>(
-                //   onAccept: (data) {
-                //     checkVariable(data, function);
-                //     a = data;
-                //     function.notify(context);
-                //   },
-                //   builder: (context, candidateData, rejectedData) => Container(
-                //     width: 30,
-                //     height: 30,
-                //     color: Colors.yellow,
-                //     child: a?.build(context),
-                //   ),
-                // ),
-                SizedBox(width: 10),
-                // Text("${getOperator(type)}"),
-                Flexible(
-                  child: DropdownButton<ComparisonOperationType>(
-                    value: type,
-                    items: List<DropdownMenuItem<ComparisonOperationType>>.from(
-                      ComparisonOperationType.values.map(
-                        (e) => DropdownMenuItem<ComparisonOperationType>(
-                          child: Text(getOperator(e)),
-                          value: e,
-                        ),
-                      ),
-                    ),
-                    onChanged: (newType) {
-                      type = newType;
-                      function.notify(context);
+              width:500,
+              color: neuBackground,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // DragTarget<CustomVariables>(
+                  //   onAccept: (data) {
+                  //     if (checkVariable(data, function)) {
+                  //       c = data;
+                  //       function.notify(context);
+                  //     }
+                  //   },
+                  //   builder: (context, candidateData, rejectedData) => Container(
+                  //     width: 30,
+                  //     height: 30,
+                  //     color: Colors.yellow,
+                  //     child: c?.build(context),
+                  //   ),
+                  // ),
+                  // Text("="),
+                  InstuctionVariablePlaceHolder(
+                    onAccept: (data) {
+          checkVariable(data, function);
+          a = data;
+          function.notify(context);
                     },
+                    child: a?.build(context),
                   ),
-                ),
-                InstuctionVariablePlaceHolder(
-                  onAccept: (data) {
-                    checkVariable(data, function);
-                    b = data;
-                    function.notify(context);
-                  },
-                  child: b?.build(context),
-                ),
-                // DragTarget<CustomVariables>(
-                //   onAccept: (data) {
-                //     checkVariable(data, function);
-                //     b = data;
-                //     function.notify(context);
-                //   },
-                //   builder: (context, candidateData, rejectedData) => Container(
-                //     width: 30,
-                //     height: 30,
-                //     color: Colors.yellow,
-                //     child: b?.build(context),
-                //   ),
-                // )
-              ],
+                  // DragTarget<CustomVariables>(
+                  //   onAccept: (data) {
+                  //     checkVariable(data, function);
+                  //     a = data;
+                  //     function.notify(context);
+                  //   },
+                  //   builder: (context, candidateData, rejectedData) => Container(
+                  //     width: 30,
+                  //     height: 30,
+                  //     color: Colors.yellow,
+                  //     child: a?.build(context),
+                  //   ),
+                  // ),
+                  SizedBox(width: 10),
+                  // Text("${getOperator(type)}"),
+                  Flexible(
+                    child: DropdownButton<ComparisonOperationType>(
+          value: type,
+          items: List<DropdownMenuItem<ComparisonOperationType>>.from(
+            ComparisonOperationType.values.map(
+              (e) => DropdownMenuItem<ComparisonOperationType>(
+                child: Text(getOperator(e)),
+                value: e,
+              ),
             ),
           ),
+          onChanged: (newType) {
+            type = newType;
+            function.notify(context);
+          },
+                    ),
+                  ),
+                  InstuctionVariablePlaceHolder(
+                    onAccept: (data) {
+          checkVariable(data, function);
+          b = data;
+          function.notify(context);
+                    },
+                    child: b?.build(context),
+                  ),
+                  // DragTarget<CustomVariables>(
+                  //   onAccept: (data) {
+                  //     checkVariable(data, function);
+                  //     b = data;
+                  //     function.notify(context);
+                  //   },
+                  //   builder: (context, candidateData, rejectedData) => Container(
+                  //     width: 30,
+                  //     height: 30,
+                  //     color: Colors.yellow,
+                  //     child: b?.build(context),
+                  //   ),
+                  // )
+                ],
+              ),
+            ),
           trueBlock.build(context, function),
         ],
       ),

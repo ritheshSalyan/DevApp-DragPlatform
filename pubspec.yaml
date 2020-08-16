@@ -28,7 +28,7 @@ dependencies:
   flutter_icons: ^1.0.0+1
   
   #UI Neumorphic
-  neumorphic: ^0.3.0
+  neumorphic: 0.3.1
   clay_containers: ^0.2.2
   animated_neumorphic: ^0.1.1
   flip_card: ^0.4.4

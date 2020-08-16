@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           initialRoute: "/",
           // add Modular to manage the routing system
           onGenerateRoute: Modular.generateRoute,//generateRoute //
-          // home: NeuTheme(
+         navigatorKey:Modular.navigatorKey // home: NeuTheme(
           //   isNeumorphicAppTheme: false,
 
           //   data: NeuThemeData(

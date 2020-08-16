@@ -55,6 +55,7 @@ class ${getClassName()} with with ChangeNotifier {
       color: neuBackground,
       child: DragTarget<CustomFunction>(
         onAccept: (data) {
+          print("Accept");
           functions.add(data.copy("function${functions.length}"));
         },
         builder: (BuildContext context, List<CustomFunction> candidateData,
@@ -68,7 +69,7 @@ class ${getClassName()} with with ChangeNotifier {
                   context,
                 ),
               ),
-            ),
+            )??[],
           );
         },
       ),
