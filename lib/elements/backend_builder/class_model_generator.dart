@@ -26,7 +26,7 @@ class CustomClassModel {
   String get code => '''
 import 'package:flutter/foundation.dart';
 
-class ${getClassName()} with with ChangeNotifier {
+class ${getClassName()} with ChangeNotifier {
   ${decarationCodeGeneration()}
 
   ${functionCodeGeneration()}
@@ -35,7 +35,7 @@ class ${getClassName()} with with ChangeNotifier {
   String decarationCodeGeneration() {
     String code = "";
     for (var item in globalVariables) {
-      code += "${item.type} ${item.name} = ${item.initialValue} ;";
+      code += "${item.type} ${item.name} = ${item.initialValue} ;\n";
     }
     return code;
   }
@@ -46,6 +46,21 @@ class ${getClassName()} with with ChangeNotifier {
       fcode += item.code + "\n\n";
     }
     return fcode;
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    functions.addAll(json["functions"].map(
+        (e) => CustomFunction("functionName").fromJson(json["functions"])));
+    globalVariables.addAll(json["variables"].map((e) =>
+        CustomGlobalVariable("functionName").fromJson(json["variables"])));
+  }
+
+  toJson() {
+    return {
+      //  "classname":pageName,
+      "functions": List.from(functions.map((e) => e.toJson())),
+      "variables": List.from(globalVariables.map((e) => e.toJson())),
+    };
   }
 
   Widget build(BuildContext context) {
@@ -64,12 +79,13 @@ class ${getClassName()} with with ChangeNotifier {
             // itemCount: functions.length,
             // itemBuilder: (context, i) =>
             children: List<Widget>.from(
-              functions.map(
-                (f) => f.build(
-                  context,
-                ),
-              ),
-            )??[],
+                  functions.map(
+                    (f) => f.build(
+                      context,
+                    ),
+                  ),
+                ) ??
+                [],
           );
         },
       ),

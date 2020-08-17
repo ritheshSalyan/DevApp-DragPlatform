@@ -4,6 +4,7 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/arithmatic/addition.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/instruction_block.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/variables/variables.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:neumorphic/neumorphic.dart';
 
@@ -30,91 +31,91 @@ class CustomConditionalOperation with CustomInstruction {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
-              width:500,
-              color: neuBackground,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  // DragTarget<CustomVariables>(
-                  //   onAccept: (data) {
-                  //     if (checkVariable(data, function)) {
-                  //       c = data;
-                  //       function.notify(context);
-                  //     }
-                  //   },
-                  //   builder: (context, candidateData, rejectedData) => Container(
-                  //     width: 30,
-                  //     height: 30,
-                  //     color: Colors.yellow,
-                  //     child: c?.build(context),
-                  //   ),
-                  // ),
-                  // Text("="),
-                  InstuctionVariablePlaceHolder(
-                    onAccept: (data) {
-          checkVariable(data, function);
-          a = data;
-          function.notify(context);
+            width: 500,
+            color: neuBackground,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                // DragTarget<CustomVariables>(
+                //   onAccept: (data) {
+                //     if (checkVariable(data, function)) {
+                //       c = data;
+                //       function.notify(context);
+                //     }
+                //   },
+                //   builder: (context, candidateData, rejectedData) => Container(
+                //     width: 30,
+                //     height: 30,
+                //     color: Colors.yellow,
+                //     child: c?.build(context),
+                //   ),
+                // ),
+                // Text("="),
+                InstuctionVariablePlaceHolder(
+                  onAccept: (data) {
+                    checkVariable(data, function);
+                    a = data;
+                    function.notify(context);
+                  },
+                  child: a?.build(context),
+                ),
+                // DragTarget<CustomVariables>(
+                //   onAccept: (data) {
+                //     checkVariable(data, function);
+                //     a = data;
+                //     function.notify(context);
+                //   },
+                //   builder: (context, candidateData, rejectedData) => Container(
+                //     width: 30,
+                //     height: 30,
+                //     color: Colors.yellow,
+                //     child: a?.build(context),
+                //   ),
+                // ),
+                SizedBox(width: 10),
+                // Text("${getOperator(type)}"),
+                Flexible(
+                  child: DropdownButton<ComparisonOperationType>(
+                    value: type,
+                    items: List<DropdownMenuItem<ComparisonOperationType>>.from(
+                      ComparisonOperationType.values.map(
+                        (e) => DropdownMenuItem<ComparisonOperationType>(
+                          child: Text(getOperator(e)),
+                          value: e,
+                        ),
+                      ),
+                    ),
+                    onChanged: (newType) {
+                      type = newType;
+                      function.notify(context);
                     },
-                    child: a?.build(context),
                   ),
-                  // DragTarget<CustomVariables>(
-                  //   onAccept: (data) {
-                  //     checkVariable(data, function);
-                  //     a = data;
-                  //     function.notify(context);
-                  //   },
-                  //   builder: (context, candidateData, rejectedData) => Container(
-                  //     width: 30,
-                  //     height: 30,
-                  //     color: Colors.yellow,
-                  //     child: a?.build(context),
-                  //   ),
-                  // ),
-                  SizedBox(width: 10),
-                  // Text("${getOperator(type)}"),
-                  Flexible(
-                    child: DropdownButton<ComparisonOperationType>(
-          value: type,
-          items: List<DropdownMenuItem<ComparisonOperationType>>.from(
-            ComparisonOperationType.values.map(
-              (e) => DropdownMenuItem<ComparisonOperationType>(
-                child: Text(getOperator(e)),
-                value: e,
-              ),
+                ),
+                InstuctionVariablePlaceHolder(
+                  onAccept: (data) {
+                    checkVariable(data, function);
+                    b = data;
+                    function.notify(context);
+                  },
+                  child: b?.build(context),
+                ),
+                // DragTarget<CustomVariables>(
+                //   onAccept: (data) {
+                //     checkVariable(data, function);
+                //     b = data;
+                //     function.notify(context);
+                //   },
+                //   builder: (context, candidateData, rejectedData) => Container(
+                //     width: 30,
+                //     height: 30,
+                //     color: Colors.yellow,
+                //     child: b?.build(context),
+                //   ),
+                // )
+              ],
             ),
           ),
-          onChanged: (newType) {
-            type = newType;
-            function.notify(context);
-          },
-                    ),
-                  ),
-                  InstuctionVariablePlaceHolder(
-                    onAccept: (data) {
-          checkVariable(data, function);
-          b = data;
-          function.notify(context);
-                    },
-                    child: b?.build(context),
-                  ),
-                  // DragTarget<CustomVariables>(
-                  //   onAccept: (data) {
-                  //     checkVariable(data, function);
-                  //     b = data;
-                  //     function.notify(context);
-                  //   },
-                  //   builder: (context, candidateData, rejectedData) => Container(
-                  //     width: 30,
-                  //     height: 30,
-                  //     color: Colors.yellow,
-                  //     child: b?.build(context),
-                  //   ),
-                  // )
-                ],
-              ),
-            ),
           trueBlock.build(context, function),
         ],
       ),
@@ -177,6 +178,24 @@ class CustomConditionalOperation with CustomInstruction {
   @override
   // TODO: implement name
   String get name => "Condition";
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "a": a.toJson(),
+      "b": b.toJson(),
+      "operator": getOperator(type),
+      "true_block": trueBlock.toJson()
+    };
+  }
+
+  @override
+  fromJson(Map<String, dynamic> json) {
+    a = CustomGlobalVariable("variableName").fromJson(json["a"]);
+    b = CustomGlobalVariable("variableName").fromJson(json["b"]);
+    type = getType(json["operator"]);
+    trueBlock = CustomBlock().fromJson(json["true_block"]);
+  }
 }
 
 enum ComparisonOperationType {
@@ -187,7 +206,29 @@ enum ComparisonOperationType {
   LESS_THAN,
   LESS_THAN_OR_EQUAL_TO,
 }
-
+ComparisonOperationType getType(String sType){
+  switch (sType) {
+    case "==":
+      return ComparisonOperationType.EQUAL_TO; 
+      break;
+    case "!=":
+      return ComparisonOperationType.NOT_EQUAL_TO; 
+      break;
+    case ">":
+      return ComparisonOperationType.GRATER_THAN; 
+      break;
+    case ">=":
+      return ComparisonOperationType.GRATER_THAN_OR_EQUAL_TO; 
+      break;
+    case "<":
+      return ComparisonOperationType.LESS_THAN; 
+      break;
+    case "<=":
+      return ComparisonOperationType.LESS_THAN_OR_EQUAL_TO; 
+      break;
+  }
+  return ComparisonOperationType.EQUAL_TO;
+}
 String getOperator(ComparisonOperationType type) {
   switch (type) {
     case ComparisonOperationType.EQUAL_TO:

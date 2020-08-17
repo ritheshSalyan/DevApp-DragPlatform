@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 
-Color neuBackground =  Color(0xFFFAFAFA);// Color(0x0E0E0E);// Color(0xFF0E0E0E);//Colors.grey[900];//Color(0x0E0E0E);//Colors.grey[100];// Colors.grey[900];//
-Color green = Colors.greenAccent;//Color(0xFF00FF73);
+Color neuBackground = Color(
+    0xFFFAFAFA); // Color(0x0E0E0E);// Color(0xFF0E0E0E);//Colors.grey[900];//Color(0x0E0E0E);//Colors.grey[100];// Colors.grey[900];//
+Color green = Colors.greenAccent; //Color(0xFF00FF73);
 double radius = 25;
 Color textColor = Colors.black;
 
 bool isNumeric(String s) {
-  if(s == null) {
+  if (s == null) {
     return false;
   }
-  return double.tryParse(s,) != null;
+  return double.tryParse(
+        s,
+      ) !=
+      null;
 }
 
 //validators
-final  alphaNumericCharacters = RegExp(r'^[a-zA-Z0-9]+$');
-final  nameCharacters = RegExp(r'^[a-zA-Z ]+$');
-final emailRegex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-
+final alphaNumericCharacters = RegExp(r'^[a-zA-Z0-9]+$');
+final nameCharacters = RegExp(r'^[a-zA-Z ]+$');
+final emailRegex = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
 //
-Map<FontWeight,String> fontWeightMap = {
+Map<FontWeight, String> fontWeightMap = {
   FontWeight.w100: 'Thin',
   FontWeight.w200: 'ExtraLight',
   FontWeight.w300: 'Light',
@@ -49,7 +53,7 @@ const USER_EMAIL = "email";
 const PROJECT_NAME = "project_name";
 const PROJECT_ID = "id";
 
-
 const PAGES_NAME = "page_name";
 const PAGES_ID = "page_id";
 const PAGES_WIDGET_TREE = "widget_tree";
+const PAGES_FUNCTION_TREE = "class_model";

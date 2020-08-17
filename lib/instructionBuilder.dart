@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/block_preview.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/side_tabbar.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
@@ -25,6 +26,7 @@ class _CodeBuilderState extends State<CodeBuilder> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print("CLassModel ${widget.classModel}");
     return Scaffold(
       // appBar: AppBar(),
       // backgroundColor: Colors.black,
@@ -85,6 +87,7 @@ class _BlockListingState extends State<BlockListing> {
             "Instructions",
             "Control Instruction",
             "Variables",
+            "Code",
           ],
           onSelect: (i) {
             // print("object $i");
@@ -176,25 +179,38 @@ class _BlockListingState extends State<BlockListing> {
                   ),
                 ],
               )
-            : Column(
-                children: <Widget>[
-                  Container(
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      child: ListView(
-                        children: <Widget>[
-                          Column(
+            : selected == 2
+                ? Column(
+                    children: <Widget>[
+                      Container(
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          child: ListView(
                             children: <Widget>[
-                              VariablePreview(
-                                variable: CustomConstInt(variableValue: 1),
+                              Column(
+                                children: <Widget>[
+                                  VariablePreview(
+                                    variable: CustomConstInt(variableValue: 1),
+                                  ),
+                                ],
                               ),
+                              VariableListing(widget: widget.widget),
                             ],
-                          ),
-                          VariableListing(widget: widget.widget),
-                        ],
-                      )),
-                  widget.widget.classModel.variableCreation(context),
-                ],
-              );
+                          )),
+                      widget.widget.classModel.variableCreation(context),
+                    ],
+                  )
+                : ListView(
+                    children: [
+                      NeuButton(
+                        decoration: NeumorphicDecoration(color: neuBackground),
+                        child: Text("Copy"),
+                        onPressed: () {
+                        Clipboard.setData(
+                            ClipboardData(text: widget.widget.classModel.code));
+                      }),
+                      Text(widget.widget.classModel.code),
+                    ],
+                  );
   }
 }
 
@@ -207,7 +223,7 @@ class VariablePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 10),
       child: Draggable<CustomVariables>(
         data: variable,
         child: Row(

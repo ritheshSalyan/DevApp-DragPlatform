@@ -7,7 +7,8 @@ class CustomGlobalVariable with CustomVariables {
   int variableValue;
   int initalValue;
   dynamic variableType;
-  CustomGlobalVariable(this.variableName,{this.variableValue = 0,this.variableType}){
+  CustomGlobalVariable(this.variableName,
+      {this.variableValue = 0, this.variableType}) {
     initalValue = variableValue;
   }
   @override
@@ -26,13 +27,27 @@ class CustomGlobalVariable with CustomVariables {
 
   @override
   void set value(dynamic nvalue) {
-   variableValue = nvalue;
+    variableValue = nvalue;
   }
 
   @override
   // TODO: implement initialValue
-  get initialValue =>initalValue;
+  get initialValue => initalValue;
 
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "variableName": variableName,
+      "value": value,
+    };
+  }
+
+  @override
+   fromJson(Map<String, dynamic> json) {
+    variableName = json["variableName"];
+    value = json["value"];
+
+  }
 }
 
 class CustomConstInt with CustomVariables {
@@ -61,10 +76,24 @@ class CustomConstInt with CustomVariables {
 
   @override
   void set value(dynamic nvalue) {
-  //  variableValue = nvalue;
+    //  variableValue = nvalue;
   }
 
   @override
   // TODO: implement initialValue
   get initialValue => variableValue;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "variableName": variableName,
+      "value": value,
+    };
+  }
+   @override
+   fromJson(Map<String, dynamic> json) {
+    variableName = json["variableName"];
+    value = json["value"];
+
+  }
 }

@@ -12,11 +12,7 @@ class CustomUpdateUi with CustomInstruction {
   Widget build(BuildContext context, CustomFunction function) {
     return Row(
       children: <Widget>[
-        Container(
-          width: 30,
-          height: 30,
-          color: Colors.yellow,
-        ),
+        Text("Update UI"),
         // )
       ],
     );
@@ -46,6 +42,15 @@ class CustomUpdateUi with CustomInstruction {
   }
 
   @override
-  // TODO: implement name
   String get name => "Update UI";
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {};
+  }
+
+  @override
+  fromJson(_) {
+   
+  }
 }

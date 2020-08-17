@@ -4,6 +4,7 @@ import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/arithmatic/addition.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/variables/variables.dart';
 
 class CustomPrint with CustomInstruction {
   CustomVariables a;
@@ -18,14 +19,15 @@ class CustomPrint with CustomInstruction {
   Widget build(BuildContext context, CustomFunction function) {
     return Row(
       children: <Widget>[
+        Text(" Print "),
         InstuctionVariablePlaceHolder(
-            onAccept: (data) {
-              checkVariable(data, function);
-              a = data;
-              function.notify(context);
-            },
-            child: a?.build(context),
-          ),
+          onAccept: (data) {
+            checkVariable(data, function);
+            a = data;
+            function.notify(context);
+          },
+          child: a?.build(context),
+        ),
         // DragTarget<CustomVariables>(
         //   onAccept: (data) {
         //     checkVariable(data, function);
@@ -65,4 +67,16 @@ class CustomPrint with CustomInstruction {
   @override
   // TODO: implement name
   String get name => "Print";
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "variable": a.toJson(),
+    };
+  }
+
+  @override
+  fromJson(json) {
+    a = CustomGlobalVariable("variableName").fromJson(json["variable"]);
+  }
 }

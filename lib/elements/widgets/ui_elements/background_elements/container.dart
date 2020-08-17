@@ -23,7 +23,7 @@ class CustomContainer with CustomWidget {
   double width = 1.0, height = 0.5;
   Color color = Colors.transparent;
   bool isSameRadius = true;
-  AlignmentGeometry alignment = Alignment.topLeft;
+  Alignment alignment = Alignment.topLeft;
   // int elevation;
   int wrand, hrand;
   double tlRad = 0.0;
@@ -369,7 +369,7 @@ class CustomContainer with CustomWidget {
     blRad = json[PROPERTIES]["blRad"] * 1.0;
     trRad = json[PROPERTIES]["trRad"] * 1.0;
     brRad = json[PROPERTIES]["brRad"] * 1.0;
-    alignment = json[PROPERTIES]["alignment"];
+    alignment = Alignment(json[PROPERTIES]["alignment"]["x"], json[PROPERTIES]["alignment"]["y"]);
     shadows = List<CustomBoxShadow>.from(
         json[PROPERTIES]["shadows"].map((x) => CustomBoxShadow.fromJson(x)));
     return this;
@@ -393,12 +393,23 @@ class CustomContainer with CustomWidget {
       "blRad": blRad,
       "trRad": trRad,
       "brRad": brRad,
-      "alignment": alignment,
+      "alignment": {
+        "x":alignment.x,
+        "y":alignment.y,
+      },
       "shadows": List<dynamic>.from(shadows.map((e) => e.toJson())),
     };
     return map;
   }
 }
+
+// Alignment fromString(Alignment align){
+  
+// switch (align) {
+ 
+//   // default:
+// }
+// }
 
 class CustomBoxShadow {
   int blurRadius = 1;

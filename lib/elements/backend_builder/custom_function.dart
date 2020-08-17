@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/controller/app_ui/controller.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/variables/variables.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/widgets/instruction_widget.dart';
+import 'package:flutter_drag_and_drop/elements/widget_track.dart';
 import 'package:neumorphic/neumorphic.dart';
 import 'package:provider/provider.dart';
 import 'package:reorderables/reorderables.dart';
@@ -12,12 +14,8 @@ import 'package:reorderables/reorderables.dart';
 class CustomFunction {
   String functionName;
   double x = 0, y = 0;
-  List<CustomVariables> inputs;
   List<CustomVariables> localVariables = [];
-  CustomVariables output;
-  // List<CustomInstruction> instructionSet = [];
-  // List<NodePoint> nodePoint = [];
-  // Map<CustomInstruction, Offset> map = {};
+  // CustomVariables output;
   List<LinkedListNode> instructions = [];
   ScrollController controller = ScrollController();
   CustomFunction(this.functionName) {
@@ -139,7 +137,8 @@ class CustomFunction {
                           // key: ValueKey(i*randomNo),
                           width: size.width * 0.25,
                           height: size.height * 0.1,
-                          child: TextField(
+                          child: TextFormField(
+                            initialValue: functionName,
                             onChanged: (value) {
                               functionName = value;
                               notify(context);
@@ -242,6 +241,20 @@ class CustomFunction {
       inst.instruction.performOperation(context, this);
     }
   }
+
+  toJson() {
+    return {
+      "instruction": List.from(instructions.map((e) => e.toJson())),
+      "variable": List.from(localVariables.map((e) => e.toJson()))
+    };
+  }
+
+  fromJson(Map<String, dynamic> json) {
+    instructions
+        .addAll(json["instruction"].map((e) => LinkedListNode.fromJson(json["instruction"])));
+    localVariables.addAll(json["variables"]
+        .map((e) => CustomGlobalVariable("functionName").fromJson(json["variables"])));
+  }
 }
 
 // class MultipleLinePainter extends CustomPainter {
@@ -312,5 +325,27 @@ class LinkedListNode {
       recievePoint = Offset((offset1.dx * -1) - parentPosition.dx,
           (offset1.dy * -1) - parentPosition.dy);
     } catch (e) {}
+  }
+
+  toJson() {
+    return {
+      "position": {
+        "x": position.dx,
+        "y": position.dy,
+      },
+      "parent_position": {
+        "x": parentPosition.dx,
+        "y": parentPosition.dy,
+      },
+      "instruction": instruction.toJson(),
+      "name": instruction.name,
+    };
+  }
+
+  static LinkedListNode fromJson(Map<String, dynamic> json) {
+    return LinkedListNode(
+        getFunctionByName(json["name"]),
+        Offset(json["position"]['x'], json["position"]['y']),
+        Offset(json["parent_position"]['x'], json["parent_position"]['y']));
   }
 }

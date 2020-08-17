@@ -3,6 +3,7 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.
 import 'package:flutter_drag_and_drop/elements/backend_builder/custom_function.dart';
 
 import 'package:flutter_drag_and_drop/constants.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/variables/variables.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:neumorphic/neumorphic.dart';
 
@@ -23,7 +24,7 @@ class CustomArithmaticOperation with CustomInstruction {
       // height: ,
       color: neuBackground,
       child: Padding(
-        padding:  EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,6 +153,22 @@ class CustomArithmaticOperation with CustomInstruction {
   @override
   // TODO: implement name
   String get name => "Arithmatic Operation";
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "a": a.toJson(),
+      "b": b.toJson(),
+      "operator":getOperator(type),
+    };
+  }
+
+  @override
+  fromJson(Map<String,dynamic> json) {
+       a = CustomGlobalVariable("variableName").fromJson(json["a"]);
+    b = CustomGlobalVariable("variableName").fromJson(json["b"]);
+    type = getType(json["operator"]);
+  }
 }
 
 class InstuctionVariablePlaceHolder extends StatelessWidget {
@@ -176,8 +193,8 @@ class InstuctionVariablePlaceHolder extends StatelessWidget {
           NeuCard(
               width: 20,
               height: 20,
-              curveType:child!=null?CurveType.flat: CurveType.emboss,
-               bevel: child!=null?1: 10,
+              curveType: child != null ? CurveType.flat : CurveType.emboss,
+              bevel: child != null ? 1 : 10,
               decoration: NeumorphicDecoration(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(25),
@@ -223,8 +240,8 @@ class InstuctionVariablePlaceHolder extends StatelessWidget {
               //     ),
               //   ],
               // ),
-              bevel: child!=null?1: 10,
-              curveType:child!=null?CurveType.flat: CurveType.emboss,
+              bevel: child != null ? 1 : 10,
+              curveType: child != null ? CurveType.flat : CurveType.emboss,
               decoration: NeumorphicDecoration(
                 // borderRadius: BorderRadius.only(
                 //   bottomLeft: Radius.circular(25),
@@ -269,4 +286,26 @@ String getOperator(ArithmaticOperationType type) {
 
   }
   return "+";
+}
+
+ArithmaticOperationType getType(String type) {
+  switch (type) {
+    case "+" :
+      return ArithmaticOperationType.ADD;
+
+    case  "-":
+      return ArithmaticOperationType.SUBTRACT;
+
+    case  "*":
+      return ArithmaticOperationType.MULTIPLY;
+
+    case  "/":
+      return ArithmaticOperationType.DEVIDE;
+
+    // case ArithmaticOperationType.MODULO:
+
+    //   return "-";
+
+  }
+  return ArithmaticOperationType.ADD;
 }

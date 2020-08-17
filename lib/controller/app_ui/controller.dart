@@ -25,16 +25,18 @@ class ControllerClass with ChangeNotifier {
   Future<void> getAllPages(String projectId) async {
     print("Started getAllPages ");
     pages = [CustomPage(pageName: "")];
-    // QuerySnapshot querySnapshot =
-    //     await AppDatabase.getPagesOfProject(projectId).getDocuments();
+    QuerySnapshot querySnapshot =
+        await AppDatabase.getPagesOfProject(projectId).getDocuments();
     pages = [];
-    // for (var document in querySnapshot.documents) {
-    //   pages.add(CustomPage.fromJson(document.data, document.documentID));
-    // }
+    print("getAllPages ${querySnapshot.documents.length}");
+    for (var document in querySnapshot.documents) {
+      pages.add(CustomPage.fromJson(document.data, document.documentID));
+    }
+    print("converted getAllPages ${pages.length} ");
     if (pages.isEmpty) {
       pages.add(CustomPage(pageName: "Page${pages.length + 1}"));
     }
-    print("Ended getAllPages ");
+    print("Ended getAllPages ${pages.length} ");
 
     notify();
   }
@@ -42,7 +44,9 @@ class ControllerClass with ChangeNotifier {
   updatePageName(String name) {
     pages[activePage].pageName = name;
   }
+  // Future<void> getData(){
 
+  // }
   Future<void> save(BuildContext context) async {
     print("Inside Save");
     for (var i = 0; i < pages.length; i++) {

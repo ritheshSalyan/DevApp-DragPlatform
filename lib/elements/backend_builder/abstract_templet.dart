@@ -8,10 +8,11 @@ mixin CustomInstruction {
   Widget iconBuilder(BuildContext context);
   String get code;
   void performOperation(BuildContext context, CustomFunction customFunction);
-  Widget build(
-      BuildContext context, 
-      CustomFunction function);
+  Widget build(BuildContext context, CustomFunction function);
   CustomInstruction copy();
+
+  Map<String, dynamic> toJson();
+   fromJson(Map<String, dynamic> json);
 }
 
 mixin CustomVariables {
@@ -21,5 +22,7 @@ mixin CustomVariables {
   dynamic get initialValue;
   set value(dynamic);
   Widget build(BuildContext context);
+  Map<String, dynamic> toJson();
+  fromJson(Map<String, dynamic> json);
 }
 String CONST_PREFIX = "CONST";

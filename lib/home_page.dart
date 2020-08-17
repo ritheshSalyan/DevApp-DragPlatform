@@ -1,6 +1,7 @@
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/common/side_tabbar.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/mobile.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/pages/widget_Listing.dart';
@@ -38,7 +39,7 @@ class _DragDropState extends State<DragDrop> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    print("Hello");
+    // print("Hello");
     return ChangeNotifierProvider<ControllerClass>(
       create: (_) => ControllerClass(project.id),
       child: Scaffold(
@@ -231,7 +232,7 @@ class UIGeneration extends StatelessWidget {
                   ),
                   back: Consumer<ControllerClass>(
                       builder: (context, snapshot, _) {
-                    print("@@@@@@@@@@@@@@@@ ${snapshot.pages.length} ");
+                    // print("@@@@@@@@@@@@@@@@ ${snapshot.pages.length} ");
                     CustomWidget val =
                         snapshot.pages[snapshot.activePage].widgetTree;
                     // print(val.toJson().toString());
@@ -242,6 +243,13 @@ class UIGeneration extends StatelessWidget {
                       child: ListView(
                         controller: ScrollController(),
                         children: <Widget>[
+                          p. NeuButton(
+                        decoration:p. NeumorphicDecoration(color: neuBackground),
+                        child: Text("Copy"),
+                        onPressed: () {
+                        Clipboard.setData(
+                            ClipboardData(text: val.code));
+                      }),
                           Text(val.code),
                         ],
                       ),

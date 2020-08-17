@@ -1,4 +1,9 @@
 import 'package:flutter_drag_and_drop/constants.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/abstract_templet.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/arithmatic/addition.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/conditional.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/custom_print.dart';
+import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/update_ui.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
 import 'package:flutter_drag_and_drop/elements/rootWidget.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/appbar_widgets/custom_appbar.dart';
@@ -30,7 +35,20 @@ Map<String, CustomWidget> widgetNames = {
   // "Appbar": CustomAppbar(),
 };
 
-CustomWidget widgetFromJson(Map<String,dynamic> json){
+CustomWidget widgetFromJson(Map<String, dynamic> json) {
   CustomWidget customWidget = getWidgetByName(json[NAME]);
-
 }
+
+CustomInstruction getFunctionByName(String name) {
+  if (instructions.containsKey(name)) {
+    return instructions[name].copy();
+  }
+  return CustomUpdateUi();
+}
+
+Map<String, CustomInstruction> instructions = {
+  "Arithmatic Operation": CustomArithmaticOperation(),
+  "Update UI": CustomUpdateUi(),
+  "Print": CustomPrint(),
+  "Condition": CustomConditionalOperation(),
+};
