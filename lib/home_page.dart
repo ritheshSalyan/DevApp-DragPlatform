@@ -12,6 +12,7 @@ import 'package:flutter_drag_and_drop/instructionBuilder.dart';
 import 'package:flutter_drag_and_drop/models/project.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:neumorphic/neumorphic.dart' as p;
 import 'package:provider/provider.dart';
 
@@ -69,7 +70,7 @@ class _DragDropState extends State<DragDrop> {
                 }),
                 Consumer<ControllerClass>(builder: (context, snapshot, _) {
                   return snapshot.isUI
-                      ?p. NeuButton(
+                      ? p.NeuButton(
                           decoration: p.NeumorphicDecoration(
                             color: neuBackground,
                           ),
@@ -191,7 +192,7 @@ class UIGeneration extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-         p. NeuCard(
+          p.NeuCard(
             bevel: 10,
 
             decoration: p.NeumorphicDecoration(
@@ -243,13 +244,23 @@ class UIGeneration extends StatelessWidget {
                       child: ListView(
                         controller: ScrollController(),
                         children: <Widget>[
-                          p. NeuButton(
-                        decoration:p. NeumorphicDecoration(color: neuBackground),
-                        child: Text("Copy"),
-                        onPressed: () {
-                        Clipboard.setData(
-                            ClipboardData(text: val.code));
-                      }),
+                          p.NeuButton(
+                              decoration:
+                                  p.NeumorphicDecoration(color: neuBackground),
+                              child: Text("Copy"),
+                              onPressed: () async {
+                                await Clipboard.setData(
+                                    ClipboardData(text: val.code));
+                                showToast("Code copied Successfull",
+                            context: context,
+                                    backgroundColor: Colors.green,
+                                    textStyle: TextStyle(color: Colors.white),
+                                    animation:
+                                        StyledToastAnimation.slideFromBottom,
+                                    curve: Curves.elasticOut,
+                                    reverseCurve: Curves.elasticIn,
+                                    duration: Duration(seconds: 3));
+                              }),
                           Text(val.code),
                         ],
                       ),
@@ -262,7 +273,7 @@ class UIGeneration extends StatelessWidget {
               ],
             ),
           ),
-         p. NeuCard(
+          p.NeuCard(
             bevel: 10,
             decoration: p.NeumorphicDecoration(
               color: neuBackground,

@@ -14,6 +14,7 @@ import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_el
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_elements/container.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_elements/scaffold.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/buttons/button.dart';
+import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/display_elements/icons.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/display_elements/text.dart';
 
 CustomWidget getWidgetByName(String name) {
@@ -26,6 +27,7 @@ CustomWidget getWidgetByName(String name) {
 Map<String, CustomWidget> widgetNames = {
   "Button": CustomButton(),
   "Text": CustomText(),
+  "Icon": CustomIcon(),
   "Scaffold": CustomScaffoldWithAppbar(),
   "Container": CustomContainer(),
   "Card": CustomCard(),

@@ -3,14 +3,18 @@ import 'package:flutter_drag_and_drop/UI/widgets/common/tree_item.dart';
 import 'package:flutter_drag_and_drop/UI/widgets/empty_representer.dart';
 import 'package:flutter_drag_and_drop/constants.dart';
 import 'package:flutter_drag_and_drop/elements/custom_widget.dart';
+import 'package:flutter_drag_and_drop/elements/properties_elements/multi_choice_selector.dart';
 import 'package:flutter_drag_and_drop/elements/properties_elements/selection_widget.dart';
 import 'package:flutter_drag_and_drop/elements/widget_track.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:reorderables/reorderables.dart';
 import 'package:tree_view/tree_view.dart';
 
 class CustomRow with CustomWidget {
   List<CustomWidget> children = [];
 
+  MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start;
+  CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start;
   void addChild(BuildContext context, CustomWidget childWidget,
       {int position}) {
     print(position);
@@ -33,6 +37,8 @@ class CustomRow with CustomWidget {
         return ReorderableRow(
         scrollController: ScrollController(),
           needsLongPressDraggable: false,
+          mainAxisAlignment: mainAxisAlignment,
+          crossAxisAlignment: crossAxisAlignment,
           onReorder: (int oldIndex, int newIndex) {
             addChild(context, children.removeAt(oldIndex), position: newIndex);
           },
@@ -83,19 +89,89 @@ class CustomRow with CustomWidget {
   @override
   // TODO: implement widget
   get name => "Row";
-  @override
-  Widget properties(BuildContext context,_) {
+ @override
+  Widget properties(BuildContext context, page) {
     return ListView(
       controller: ScrollController(),
       children: <Widget>[
-        TextField(
-          onChanged: (string) {
-            // elevation = int.parse(string);
+        CustomNeumorpicRadio(
+          initialSelect: mainAxisAlignment,
+          lable: "Vertical Alignment",
+          onSelect: (align) {
+            mainAxisAlignment = align;
+            super.properties(context,page);
+          },
+          children: {
+            MainAxisAlignment.center: Icon(Icons.vertical_align_center),
+            MainAxisAlignment.end: Icon(Icons.vertical_align_bottom),
+            MainAxisAlignment.start: Icon(Icons.vertical_align_top),
+            MainAxisAlignment.spaceAround: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+              ],
+            ),
+            MainAxisAlignment.spaceBetween: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+              ],
+            ),
+            MainAxisAlignment.spaceEvenly: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+                Container(
+                  width: 20,
+                  height: 3,
+                  color: green,
+                ),
+              ],
+            ),
           },
         ),
+
+
+         CustomNeumorpicRadio(
+          initialSelect: crossAxisAlignment,
+          lable: "Horizontal Alignment",
+          onSelect: (align) {
+            crossAxisAlignment = align;
+            super.properties(context,page);
+          },
+          children: {
+            CrossAxisAlignment.center: Icon(MaterialCommunityIcons.format_horizontal_align_center),
+            CrossAxisAlignment.end: Icon(MaterialCommunityIcons.format_horizontal_align_right),
+            CrossAxisAlignment.start: Icon(MaterialCommunityIcons.format_horizontal_align_left),
+           
+          },
+        )
       ],
     );
   }
+
 
   String childrenCode() {
     String code = "";

@@ -11,6 +11,7 @@ import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_el
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_elements/container.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/background_elements/scaffold.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/buttons/button.dart';
+import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/display_elements/icons.dart';
 import 'package:flutter_drag_and_drop/elements/widgets/ui_elements/display_elements/text.dart';
 
 class WidgetWindow extends StatefulWidget {
@@ -202,11 +203,11 @@ class _WidgetWindowState extends State<WidgetWindow> {
           customWidget: CustomButton(),
         ),
         feedback: Material(
-          child: Container(
-            width: widget.size.width * 0.1,
-            height: widget.size.width * 0.1,
-            color: Colors.red,
-            child: Text("CustomButton"),
+          child: Opacity(
+            opacity: 0.5,
+            child: DragWidgetPrview(
+              customWidget: CustomButton(),
+            ),
           ),
         ),
       ),
@@ -216,13 +217,25 @@ class _WidgetWindowState extends State<WidgetWindow> {
           customWidget: CustomText(),
         ),
         feedback: Material(
-          child: Container(
-            width: widget.size.width * 0.1,
-            height: widget.size.width * 0.1,
-            color: Colors.orange,
-            child: Text("CustomText"),
+            child: Opacity(
+          opacity: 0.5,
+          child: DragWidgetPrview(
+            customWidget: CustomText(),
           ),
+        )),
+      ),
+      Draggable<CustomWidget>(
+        data: CustomIcon(),
+        child: DragWidgetPrview(
+          customWidget: CustomIcon(),
         ),
+        feedback: Material(
+            child: Opacity(
+          opacity: 0.5,
+          child: DragWidgetPrview(
+            customWidget: CustomIcon(),
+          ),
+        )),
       ),
     ];
   }

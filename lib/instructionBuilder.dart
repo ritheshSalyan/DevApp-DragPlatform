@@ -12,6 +12,7 @@ import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/cust
 import 'package:flutter_drag_and_drop/elements/backend_builder/instructions/update_ui.dart';
 import 'package:flutter_drag_and_drop/elements/backend_builder/variables/variables.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:neumorphic/neumorphic.dart';
 
 class CodeBuilder extends StatefulWidget {
@@ -207,6 +208,15 @@ class _BlockListingState extends State<BlockListing> {
                         onPressed: () {
                         Clipboard.setData(
                             ClipboardData(text: widget.widget.classModel.code));
+                            showToast("Code copied Successfull",
+                            context: context,
+                                    backgroundColor: Colors.green,
+                                    textStyle: TextStyle(color: Colors.white),
+                                    animation:
+                                        StyledToastAnimation.slideFromBottom,
+                                    curve: Curves.elasticOut,
+                                    reverseCurve: Curves.elasticIn,
+                                    duration: Duration(seconds: 3));
                       }),
                       Text(widget.widget.classModel.code),
                     ],
